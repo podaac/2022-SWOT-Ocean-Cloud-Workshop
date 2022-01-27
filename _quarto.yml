@@ -1,0 +1,71 @@
+project:
+  type: site
+  output-dir: _site
+
+execute:
+  freeze: true
+
+site:
+  title: "2021 Cloud Workshop at AGU"
+  site-url: https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU
+  repo-url: https://github.com/nasa-openscapes/2021-Cloud-Workshop-AGU
+  repo-actions: [edit, issue]
+  page-navigation: true
+  page-footer: "PODAAC, NSIDC DAAC and LPDAAC (2021). 2021 Cloud Workshop"
+ 
+  navbar: 
+    #background: light
+    right: 
+      - sidebar:welcome
+      - icon: github
+        href: https://github.com/nasa-openscapes/2021-Cloud-Workshop-AGU
+ 
+  sidebar:
+    - id: welcome
+      title: "Menu"
+      logo: https://user-images.githubusercontent.com/2915555/133525653-2a2278b1-1015-4350-b2a5-160d125aaaf7.png
+      style: "docked"
+      collapse-level: 1
+      align: left
+      contents:
+        - section: "Welcome"
+          contents:
+            - index.md
+            - cloud-paradigm.md
+        - section: "Logistics"
+          contents:
+            - logistics/index.md
+            - logistics/schedule.md
+            - logistics/prerequisites.md
+            - logistics/github-workflows.md
+        - section: "Tutorials"
+          contents: 
+            - tutorials/index.md
+            - tutorials/00_Setup.md  ## tutorial 0
+            - tutorials/01_Earthdata_Search.md ## tutorial 1
+            - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
+            - section: "03. Data Access"
+              contents:
+                - how-tos/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.ipynb
+                - how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb
+                - how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
+                - how-tos/Multi-File_Direct_S3_Access_NetCDF_Example.ipynb
+            - tutorials/04_On-Prem_Cloud.ipynb ## tutorial 4
+        - section: "Further Resources"
+          contents:
+            - further-resources.md
+
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: [cosmo, theme-dark.scss]
+    code-background: true
+    code-copy: true
+    css: styles.css
+    toc: true
+
+filters:
+  - include-files.lua
+  - quarto
