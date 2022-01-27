@@ -1,14 +1,15 @@
 ---
-title: "2021 Cloud Workshop at AGU"
-subtitle: "Enabling Analysis in the Cloud Using NASA Earth Science Data"
+title: "2022 PO.DAAC SWOT Oceanography Cloud Workshop"
+subtitle: "Vrtual workshop on accessing and analyzing a set of synthetic SWOT L2 SSH dataset"
  
-author: "This Workshop is co-hosted by PODAAC, NSIDC DAAC, and LPDAAC. Additional support is provided by ASDC, GESDISC, IMPACT, and Openscapes."
+author: "This Workshop is hosted by PODAAC and supported by the NASA Physical Oceanography office, with additional support from NASA Openscapes."
 ---
 
 ## Welcome
 
 ![](https://user-images.githubusercontent.com/2915555/133526401-b79abf6c-ab0d-438d-9927-da39b7c17b96.jpg)
 
+**WEBSITE UNDER DEVELOPMENT**
 
 Welcome to the **2021 Cloud Workshop at AGU: Enabling Analysis in the Cloud Using NASA Earth Science Data,** co-hosted by the NASA EOSDIS Land Processes Distributed Active Archive Center ([LP.DAAC](https://lpdaac.usgs.gov/)), National Snow and Ice Data Center DAAC ([NSIDC DAAC](https://nsidc.org/daac)), Physical Oceanography Distributed Active Archive Center ([PO.DAAC](https://podaac.jpl.nasa.gov/)),  with support provided by [ASDC DAAC](https://asdc.larc.nasa.gov/), [GES DISC](https://disc.gsfc.nasa.gov/), [IMPACT](https://impact.earthdata.nasa.gov/), and [NASA Openscapes](https://nasa-openscapes.github.io/).
 
