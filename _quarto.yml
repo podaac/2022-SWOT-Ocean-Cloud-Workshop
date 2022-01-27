@@ -7,18 +7,18 @@ execute:
 
 site:
   title: "2021 Cloud Workshop at AGU"
-  site-url: https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU
-  repo-url: https://github.com/nasa-openscapes/2021-Cloud-Workshop-AGU
+  site-url: https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop
+  repo-url: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
   repo-actions: [edit, issue]
   page-navigation: true
-  page-footer: "PODAAC, NSIDC DAAC and LPDAAC (2021). 2021 Cloud Workshop"
+  page-footer: "PODAAC (2022). 2022 SWOT Oceanography Cloud Workshop"
  
   navbar: 
     #background: light
     right: 
       - sidebar:welcome
       - icon: github
-        href: https://github.com/nasa-openscapes/2021-Cloud-Workshop-AGU
+        href: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
  
   sidebar:
     - id: welcome
