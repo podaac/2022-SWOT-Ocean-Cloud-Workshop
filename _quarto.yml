@@ -6,7 +6,7 @@ execute:
   freeze: true
 
 site:
-  title: "2021 Cloud Workshop at AGU"
+  title: "2022 SWOT Oceanography Cloud Workshop"
   site-url: https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop
   repo-url: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
   repo-actions: [edit, issue]
