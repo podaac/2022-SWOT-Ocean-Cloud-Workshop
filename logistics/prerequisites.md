@@ -12,7 +12,7 @@ To follow along hands-on during the Workshop, please do the following (20 minute
     - Remember your username and password; you will need to be logged in during the workshop!
 2. **Earthdata Login account** 
     - Create an Earthdata Login account (if you don't already have one) at <https://urs.earthdata.nasa.gov>
-    - Remember your username and password; you will need to be logged in during the workshop!
+    - Remember your username and password; you will need to download or access cloud data during the workshop and beyond.
 3. **Get comfortable** 
     - Consider your computer set-up in advance, including an external monitor if possible. You can follow along in Jupyter Hub on your own computer while also watching an instructor demo over WebEx (or equivalent).
 
