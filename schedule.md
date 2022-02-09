@@ -4,7 +4,7 @@ title: Schedule
 
 **The SWOT Oceanography Cloud Workshop will take place virtually March 16-17, from  9am-1pm PST / 12-4pm EST**.   
 
-See [Prerequisites, Homework & Help](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Workshop/logistics/prerequisites.html) for pre-workshop preparation.
+See [Prerequisites & Homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Workshop/prerequisites/) for pre-workshop preparation.
 
 **WebEx links** will be shared directly with this group via a (calendar) meeting invite.
  
