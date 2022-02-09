@@ -7,7 +7,7 @@ author: "This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physi
 
 ## Welcome
 
-![](https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/blob/main/logistics/images/applications_graphical_abstract.png)
+![Image edited from https://swot.jpl.nasa.gov/resources/87/artists-impression-of-the-swot-satellite/](https://user-images.githubusercontent.com/51928352/153272282-018e791b-8c76-407e-8dc7-bbdd35c356e0.png)
 
 **WEBSITE UNDER DEVELOPMENT**
 
