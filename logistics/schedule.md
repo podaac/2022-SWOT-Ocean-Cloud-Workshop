@@ -2,41 +2,39 @@
 title: Schedule
 ---
 
-**The Cloud Workshop will take place virtually on December 12, 2021, from  8am-12pm CST [(UTC-6)](https://www.timeanddate.com/time/zones/cst) in [AGU session SCIWS31](https://agu.confex.com/agu/fm21/meetingapp.cgi/Session/124026)**.   
+**The SWOT Oceanography Cloud Workshop will take place virtually March 16-17, from  9am-1pm PST / 12-4pm EST**.   
 
-We will engage primarily with this group and schedule via Zoom; see [prerequisites & getting help](https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU/logistics/prerequisites.html).
+See [Prerequisites, Homework & Help](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Workshop/logistics/prerequisites.html) for pre-workshop preparation.
 
-**Zoom links** will be posted through AGU.
+**WebEx links** will be shared directly with this group via a (calendar) meeting invite.
  
 ## Workshop Schedule 
 
-| Time, CST [(UTC-6)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
+### Day 1 - March 16, 2022
+
+| Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
 |------|-------|-------------------|
-| 8:00 am | Welcome | Erin Robinson & Julie Lowndes, Openscapes | 
-| 8:05 am | NASA and the Cloud Paradigm | Catalina Oaida, PO.DAAC & Cyndi Hall, NASA |
-| 8:20 am | Tutorial 0: Orientation and setup | Luis Lopez, NSIDC
-| 8:35 am | Tutorial 1: EarthData Search | Catalina Oaida, PO.DAAC |
-| 9:05 am | Tutorial 2: EarthData Authentication | Aaron Friesz, LP DAAC |
-| 9:20 am | Break|  |
-| 9:35 am | Tutorial 3: Direct S3 Access | Aaron Friesz, LP DAAC |
-| 10:25 am | Tutorial 4: Cloud-non-cloud | Amy Steiker, NSIDC |
-| 11:15 am | Q&A | All |
-| 11:45 am | Closing (survey and next opportunities) | Catalina Oaida, PO.DAAC, Erin Robinson, Openscapes |
+| 9:00 am | Welcome | Nadya/Jessica, NASA Physical Oceanography Office | 
+| 9:05 am | *TBD - SWOT Project Welcome - TBD* | Lee-Lueng Fu, SWOT Project |
+| 9:10 am | Workshop Goals and Intro to the new Earthdata Cloud Paradigm | Catalina Oaida, PO.DAAC Applied Science Systems Engineer |
+| 9:30 am | Introduce the SWOT L2 simulated dataset | Jinbo Wang, PO.DAAC Project Scientist |
+| 9:35 am | Earthdata Authentication, Downloading (e.g. Subscriber) - Review | Suresh Vannan, PO.DAAC Project Manager |
+| 10:05 am | Intro to JupyterHub in AWS (everyone logs in)| Erin Robinson, Openscapes |
+| 10:20 am | Tutorial 1: Direct S3 Access for synthetic SWOT L2 SSH | Mike Gangl, PO.DAAC Project Systems Engineer |
+| 10:50 am | Break |  |
+| 11:00 am | Q&A and Hack-time | All |
+| 1:00 pm | Closing for the Day
 
-### Welcome
+### Day 2 - March 17, 2022
 
-- **Welcome and Code of Conduct**
-  - Please see the `NASA_CloudWorkshop_Notes` Google Doc
+| Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
+|------|-------|-------------------|
+| 9:00 am | Welcome | Catalina Oaida, PO.DAAC Applied Science Systems Engineer | 
+| 9:05 am | Subsetting synthetic SWOT L2 SSH | Celia Ou/Jack McNelis, PO.DAAC Data Publication Engineers |
+| 9:35 am | Creating synthetic SWOT L2 time series | Catalina Oaida, PO.DAAC Applied Science Systems Engineer |
+| 9:50 am | Q&A / Hack-time | All |
+| 11:30 am | Participant Reportout | Participants  |
+| 12:30 pm | What's Next / Save your Work | Julie Lowndes, Openscapes |
+| 1:00 pm | Workshop Concludes |  |
 
-![](images/starwars-team-nasa.png)
-
-### Closing
-
-[**Slides**](https://docs.google.com/presentation/d/1VrggJqzYCwjV5S0WbVRaAco-V10tdr54qHfoOQhLpBM/edit?usp=sharing) - Erin Robinson & Julie Lowndes
-
-- **Thank you**
-- **Continued hacking on the cloud - one week**. You will continue to have access to the 2i2c JupyterHub in AWS for one week following the Cloud Hackathon so you can continue to work and we all learn more about what is involved with migrating data access and science workflows to the Cloud. This cloud compute environment is supported by the [NASA Openscapes](https://nasa-openscapes.github.io/) project. 
-- **Upcoming events - all virtual**
-  - **[AGU Open science in action session](https://agu.confex.com/agu/fm21/meetingapp.cgi/Session/122142)** - December 17, 2021. Talks and tutorials by Hackathon Mentors, among other leaders in open science.
-  - **[NASA Openscapes Champions Cohort](https://nasa-openscapes.github.io/champions.html)** - March-April 2022. Openscapes will lead a NASA Champions Cohort for 7 research teams. This is  a professional development and leadership opportunity for scientists that use data from NASA DAACs and are interested in collaborative open data science practices and migrating their workflows to the cloud. Nominate your team by February 1. 
 
