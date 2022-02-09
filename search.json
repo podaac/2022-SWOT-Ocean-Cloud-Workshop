@@ -11,21 +11,21 @@
     "href": "logistics/prerequisites.html#prerequisites",
     "title": "Prerequisites, Homework & Help",
     "section": "Prerequisites",
-    "text": "Prerequisites\nIf you would like to follow along hands-on during the Workshop, please do the following (20 minutes). All software or accounts are free.\n\nGitHub username\n\nCreate a GitHub account (if you don’t already have one) at https://github.com. Follow optional advice on choosing your username\nWe will ask for your username at the beginning of the workshop\nRemember your username and password; you will need to be logged in during the workshop!\n\nEarthdata Login account\n\nCreate an Earthdata Login account (if you don’t already have one) at https://urs.earthdata.nasa.gov\nRemember your username and password; you will need to be logged in during the workshop!\n\nGet comfortable\n\nConsider your computer set-up in advance, including an external monitor if possible. You can follow along in Jupyter Hub on your own computer while also watching an instructor demo over Zoom (or equivalent), and will also want quick-access to Slack to ask for help and follow links."
+    "text": "Prerequisites\nTo follow along hands-on during the Workshop, please do the following (20 minutes). All software or accounts are free.\n\nGitHub username\n\nCreate a GitHub account (if you don’t already have one) at https://github.com. Follow optional advice on choosing your username\nThe workshop signup form asks for your GitHub username - this allows us to enable you access to a cloud environment during the workshop.\nRemember your username and password; you will need to be logged in during the workshop!\n\nEarthdata Login account\n\nCreate an Earthdata Login account (if you don’t already have one) at https://urs.earthdata.nasa.gov\nRemember your username and password; you will need to be logged in during the workshop!\n\nGet comfortable\n\nConsider your computer set-up in advance, including an external monitor if possible. You can follow along in Jupyter Hub on your own computer while also watching an instructor demo over WebEx (or equivalent)."
   },
   {
     "objectID": "logistics/prerequisites.html#pre-workshop-homework",
     "href": "logistics/prerequisites.html#pre-workshop-homework",
     "title": "Prerequisites, Homework & Help",
     "section": "Pre-Workshop Homework",
-    "text": "Pre-Workshop Homework\nWe recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won’t have time to take a deep dive into during the workshop, but which a important pieces in accessin (simulated) SWOT data hosted in the NASA Earthdata Cloud.\n\nDownload data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber\n\nWhile the workshop will focus on data access within the cloud, data download from the NASA Earthdata Cloud is still possbile. This tutorial will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC data-subscriber tool."
+    "text": "Pre-Workshop Homework\nWe recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won’t have time to take a deep dive into during the workshop, but which are important pieces in accessing (simulated) SWOT data hosted in the NASA Earthdata Cloud. You will get the chance to ask any quesitons reagrding the material covered in these pre-workshop tutorials during the workshop.\n\nDownload data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber (12 minutes)\n\nWhile the workshop will focus on data access within the cloud, data download from the NASA Earthdata Cloud is still possbile. This tutorial will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC data-subscriber tool."
   },
   {
     "objectID": "logistics/prerequisites.html#getting-help",
     "href": "logistics/prerequisites.html#getting-help",
     "title": "Prerequisites, Homework & Help",
     "section": "Getting help",
-    "text": "Getting help\nWe will use Zoom Chat and Google Doc notes as our main channels for help. Please use Zoom Chat to post questions, direct helpers to any screenshots you’ve pasted or conversations in the Google Doc, and request a breakout room.\nTo create a screenshot:\n\nOn your Mac - Screenshot\nOn your PC - Snipping Tool"
+    "text": "Getting help\nWe will use WebEx Chat and Google Doc notes as our main channels for help. Please use WebEx Chat to post questions, direct helpers to any screenshots you’ve pasted or conversations in the Google Doc, and request a breakout room.\nTo create a screenshot:\n\nOn your Mac - Screenshot\nOn your PC - Snipping Tool"
   },
   {
     "objectID": "logistics/index.html#for-workshop-participants",
