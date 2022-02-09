@@ -15,7 +15,7 @@ See [Prerequisites, Homework & Help](https://podaac.github.io/2022-SWOT-Ocean-Cl
 | Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
 |------|-------|-------------------|
 | 9:00 am | Welcome | Nadya/Jessica, NASA Physical Oceanography Office | 
-| 9:05 am | *TBD - SWOT Project Welcome - TBD* | Lee-Lueng Fu, SWOT Project |
+| 9:05 am | *TBD* | Lee-Lueng Fu, SWOT Project |
 | 9:10 am | Workshop Goals and Intro to the new Earthdata Cloud Paradigm | Catalina Oaida, PO.DAAC Applied Science Systems Engineer |
 | 9:30 am | Introduce the SWOT L2 simulated dataset | Jinbo Wang, PO.DAAC Project Scientist |
 | 9:35 am | Earthdata Authentication, Downloading (e.g. Subscriber) - Review | Suresh Vannan, PO.DAAC Project Manager |
@@ -30,8 +30,8 @@ See [Prerequisites, Homework & Help](https://podaac.github.io/2022-SWOT-Ocean-Cl
 | Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
 |------|-------|-------------------|
 | 9:00 am | Welcome | Catalina Oaida, PO.DAAC Applied Science Systems Engineer | 
-| 9:05 am | Subsetting synthetic SWOT L2 SSH | Celia Ou/Jack McNelis, PO.DAAC Data Publication Engineers |
-| 9:35 am | Creating synthetic SWOT L2 time series | Catalina Oaida, PO.DAAC Applied Science Systems Engineer |
+| 9:05 am | Tutorial 2: Subsetting synthetic SWOT L2 SSH | Celia Ou/Jack McNelis, PO.DAAC Data Publication Engineers |
+| 9:35 am | Tutorial 3: Creating synthetic SWOT L2 time series | *TBD* |
 | 9:50 am | Q&A / Hack-time | All |
 | 11:30 am | Participant Reportout | Participants  |
 | 12:30 pm | What's Next / Save your Work | Julie Lowndes, Openscapes |
