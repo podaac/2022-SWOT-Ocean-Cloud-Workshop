@@ -38,18 +38,19 @@ site:
             - logistics/schedule.md
             - logistics/prerequisites.md
             - logistics/github-workflows.md
-            - section: "Pre-Workshop Materials"
-              content:
-                - tutorials/01_Earthdata_Search.md ## tutorial 1
-                - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
         - section: "Tutorials"
           contents: 
             - tutorials/index.md
             - tutorials/00_Setup.md  ## tutorial 0
-            - section: "01. Data Access"
+            - tutorials/01_Earthdata_Search.md ## tutorial 1
+            - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
+            - section: "03. Data Access"
               contents:
+                - how-tos/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.ipynb
+                - how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb
                 - how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
                 - how-tos/Multi-File_Direct_S3_Access_NetCDF_Example.ipynb
+            - tutorials/04_On-Prem_Cloud.ipynb ## tutorial 4
         - section: "Further Resources"
           contents:
             - further-resources.md
