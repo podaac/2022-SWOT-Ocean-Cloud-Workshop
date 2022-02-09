@@ -4,5 +4,4 @@ title: Logistics overview
 
 ## For Workshop Participants
 
-Before the workshop, please complete the [prerequisites](https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU/logistics/prerequisites.html#prerequisites).
-
+Before the workshop, please complete the [prerequisites and pre-workshop homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Workshop/logistics/prerequisites.html).
