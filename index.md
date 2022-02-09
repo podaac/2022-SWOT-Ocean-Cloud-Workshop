@@ -1,6 +1,6 @@
 ---
 title: "2022 SWOT Oceanography Cloud Workshop"
-subtitle: "Virtual workshop on accessing and analyzing a set of synthetic SWOT L2 SSH dataset hosted"
+subtitle: "Virtual workshop on accessing and analyzing synthetic SWOT L2 SSH dataset hosted in Earthdata Cloud"
  
 author: "This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physical Oceanography office, with additional support from NASA Openscapes."
 ---
