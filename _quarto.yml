@@ -38,8 +38,10 @@ site:
             - logistics/schedule.md
             - logistics/prerequisites.md
             - logistics/github-workflows.md
-            - tutorials/01_Earthdata_Search.md ## tutorial 1
-            - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
+            - section: "Pre-Workshop Materials"
+              content:
+                - tutorials/01_Earthdata_Search.md ## tutorial 1
+                - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
         - section: "Tutorials"
           contents: 
             - tutorials/index.md
