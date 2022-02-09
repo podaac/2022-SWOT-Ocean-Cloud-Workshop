@@ -18,7 +18,7 @@ To follow along hands-on during the Workshop, please do the following (20 minute
 
 ## Pre-Workshop Homework
 
-We recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won't have time to take a deep dive into during the workshop, but which are important pieces in accessing (simulated) SWOT data hosted in the NASA Earthdata Cloud. You will get the chance to ask any quesitons reagrding the material covered in these pre-workshop tutorials during the workshop.
+We recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won't have time to take a deep dive into during the workshop, but which are important pieces in accessing (simulated) SWOT data hosted in the NASA Earthdata Cloud. You will get the chance to ask any questions regarding the material covered in these pre-workshop tutorials during the workshop.
 
 1. **Download data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber** (12 minutes) 
     - While the workshop will focus on data access _within_ the cloud, data download from the NASA Earthdata Cloud is still possbile. [This tutorial](https://drive.google.com/file/d/10zPgAPpc2x2Mz7JJeNDmSwCJUylzqSxv/view?usp=sharing) will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC [data-subscriber tool](https://github.com/podaac/data-subscriber).
