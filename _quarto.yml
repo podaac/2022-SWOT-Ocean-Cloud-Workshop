@@ -1,9 +1,5 @@
-project:
-  type: site
-  output-dir: _site
-
-execute:
-  freeze: true
+project: 
+  type: website
 
 site:
   title: "2022 SWOT Oceanography Cloud Workshop"
@@ -32,14 +28,13 @@ site:
           contents:
             - index.md
             - cloud-paradigm.md
-        - section: "Logistics"
+        - schedule.md
+        - section: prerequisites/index.md 
           contents:
-            - logistics/index.md
-            - logistics/schedule.md
-            - logistics/prerequisites.md
             - logistics/github-workflows.md
-            - tutorials/01_Earthdata_Search.md ## tutorial 1
-            - tutorials/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
+            - prerequisites/01_Earthdata_Search.md ## tutorial 1
+            - prerequisites/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
+            - prerequisites/03_download.md
         - section: "Tutorials"
           contents: 
             - tutorials/index.md
