@@ -141,22 +141,19 @@
         <li>
     <a class="dropdown-item" href="../cloud-paradigm.html">NASA and the Cloud Paradigm</a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../schedule.html">Schedule</a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Logistics</li>
+        <li class="dropdown-header">Prerequisites &amp; Homework</li>
         <li>
-    <a class="dropdown-item" href="../logistics/index.html">Logistics overview</a>
+    <a class="dropdown-item" href="../prerequisites/01_Earthdata_Search.html">01. Earthdata Search</a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../logistics/schedule.html">Schedule</a>
+    <a class="dropdown-item" href="../prerequisites/02_NASA_Earthdata_Authentication.html">02. Authentication for NASA Earthdata</a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../logistics/prerequisites.html">Prerequisites, Homework &amp; Help</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/01_Earthdata_Search.html">01. Earthdata Search</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/02_NASA_Earthdata_Authentication.html">02. Authentication for NASA Earthdata</a>
+    <a class="dropdown-item" href="../prerequisites/03_download.html">03. Download with PO.DAAC data-subscriber</a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Tutorials</li>
@@ -229,37 +226,32 @@
 </li>
     </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schedule.html" class="sidebar-item-text ">Schedule</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">Logistics</a>
-      <a class="sidebar-item-toggle text-start collapsed " data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">
+        <a href="../prerequisites/index.html" class="sidebar-item-text ">Prerequisites &amp; Homework</a>
+      <a class="sidebar-item-toggle text-start collapsed " data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-prerequisitesindexmd" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-logistics" class="collapse list-unstyled sidebar-section depth1 ">  
+    <ul id="quarto-sidebar-section-prerequisitesindexmd" class="collapse list-unstyled sidebar-section depth1 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/index.html" class="sidebar-item-text ">Logistics overview</a>
+  <a href="../prerequisites/01_Earthdata_Search.html" class="sidebar-item-text ">01. Earthdata Search</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/schedule.html" class="sidebar-item-text ">Schedule</a>
+  <a href="../prerequisites/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text ">02. Authentication for NASA Earthdata</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/prerequisites.html" class="sidebar-item-text ">Prerequisites, Homework &amp; Help</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/01_Earthdata_Search.html" class="sidebar-item-text ">01. Earthdata Search</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text ">02. Authentication for NASA Earthdata</a>
+  <a href="../prerequisites/03_download.html" class="sidebar-item-text ">03. Download with PO.DAAC data-subscriber</a>
   </div>
 </li>
     </ul>
@@ -436,7 +428,7 @@
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                  GDAL_HTTP_COOKIEJAR<span class="op">=</span>os.path.expanduser(<span class="st">'~/cookies.txt'</span>))</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>rio_env.<span class="fu">__enter__</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this example we’re interested in the <a href="https://doi.org/10.5067/HLS/HLSL30.002">HLS L30</a> data collection from NASA’s <a href="https://lpdaac.usgs.gov/">LP DAAC</a> in Earthdata Cloud. Below we specify the s3 URL to the data asset in Earthdata Cloud. This URL can be found via <a href="../tutorials/01_Earthdata_Search.html">Earthdata Search</a> or programmatically through the <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/01_Data_Discovery_CMR.html">CMR</a> and <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/02_Data_Discovery_CMR-STAC_API.html">CMR-STAC</a> APIs.</p>
+<p>In this example we’re interested in the <a href="https://doi.org/10.5067/HLS/HLSL30.002">HLS L30</a> data collection from NASA’s <a href="https://lpdaac.usgs.gov/">LP DAAC</a> in Earthdata Cloud. Below we specify the s3 URL to the data asset in Earthdata Cloud. This URL can be found via <a href="../tutorials/01_Earthdata_Search.md">Earthdata Search</a> or programmatically through the <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/01_Data_Discovery_CMR.html">CMR</a> and <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/02_Data_Discovery_CMR-STAC_API.html">CMR-STAC</a> APIs.</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s3_url <span class="op">=</span> <span class="st">'s3://lp-prod-protected/HLSL30.020/HLS.L30.T11SQA.2021333T181532.v2.0/HLS.L30.T11SQA.2021333T181532.v2.0.B04.tif'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

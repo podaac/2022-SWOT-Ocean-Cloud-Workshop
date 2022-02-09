@@ -143,22 +143,19 @@
         <li>
     <a class="dropdown-item" href="../cloud-paradigm.html">NASA and the Cloud Paradigm</a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../schedule.html">Schedule</a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Logistics</li>
+        <li class="dropdown-header">Prerequisites &amp; Homework</li>
         <li>
-    <a class="dropdown-item" href="../logistics/index.html">Logistics overview</a>
+    <a class="dropdown-item" href="../prerequisites/01_Earthdata_Search.html">01. Earthdata Search</a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../logistics/schedule.html">Schedule</a>
+    <a class="dropdown-item" href="../prerequisites/02_NASA_Earthdata_Authentication.html">02. Authentication for NASA Earthdata</a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../logistics/prerequisites.html">Prerequisites, Homework &amp; Help</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/01_Earthdata_Search.html">01. Earthdata Search</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/02_NASA_Earthdata_Authentication.html">02. Authentication for NASA Earthdata</a>
+    <a class="dropdown-item" href="../prerequisites/03_download.html">03. Download with PO.DAAC data-subscriber</a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Tutorials</li>
@@ -231,37 +228,32 @@
 </li>
     </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schedule.html" class="sidebar-item-text ">Schedule</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">Logistics</a>
-      <a class="sidebar-item-toggle text-start collapsed " data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">
+        <a href="../prerequisites/index.html" class="sidebar-item-text ">Prerequisites &amp; Homework</a>
+      <a class="sidebar-item-toggle text-start collapsed " data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-prerequisitesindexmd" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-logistics" class="collapse list-unstyled sidebar-section depth1 ">  
+    <ul id="quarto-sidebar-section-prerequisitesindexmd" class="collapse list-unstyled sidebar-section depth1 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/index.html" class="sidebar-item-text ">Logistics overview</a>
+  <a href="../prerequisites/01_Earthdata_Search.html" class="sidebar-item-text ">01. Earthdata Search</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/schedule.html" class="sidebar-item-text ">Schedule</a>
+  <a href="../prerequisites/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text ">02. Authentication for NASA Earthdata</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../logistics/prerequisites.html" class="sidebar-item-text ">Prerequisites, Homework &amp; Help</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/01_Earthdata_Search.html" class="sidebar-item-text ">01. Earthdata Search</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text ">02. Authentication for NASA Earthdata</a>
+  <a href="../prerequisites/03_download.html" class="sidebar-item-text ">03. Download with PO.DAAC data-subscriber</a>
   </div>
 </li>
     </ul>
@@ -427,7 +419,7 @@
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                          secret<span class="op">=</span>temp_creds_req[<span class="st">'secretAccessKey'</span>], </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                          token<span class="op">=</span>temp_creds_req[<span class="st">'sessionToken'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this example we’re interested in the ECCO data collection from NASA’s PO.DAAC in Earthdata Cloud. Below we specify the s3 URL to the data asset in Earthdata Cloud. This URL can be found via <a href="../tutorials/01_Earthdata_Search.html">Earthdata Search</a> or programmatically through the <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/01_Data_Discovery_CMR.html">CMR</a> and <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/02_Data_Discovery_CMR-STAC_API.html">CMR-STAC</a> APIs.</p>
+<p>In this example we’re interested in the ECCO data collection from NASA’s PO.DAAC in Earthdata Cloud. Below we specify the s3 URL to the data asset in Earthdata Cloud. This URL can be found via <a href="../tutorials/01_Earthdata_Search.md">Earthdata Search</a> or programmatically through the <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/01_Data_Discovery_CMR.html">CMR</a> and <a href="https://nasa-openscapes.github.io/2021-Cloud-Hackathon/tutorials/02_Data_Discovery_CMR-STAC_API.html">CMR-STAC</a> APIs.</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>s3_url <span class="op">=</span> <span class="st">'s3://podaac-ops-cumulus-protected/ECCO_L4_SSH_05DEG_MONTHLY_V4R4/SEA_SURFACE_HEIGHT_mon_mean_2015-01_ECCO_V4r4_latlon_0p50deg.nc'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
