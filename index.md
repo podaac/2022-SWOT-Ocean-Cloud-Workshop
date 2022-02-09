@@ -7,7 +7,7 @@ author: "This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physi
 
 ## Welcome
 
-![Image edited from https://swot.jpl.nasa.gov/resources/87/artists-impression-of-the-swot-satellite/](https://user-images.githubusercontent.com/51928352/153272794-8a159fed-481a-4161-946c-f613d8ebcf3b.png)
+![Image edited from https://swot.jpl.nasa.gov/resources/87/artists-impression-of-the-swot-satellite/](https://user-images.githubusercontent.com/51928352/153276603-03d101f6-9acc-4502-8d8b-05d2bb58e75e.png)
 
 **WEBSITE UNDER DEVELOPMENT**
 
