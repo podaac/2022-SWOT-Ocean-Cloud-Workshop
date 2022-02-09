@@ -8,7 +8,6 @@ author: "This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physi
 ## Welcome
 
 ![](https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/blob/main/logistics/images/applications_graphical_abstract.png)
-![](https://user-images.githubusercontent.com/2915555/133526401-b79abf6c-ab0d-438d-9927-da39b7c17b96.jpg)
 
 **WEBSITE UNDER DEVELOPMENT**
 
