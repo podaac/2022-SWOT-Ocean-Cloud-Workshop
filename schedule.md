@@ -20,7 +20,7 @@ See [Prerequisites & Homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Wo
 | 9:30 am | Introduce the SWOT L2 simulated dataset | Jinbo Wang, PO.DAAC Project Scientist |
 | 9:35 am | Earthdata Authentication, Downloading (e.g. Subscriber) - Review | Suresh Vannan, PO.DAAC Project Manager |
 | 10:05 am | Intro to JupyterHub in AWS (everyone logs in)| Erin Robinson, Openscapes |
-| 10:20 am | Tutorial 1: Direct S3 Access for synthetic SWOT L2 SSH | Mike Gangl, PO.DAAC Project Systems Engineer |
+| 10:20 am | Tutorial 1: Direct S3 Access for simulated SWOT L2 SSH | Mike Gangl, PO.DAAC Project Systems Engineer |
 | 10:50 am | Break |  |
 | 11:00 am | Q&A and Hack-time | All |
 | 1:00 pm | Closing for the Day
@@ -30,8 +30,8 @@ See [Prerequisites & Homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Wo
 | Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
 |------|-------|-------------------|
 | 9:00 am | Welcome | Catalina Oaida, PO.DAAC Applied Science Systems Engineer | 
-| 9:05 am | Tutorial 2: Subsetting synthetic SWOT L2 SSH | Celia Ou/Jack McNelis, PO.DAAC Data Publication Engineers |
-| 9:35 am | Tutorial 3: Creating synthetic SWOT L2 time series | *TBD* |
+| 9:05 am | Tutorial 2: Subsetting simulated SWOT L2 SSH | Celia Ou/Jack McNelis, PO.DAAC Data Publication Engineers |
+| 9:35 am | Tutorial 3: Creating simulated SWOT L2 time series | *TBD* |
 | 9:50 am | Q&A / Hack-time | All |
 | 11:30 am | Participant Reportout | Participants  |
 | 12:30 pm | What's Next / Save your Work | Julie Lowndes, Openscapes |
