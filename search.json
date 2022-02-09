@@ -18,14 +18,14 @@
     "href": "logistics/prerequisites.html#pre-workshop-homework",
     "title": "Prerequisites, Homework & Help",
     "section": "Pre-Workshop Homework",
-    "text": "Pre-Workshop Homework\nWe recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won’t have time to take a deep dive into during the workshop, but which are important pieces in accessing (simulated) SWOT data hosted in the NASA Earthdata Cloud. You will get the chance to ask any questions regarding the material covered in these pre-workshop tutorials during the workshop.\n\nDownload data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber (12 minutes)\n\nWhile the workshop will focus on data access within the cloud, data download from the NASA Earthdata Cloud is still possbile. This tutorial will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC data-subscriber tool."
+    "text": "Pre-Workshop Homework\nWe recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won’t have time to take a deep dive into during the workshop, but which are important pieces in accessing (simulated) SWOT data hosted in the NASA Earthdata Cloud. You will get the chance to ask any questions regarding the material covered in these pre-workshop tutorials during the workshop.\n\nSearch for PO.DAAC data using the Earthdata Search GUI\n\ngeneric tutorial on how to search and retrieve download or access links for PO.DAAC data using the Earthdata Search GUI.\n\nNASA Earthdata Authentication\n\ntutorial for generating a netrc file, which enables programmatic (command line) NASA Earthdata Authentication. If you don’t have a NASA Earthdata user login account, you can set up a free one quickly. See the Prerequisites section above.\n\nDownload data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber (12 minutes)\n\nWhile the workshop will focus on data access within the cloud, data download from the NASA Earthdata Cloud is still possbile. This tutorial will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC data-subscriber tool."
   },
   {
-    "objectID": "logistics/prerequisites.html#getting-help",
-    "href": "logistics/prerequisites.html#getting-help",
+    "objectID": "logistics/prerequisites.html#getting-help-during-the-workshop",
+    "href": "logistics/prerequisites.html#getting-help-during-the-workshop",
     "title": "Prerequisites, Homework & Help",
-    "section": "Getting help",
-    "text": "Getting help\nWe will use WebEx Chat and Google Doc notes as our main channels for help. Please use WebEx Chat to post questions, direct helpers to any screenshots you’ve pasted or conversations in the Google Doc, and request a breakout room.\nTo create a screenshot:\n\nOn your Mac - Screenshot\nOn your PC - Snipping Tool"
+    "section": "Getting help during the Workshop",
+    "text": "Getting help during the Workshop\nWe will use WebEx Chat and Google Doc notes as our main channels for help. Please use WebEx Chat to post questions, direct helpers to any screenshots you’ve pasted or conversations in the Google Doc, and request a breakout room.\nTo create a screenshot:\n\nOn your Mac - Screenshot\nOn your PC - Snipping Tool"
   },
   {
     "objectID": "logistics/index.html#for-workshop-participants",
