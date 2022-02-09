@@ -1,5 +1,5 @@
 ---
-title: Prerequisites & help
+title: Prerequisites, Homework & Help
 ---
 
 ## Prerequisites
@@ -15,6 +15,14 @@ If you would like to follow along hands-on during the Workshop, please do the fo
     - Remember your username and password; you will need to be logged in during the workshop!
 1. **Get comfortable** 
     - Consider your computer set-up in advance, including an external monitor if possible. You can follow along in Jupyter Hub on your own computer while also watching an instructor demo over Zoom (or equivalent), and will also want quick-access to Slack to ask for help and follow links.
+
+## Pre-Workshop Homework
+We recommmend watching or walking through the following tutorials ahead of the workshop, to become familiar with topics that we won't have time to take a deep dive into during the workshop, but which a important pieces in accessin (simulated) SWOT data hosted in the NASA Earthdata Cloud.
+
+1. **Download data from the NASA Earthdata Cloud using the PO.DAAC data-subscriber**
+    - While the workshop will focus on data access _within_ the cloud, data download from the NASA Earthdata Cloud is still possbile. [This tutorial](https://drive.google.com/file/d/10zPgAPpc2x2Mz7JJeNDmSwCJUylzqSxv/view?usp=sharing) will walk you through how to download simulated SWOT L2 data from the PO.DAAC archive in Earthdata Cloud (hosted in AWS), using the PO.DAAC [data-subscriber tool](https://github.com/podaac/data-subscriber).
+
+
 
 ## Getting help
 
