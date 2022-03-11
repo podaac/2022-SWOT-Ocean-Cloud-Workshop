@@ -19,7 +19,7 @@ site:
   sidebar:
     - id: welcome
       title: "Menu"
-      logo: https://user-images.githubusercontent.com/2915555/133525653-2a2278b1-1015-4350-b2a5-160d125aaaf7.png
+      logo: podaac-logo.png
       style: "docked"
       collapse-level: 1
       align: left
