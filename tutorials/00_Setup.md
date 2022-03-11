@@ -10,7 +10,7 @@ Please go to Jupyter Hub and Log in with your GitHub Account, and select "Small"
 
 Alternatively, you can also click this badge to launch the Hub:
 
-![](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Openscapes&message=AWS+us-west-2&color=orange){fig-align="center"}
+[![](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Openscapes&message=AWS+us-west-2&color=orange)](https://openscapes.2i2c.cloud/hub/){fig-align="center"}
 
 ![](img/JupyterHub-2i2c.png){width="500"}
 
