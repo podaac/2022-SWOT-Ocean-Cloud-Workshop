@@ -14,7 +14,7 @@ See [Prerequisites & Homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Wo
 
 | Time, PST [(UTC-8)](https://www.timeanddate.com/time/zones/cst) | Event | Leads/Instructors |
 |------|-------|-------------------|
-| 9:00 am | Welcome - Getting settle in | Catalina Oaida, PO.DAAC Applied Science Systems Engineer | 
+| 9:00 am | Welcome - Getting settled in | Catalina Oaida, PO.DAAC Applied Science Systems Engineer | 
 | 9:05 am | Welcome | Jessica Hausman, NASA Physical Oceanography Program Office | 
 | 9:10 am | SWOT Status and Challenges | Lee-Lueng Fu, SWOT Project |
 | 9:15 am | Workshop Goals and Intro to the new Earthdata Cloud Paradigm | Catalina Oaida, PO.DAAC Applied Science Systems Engineer |
