@@ -46,7 +46,7 @@ See [Prerequisites & Homework](https://podaac.github.io/2022-SWOT-Ocean-Cloud-Wo
 | 9:35 am | Tutorial 3: Creating simulated SWOT L2 time series | Celia Ou/Jinbo Wang, PO.DAAC |
 | 9:50 am | Q&A / Hack-time | All |
 | 11:45 am | Participant Reportout | Participants  |
-| 12:45 pm | What's Next | Catalina Oaida, PO.DAAC |
+| 12:45 pm | What's Next & Q&A/Discussion | Catalina Oaida, PO.DAAC |
 | 1:00 pm | Workshop Concludes |  |
 
 #### Welcome Day 2
