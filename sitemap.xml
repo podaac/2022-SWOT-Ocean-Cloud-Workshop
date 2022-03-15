@@ -2,110 +2,110 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/cloud-paradigm.html</loc>
-    <lastmod>2022-03-15T23:07:11.420Z</lastmod>
+    <lastmod>2022-03-15T23:11:40.697Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/index.html</loc>
-    <lastmod>2022-03-15T23:07:12.336Z</lastmod>
+    <lastmod>2022-03-15T23:11:42.549Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/prerequisites/01_Earthdata_Search.html</loc>
-    <lastmod>2022-03-15T23:07:12.704Z</lastmod>
+    <lastmod>2022-03-15T23:11:42.925Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/prerequisites/index.html</loc>
-    <lastmod>2022-03-15T23:07:13.000Z</lastmod>
+    <lastmod>2022-03-15T23:11:43.217Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/prerequisites/02_NASA_Earthdata_Authentication.html</loc>
-    <lastmod>2022-03-15T23:07:13.592Z</lastmod>
+    <lastmod>2022-03-15T23:11:43.733Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/prerequisites/03_download.html</loc>
-    <lastmod>2022-03-15T23:07:13.868Z</lastmod>
+    <lastmod>2022-03-15T23:11:44.017Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/On-prem_Cloud_example.html</loc>
-    <lastmod>2022-03-15T23:07:17.188Z</lastmod>
+    <lastmod>2022-03-15T23:11:47.009Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/index.html</loc>
-    <lastmod>2022-03-15T23:07:17.484Z</lastmod>
+    <lastmod>2022-03-15T23:11:47.277Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/swot_cloud_hackathon_data_intro_dask.html</loc>
-    <lastmod>2022-03-15T23:07:17.904Z</lastmod>
+    <lastmod>2022-03-15T23:11:47.673Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/00_Setup.html</loc>
-    <lastmod>2022-03-15T23:07:18.308Z</lastmod>
+    <lastmod>2022-03-15T23:11:48.017Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/03_Timeseries_SWOT_sim.html</loc>
-    <lastmod>2022-03-15T23:07:18.816Z</lastmod>
+    <lastmod>2022-03-15T23:11:48.381Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/02_Subset_SWOT_sim.html</loc>
-    <lastmod>2022-03-15T23:07:19.212Z</lastmod>
+    <lastmod>2022-03-15T23:11:48.757Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/Finding_collection_s3_location.html</loc>
-    <lastmod>2022-03-15T23:07:19.508Z</lastmod>
+    <lastmod>2022-03-15T23:11:49.045Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/SWOT_sim_data_intro.html</loc>
-    <lastmod>2022-03-15T23:07:20.868Z</lastmod>
+    <lastmod>2022-03-15T23:11:50.349Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/tutorials/01_Direct_Access_SWOT_sim.html</loc>
-    <lastmod>2022-03-15T23:09:18.661Z</lastmod>
+    <lastmod>2022-03-15T23:13:38.386Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/schedule.html</loc>
-    <lastmod>2022-03-15T23:09:18.993Z</lastmod>
+    <lastmod>2022-03-15T23:13:38.726Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/Direct_Access_netCDF_simple.html</loc>
-    <lastmod>2022-03-15T23:09:19.421Z</lastmod>
+    <lastmod>2022-03-15T23:13:39.162Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html</loc>
-    <lastmod>2022-03-15T23:09:19.769Z</lastmod>
+    <lastmod>2022-03-15T23:13:39.494Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Multi-File_Direct_S3_Access_COG_Example.html</loc>
-    <lastmod>2022-03-15T23:09:20.105Z</lastmod>
+    <lastmod>2022-03-15T23:13:39.822Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.html</loc>
-    <lastmod>2022-03-15T23:09:20.501Z</lastmod>
+    <lastmod>2022-03-15T23:13:40.206Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Multi-File_Direct_S3_Access_NetCDF_Example.html</loc>
-    <lastmod>2022-03-15T23:09:20.885Z</lastmod>
+    <lastmod>2022-03-15T23:13:40.558Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html</loc>
-    <lastmod>2022-03-15T23:09:21.253Z</lastmod>
+    <lastmod>2022-03-15T23:13:40.918Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Earthdata_Cloud__Open-Science-Tutorial.html</loc>
-    <lastmod>2022-03-15T23:09:46.037Z</lastmod>
+    <lastmod>2022-03-15T23:14:05.011Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/how-tos/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html</loc>
-    <lastmod>2022-03-15T23:09:50.897Z</lastmod>
+    <lastmod>2022-03-15T23:14:09.947Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/external/cof-zarr-reformat.html</loc>
-    <lastmod>2022-03-15T23:09:51.545Z</lastmod>
+    <lastmod>2022-03-15T23:14:10.567Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/external/zarr-eosdis-store.html</loc>
-    <lastmod>2022-03-15T23:09:51.889Z</lastmod>
+    <lastmod>2022-03-15T23:14:10.915Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop/further-resources.html</loc>
-    <lastmod>2022-03-15T23:09:52.209Z</lastmod>
+    <lastmod>2022-03-15T23:14:11.207Z</lastmod>
   </url>
 </urlset>
