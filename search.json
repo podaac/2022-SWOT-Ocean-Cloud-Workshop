@@ -77,6 +77,41 @@
     "text": "This page is still under development. New content will be added between now and the workshop.\nThese tutorials are a combination of narrative, links, code, and outputs. They have been developed for live demos during the Workshop, and are available for self-paced learning.\nTutorials are markdown (.md) and Jupyter (.ipynb) notebooks, and are available on GitHub:\nhttps://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/tree/main/tutorials."
   },
   {
+    "objectID": "tutorials/swot_cloud_hackathon_data_intro_dask.html#subset-swot-l2-ssh-using-dask",
+    "href": "tutorials/swot_cloud_hackathon_data_intro_dask.html#subset-swot-l2-ssh-using-dask",
+    "title": "2022 SWOT Oceanography Cloud Workshop",
+    "section": "Subset SWOT L2 SSH using Dask",
+    "text": "Subset SWOT L2 SSH using Dask\nJinbo Wang\nSWOT Scientist/PODAAC Project Scientist\n3/15/2022"
+  },
+  {
+    "objectID": "tutorials/swot_cloud_hackathon_data_intro_dask.html#simulated-l2-ssh",
+    "href": "tutorials/swot_cloud_hackathon_data_intro_dask.html#simulated-l2-ssh",
+    "title": "2022 SWOT Oceanography Cloud Workshop",
+    "section": "Simulated L2 SSH",
+    "text": "Simulated L2 SSH\nThe SWOTsimulator was used on two global ocean simulations (LLC4320 and GLORYS) following the error specification described in Level 2 KaRIn Low Rate Sea Surface Height Product PDF file (D-56407). The simulator was based on Gaultier et al. first version but was almost completely rewritten, while keeping the error budget largely unchanged. (The error representation is claimed to be better but needs more documentation.) The CNES team is the creator of these products. The 8 datasets are listed as follows:\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_CALVAL_V1    10288 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_CALVAL_V1    10287 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nThe links to these datasets on PODAAC website or Earthdata search page.\n\nEight simulated L2 SSH datasets on PO.DAAC website.\nFour GLORYS datasets from Earthdata search\nFour ECCO_LLC4320 datasets from Earthdata search\n\nThe ECCO_LLC4320-based products cover one-year duration with >10k files (granules in Earthdata language) in each collection. The GLORYS-based products cover about 20 months with >17k files in each collection."
+  },
+  {
+    "objectID": "tutorials/swot_cloud_hackathon_data_intro_dask.html#relevant-content-in-the-simulated-l2-ssh-files",
+    "href": "tutorials/swot_cloud_hackathon_data_intro_dask.html#relevant-content-in-the-simulated-l2-ssh-files",
+    "title": "2022 SWOT Oceanography Cloud Workshop",
+    "section": "Relevant content in the simulated L2 SSH files",
+    "text": "Relevant content in the simulated L2 SSH files\nThere are too much information in these datasets for this short cloud hackathon. For example, there are 92 variables in the KaRIn products. The hackathon participants are strongly encouraged to read the the product description to understand the meaning of different variables. For this exercise, the variables with “simulated” keyword are most relevant: 1. ‘simulated_true_ssh_karin’ 1. ‘simulated_error_baseline_dilation’ 1. ‘simulated_error_roll’ 1. ‘simulated_error_phase’ 1. ‘simulated_error_timing’ 1. ‘simulated_error_karin’ 1. ‘simulated_error_orbital’ 1. ‘simulated_error_troposphere’"
+  },
+  {
+    "objectID": "tutorials/swot_cloud_hackathon_data_intro_dask.html#subsetting-using-dask-delay",
+    "href": "tutorials/swot_cloud_hackathon_data_intro_dask.html#subsetting-using-dask-delay",
+    "title": "2022 SWOT Oceanography Cloud Workshop",
+    "section": "Subsetting using Dask delay",
+    "text": "Subsetting using Dask delay\nSteps to use Dask within jupyter-notebook 1. Go to the Dask extension (third button on the left-hand side vertical bar). 1. Start a Dask cluster by clicking “+” NEW. You will get the following: \n\nUse “SCALE” to maximumize the number of workers according to your AWS instance.\n\nCopy tcp://127.0.0.1:????? link from the LocalCluster and replace the following scheduler variable.\n\n\nscheduler='tcp://127.0.0.1:34721'\nout_folder='/home/jovyan/podaac_hackathon_swot_20220316/subsets/' #change this to your folder\n\n\n#The 8 datasets have short names starting from \"SWOT\". \n#You may get more than these 8 collections in the future after new SWOT data ingested. \n#The following wildcard will give you the 8 collections for now.\n#%%timeit\n\ns3sys=init_S3FileSystem()\n\ns3path=\"s3://podaac-ops-cumulus-protected/SWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_SCIENCE_V1/*nc\"  \n#Search all collections that fit to the wildcard.\nfns= s3sys.glob(s3path)\nprint(len(fns))\n\nswot_karin_l2_subset_dask(scheduler,fns[:1000], \n                          'simulated_true_ssh_karin', \n                          [-126,-120,30,50], \n                           out_folder=out_folder )"
+  },
+  {
+    "objectID": "tutorials/swot_cloud_hackathon_data_intro_dask.html#print-the-content-of-an-example-file",
+    "href": "tutorials/swot_cloud_hackathon_data_intro_dask.html#print-the-content-of-an-example-file",
+    "title": "2022 SWOT Oceanography Cloud Workshop",
+    "section": "Print the content of an example file",
+    "text": "Print the content of an example file\nLoad and plot one subset.\n\nfrom glob import glob\nfns_local=sorted(glob('subsets/*nc'))\n\ndata=xr.open_dataset(fns_local[10])\ndata\n\nLet us look at one error field “simulated_error_troposphere”.\n\nplt.scatter(data['longitude'],data['latitude'],s=1,c=data['simulated_true_ssh_karin'])\n\n\nPlease engage with PODAAC by sharing your experience, sending feedback, and asking questions, either through podaac@podaac.jpl.nasa.gov or any of the PODAAC team members who you feel comfortable to communicate. Engagement leads to better services. Go SWOT!"
+  },
+  {
     "objectID": "tutorials/00_Setup.html#step-1.-login-to-the-hub",
     "href": "tutorials/00_Setup.html#step-1.-login-to-the-hub",
     "title": "00. Setup for tutorials",
@@ -214,7 +249,7 @@
     "href": "tutorials/swot_cloud_hackathon_data_intro.html#simulated-l2-ssh",
     "title": "2022 SWOT Oceanography Cloud Workshop",
     "section": "Simulated L2 SSH",
-    "text": "Simulated L2 SSH\nThe SWOTsimulator was used on two global ocean simulations (LLC4320 and GLORYS) following the error specification described in Level 2 KaRIn Low Rate Sea Surface Height Product PDF file (D-56407). The simulator was based on Lucile/Clement/Fu’s first version but was almost completely rewritten, while keeping the error budget largely unchanged. (The error representation is claimed to be better but needs more documentation.) The CNES team is the creator of these products. The 8 datasets are listed as follows:\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_CALVAL_V1    10288 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_CALVAL_V1    10287 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nThe links to these datasets on PODAAC website or Earthdata search page.\n\nEight simulated L2 SSH datasets on PO.DAAC website.\nFour GLORYS datasets from Earthdata search\nFour ECCO_LLC4320 datasets from Earthdata search\n\nThe ECCO_LLC4320-based products cover one-year duration with >10k files (granules in Earthdata language) in each collection. The GLORYS-based products cover about 20 months with >17k files in each collection."
+    "text": "Simulated L2 SSH\nThe SWOTsimulator was used on two global ocean simulations (LLC4320 and GLORYS) following the error specification described in Level 2 KaRIn Low Rate Sea Surface Height Product PDF file (D-56407). The simulator was based on Gaultier et al. first version but was almost completely rewritten, while keeping the error budget largely unchanged. (The error representation is claimed to be better but needs more documentation.) The CNES team is the creator of these products. The 8 datasets are listed as follows:\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_KARIN_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_CALVAL_V1          17686 files\nSWOT_SIMULATED_L2_NADIR_SSH_GLORYS_SCIENCE_V1         17564 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_CALVAL_V1    10288 files\nSWOT_SIMULATED_L2_KARIN_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_CALVAL_V1    10287 files\nSWOT_SIMULATED_L2_NADIR_SSH_ECCO_LLC4320_SCIENCE_V1   10218 files\nThe links to these datasets on PODAAC website or Earthdata search page.\n\nEight simulated L2 SSH datasets on PO.DAAC website.\nFour GLORYS datasets from Earthdata search\nFour ECCO_LLC4320 datasets from Earthdata search\n\nThe ECCO_LLC4320-based products cover one-year duration with >10k files (granules in Earthdata language) in each collection. The GLORYS-based products cover about 20 months with >17k files in each collection."
   },
   {
     "objectID": "tutorials/swot_cloud_hackathon_data_intro.html#relevant-content-in-the-simulated-l2-ssh-files",
@@ -235,7 +270,7 @@
     "href": "tutorials/swot_cloud_hackathon_data_intro.html#acknowledgment",
     "title": "2022 SWOT Oceanography Cloud Workshop",
     "section": "Acknowledgment",
-    "text": "Acknowledgment\n\nProject/HQ\n\nF. Briol, Gerald Dibarbource, Nicolas Picot, Shailen Desai produced the data products\nJ. Tom Farrar, Julien le Sommer, Ryan Abernathey, Sarah Gille, Rosemary Morrow, Lee-Lueng Fu provided science team support\nNadya Vinogradova requested this cloud hackathon. Jessica Hausman facilitated the coordination.\nJustin Rice facilitates the PODAAC-openscapes collaboration\n\nOpenscapes provides cloud-jupyterhub\nPO.DAAC team (everything else here)"
+    "text": "Acknowledgment\n\nProject/HQ\n\nF. Briol, Gerald Dibarbource, Nicolas Picot, Shailen Desai produced the data products\nJ. Tom Farrar, Julien le Sommer, Ryan Abernathey, Sarah Gille, Rosemary Morrow, Lee-Lueng Fu provided science team support\nNadya Vinogradova requested this cloud hackathon. Jessica Hausman facilitated the coordination.\nJustin Rice facilitates the PODAAC-openscapes collaboration\n\nOpenscapes provides cloud-jupyterhub and cloud computing expertise\nPO.DAAC team (everything else here)"
   },
   {
     "objectID": "tutorials/swot_cloud_hackathon_data_intro.html#browsing-the-8-datasets-in-s3podaac-ops-cumulus-protected",
