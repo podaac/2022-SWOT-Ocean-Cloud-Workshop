@@ -39,6 +39,7 @@ site:
           contents: 
             - tutorials/index.md
             - tutorials/00_Setup.md  ## tutorial 0
+            - tutorials/01_Direct_Access_netCDF_SWOT_L2.ipynb  ## tutorial 1
             - section: "01. Data Access"
               contents:
                 - how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
@@ -46,7 +47,9 @@ site:
         - section: "Further Resources"
           contents:
             - further-resources.md
-
+            - tutorials/swot_cloud_hackathon_data_intro.ipynb   ## Jinbo's SWOT simulated data intro
+            - tutorials/Finding_collection_s3_location.ipynb  ## Mike's complementary notebook to direct access
+            
 
 format:
   html:
