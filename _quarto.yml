@@ -2,9 +2,9 @@ project:
   type: website
 
 site:
-  title: "2022 SWOT Oceanography Cloud Workshop"
+  title: "2022 ECOSTRESS Science Team Workshop"
   site-url: https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop
-  repo-url: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
+  repo-url: https://github.com/nasa-openscapes/2022-SWOT-Ocean-Cloud-Workshop
   repo-actions: [edit, issue]
   page-navigation: true
   page-footer: "PODAAC (2022). 2022 SWOT Oceanography Cloud Workshop"
@@ -14,7 +14,7 @@ site:
     right: 
       - sidebar:welcome
       - icon: github
-        href: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
+        href: https://github.com/nasa-openscapes/2022-SWOT-Ocean-Cloud-Workshop
  
   sidebar:
     - id: welcome
