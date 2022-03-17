@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
   <meta charset="utf-8">
-  <meta name="generator" content="quarto-0.3.114">
+  <meta name="generator" content="quarto-0.9.74">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physical Oceanography office, with additional support from NASA Openscapes.">
-  <title>2022 SWOT Oceanography Cloud Workshop</title>
+  <meta name="author" content="This Workshop is hosted by NASA LP DAAC and JPL with support from NASA Openscapes.">
+  <title>2022 SWOT Oceanography Cloud Workshop - 2022 ECOSTRESS Cloud Workshop</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -75,48 +75,67 @@
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-menu">    
         <li class="dropdown-header">Welcome</li>
         <li>
-    <a class="dropdown-item" href="./index.html">2022 SWOT Oceanography Cloud Workshop</a>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">2022 ECOSTRESS Cloud Workshop</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./cloud-paradigm.html">NASA and the Cloud Paradigm</a>
+    <a class="dropdown-item" href="./cloud-paradigm.html">
+ <span class="dropdown-text">NASA and the Cloud Paradigm</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Logistics</li>
+        <li class="dropdown-header">Prerequisites &amp; Homework</li>
         <li>
-    <a class="dropdown-item" href="./logistics/index.html">Logistics overview</a>
+    <a class="dropdown-item" href="./prerequisites/01_Earthdata_Search.html">
+ <span class="dropdown-text">01. Earthdata Search</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./logistics/schedule.html">Schedule</a>
+    <a class="dropdown-item" href="./prerequisites/02_NASA_Earthdata_Authentication.html">
+ <span class="dropdown-text">02. Authentication for NASA Earthdata</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./logistics/prerequisites.html">Prerequisites, Homework &amp; Help</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./tutorials/01_Earthdata_Search.html">01. Earthdata Search</a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./tutorials/02_NASA_Earthdata_Authentication.html">02. Authentication for NASA Earthdata</a>
+    <a class="dropdown-item" href="./prerequisites/03_download.html">
+ <span class="dropdown-text">03. Download with PO.DAAC data-subscriber</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Tutorials</li>
         <li>
-    <a class="dropdown-item" href="./tutorials/index.html">Tutorials Overview</a>
+    <a class="dropdown-item" href="./tutorials/index.html">
+ <span class="dropdown-text">Tutorials Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./tutorials/00_Setup.html">00. Setup for tutorials</a>
+    <a class="dropdown-item" href="./tutorials/00_Setup.html">
+ <span class="dropdown-text">00. Setup for tutorials</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html">01. Data Access</a>
+    <a class="dropdown-item" href="./tutorials/01_Direct_Access_SWOT_sim.html">
+ <span class="dropdown-text">01. Direct cloud data access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tutorials/02_Subset_SWOT_sim.html">
+ <span class="dropdown-text">02. Using Harmony to Subset SWOT Simulated Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tutorials/03_Timeseries_SWOT_sim.html">
+ <span class="dropdown-text">03. Build a Time Series of SWOT Simulated Data</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Further Resources</li>
         <li>
-    <a class="dropdown-item" href="./further-resources.html">Additional resources</a>
+    <a class="dropdown-item" href="./further-resources.html">
+ <span class="dropdown-text">Additional resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tutorials/SWOT_sim_data_intro.html">
+ <span class="dropdown-text">Workshop Additional Tutorials</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop"><i class="bi-github" role="img">
+    <a class="nav-link" href="https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop"><i class="bi bi-github" role="img">
 </i> 
  </a>
   </li>  
@@ -130,7 +149,7 @@
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">2022 SWOT Oceanography Cloud Workshop</h1>
+      <h1 class="quarto-secondary-nav-title">2022 ECOSTRESS Cloud Workshop</h1>
       <button type="button" class="quarto-btn-toggle btn">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -143,14 +162,14 @@
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./">
-      <img src="https://user-images.githubusercontent.com/2915555/133525653-2a2278b1-1015-4350-b2a5-160d125aaaf7.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./podaac-logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start " data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-welcome" aria-expanded="true">Welcome</a>
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-welcome" aria-expanded="true">Welcome</a>
       <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-welcome" aria-expanded="true">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
@@ -158,7 +177,7 @@
     <ul id="quarto-sidebar-section-welcome" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">2022 SWOT Oceanography Cloud Workshop</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">2022 ECOSTRESS Cloud Workshop</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -168,45 +187,40 @@
 </li>
     </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">Logistics</a>
-      <a class="sidebar-item-toggle text-startcollapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-logistics" aria-expanded="false">
+        <a href="./prerequisites/index.html" class="sidebar-item-text sidebar-link">Prerequisites &amp; Homework</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-prerequisitesindexmd" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-logistics" class="collapse list-unstyled sidebar-section depth1 ">  
+    <ul id="quarto-sidebar-section-prerequisitesindexmd" class="collapse list-unstyled sidebar-section depth1 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistics/index.html" class="sidebar-item-text sidebar-link">Logistics overview</a>
+  <a href="./prerequisites/01_Earthdata_Search.html" class="sidebar-item-text sidebar-link">01. Earthdata Search</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistics/schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  <a href="./prerequisites/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text sidebar-link">02. Authentication for NASA Earthdata</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistics/prerequisites.html" class="sidebar-item-text sidebar-link">Prerequisites, Homework &amp; Help</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/01_Earthdata_Search.html" class="sidebar-item-text sidebar-link">01. Earthdata Search</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text sidebar-link">02. Authentication for NASA Earthdata</a>
+  <a href="./prerequisites/03_download.html" class="sidebar-item-text sidebar-link">03. Download with PO.DAAC data-subscriber</a>
   </div>
 </li>
     </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-tutorials" aria-expanded="false">Tutorials</a>
-      <a class="sidebar-item-toggle text-startcollapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-tutorials" aria-expanded="false">
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-tutorials" aria-expanded="false">Tutorials</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-tutorials" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
@@ -221,32 +235,27 @@
   <a href="./tutorials/00_Setup.html" class="sidebar-item-text sidebar-link">00. Setup for tutorials</a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-data-access" aria-expanded="false">01. Data Access</a>
-      <a class="sidebar-item-toggle text-startcollapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-data-access" aria-expanded="false">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-data-access" class="collapse list-unstyled sidebar-section depth2 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./how-tos/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html" class="sidebar-item-text sidebar-link">Accessing a NetCDF4/HDF5 File - S3 Direct Access</a>
+  <a href="./tutorials/01_Direct_Access_SWOT_sim.html" class="sidebar-item-text sidebar-link">01. Direct cloud data access</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./how-tos/Multi-File_Direct_S3_Access_NetCDF_Example.html" class="sidebar-item-text sidebar-link">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</a>
+  <a href="./tutorials/02_Subset_SWOT_sim.html" class="sidebar-item-text sidebar-link">02. Using Harmony to Subset SWOT Simulated Data</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/03_Timeseries_SWOT_sim.html" class="sidebar-item-text sidebar-link">03. Build a Time Series of SWOT Simulated Data</a>
   </div>
 </li>
     </ul>
   </li>
-    </ul>
-  </li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start  collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">Further Resources</a>
-      <a class="sidebar-item-toggle text-startcollapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">Further Resources</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
@@ -256,6 +265,26 @@
   <a href="./further-resources.html" class="sidebar-item-text sidebar-link">Additional resources</a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">Workshop Additional Tutorials</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-workshop-additional-tutorials" class="collapse list-unstyled sidebar-section depth2 ">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/SWOT_sim_data_intro.html" class="sidebar-item-text sidebar-link">SWOT Oceanography with PO.DAAC</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/Finding_collection_s3_location.html" class="sidebar-item-text sidebar-link">Location of data in the PO.DAAC S3 Archive</a>
+  </div>
+</li>
+    </ul>
+  </li>
     </ul>
   </li>
     </ul>
@@ -267,40 +296,52 @@
 <h2 id="toc-title">On this page</h2>
 <ul>
 <li><a href="#welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
-<li><a href="#about" class="nav-link" data-scroll-target="#about">About</a></li>
+<li><a href="#about" class="nav-link" data-scroll-target="#about">About</a>
+<ul class="collapse">
+<li><a href="#workshop-goal" class="nav-link" data-scroll-target="#workshop-goal">Workshop Goal</a></li>
+<li><a href="#workshop-description" class="nav-link" data-scroll-target="#workshop-description">Workshop Description</a></li>
+<li><a href="#workshop-outcomes" class="nav-link" data-scroll-target="#workshop-outcomes">Workshop Outcomes</a></li>
+</ul></li>
 <li><a href="#acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
 </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/edit/main/index.md" class="toc-action">Edit this page</a></p><p><a href="https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content">
-<header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7">2022 SWOT Oceanography Cloud Workshop</h1>
-<p class="subtitle lead">Virtual workshop on accessing and analyzing synthetic SWOT L2 SSH dataset hosted in Earthdata Cloud</p>
-<p class="author">This Workshop is hosted by NASA PO.DAAC and supported by the NASA Physical Oceanography office, with additional support from NASA Openscapes.</p>
-</header>
+<main class="content" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default">
+
+
+
+<div class="quarto-title"><h1 class="title d-none d-lg-block display-7">2022 ECOSTRESS Cloud Workshop</h1><p class="subtitle lead">Finding, accessing &amp; analyzing ECOSTRESS data hosted in Earthdata Cloud</p></div><div class="quarto-title-meta"><div><div class="quarto-title-meta-heading">Author</div><div class="quarto-title-meta-contents"><div class="quarto-title-authors"><p>This Workshop is hosted by NASA LP DAAC and JPL with support from NASA Openscapes.</p></div></div></div></div></header>
 
 <section id="welcome" class="level2">
 <h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://user-images.githubusercontent.com/51928352/153276603-03d101f6-9acc-4502-8d8b-05d2bb58e75e.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Image edited from https://swot.jpl.nasa.gov/resources/87/artists-impression-of-the-swot-satellite/</figcaption><p></p>
-</figure>
-</div>
-<p><strong>WEBSITE UNDER DEVELOPMENT</strong></p>
-<p>Welcome to the <strong>2022 SWOT Oceanography Cloud Workshop</strong> hosted by the Physical Oceanography Distributed Active Archive Center (<a href="https://podaac.jpl.nasa.gov/">PO.DAAC</a>), with support provided by the <a href="https://science.nasa.gov/earth-science/focus-areas/climate-variability-and-change/ocean-physics">NASA Physical Oceanography Office</a> and <a href="https://nasa-openscapes.github.io/">NASA Openscapes</a>.</p>
-<p><strong>The workshop will take place virtually daily March 16 and 17, 2022 from 9am-1pm PST / 12pm-4pm EST <a href="https://www.timeanddate.com/time/zones/cst">(UTC-6)</a></strong>. Invited participants will receive a signup link via email.</p>
+<p><img src="img/ecostress_banner.jpg" class="img-fluid"></p>
+<p>Welcome to the <strong>2022 ECOSTRESS Cloud Workshop</strong> hosted by NASA’s Land Processes Distributed Activate Archive (<a href="https://lpdaac.usgs.gov/">LP DAAC</a>) with support from <a href="https://nasa-openscapes.github.io/">NASA Openscapes</a>.</p>
+<p><strong>The workshop will take place virtually daily on April 12 and 13, 2022 from 2pm-5:30pm PST <a href="https://www.timeanddate.com/time/zones/pdt">(UTC-7)</a></strong>.</p>
 </section>
 <section id="about" class="level2">
 <h2 class="anchored" data-anchor-id="about">About</h2>
-<p><strong>Workshop Goal</strong> The goal of the workshop is to get ready for Surface Water and Ocean Topography (<a href="https://swot.jpl.nasa.gov/">SWOT</a>) and enable the (oceanography) science team to be ready for processing and handling the large volumes of SWOT SSH data in the cloud. Learning objectives focus on how to access the <a href="https://podaac.jpl.nasa.gov/announcements/2022-01-31-Release-simulated-SWOT-SSH-version1-datasets">synthetic SWOT L2 SSH data</a> from Earthdata Cloud either by downloading or accessing the data on the cloud. PO.DAAC is the NASA archive for the SWOT mission, and once launched will be making data available via the NASA Earthdata Cloud, hosted in AWS.</p>
-<p><strong>Workshop Description</strong> The workshop has two main components: (1) Pre-event materials will be shared ahead of the workshop and will cover how to access and download cloud-archived synthetic SWOT L2 SSH data from the Earthdata Cloud. This material can be found under Logistics - <a href="https://podaac.github.io/2022-SWOT-Ocean-Cloud-Workshop/logistics/prerequisites.html">Pre-Requisites, Homework &amp; Help</a> section of this website. (2) At the workshop the focus will be on in-could workflows, where no data download is required and data analysis can take place next to the data in the cloud. During the “hacking” time at the workshop participants can choose to employ the “download and analyze locally” or the “in-cloud analysis” paradigm for working with the synthetic SWOT L2 SSH data. For the in-cloud workflows, cloud accounts will be provided for the workshop. PO.DAAC will provide necessary tech support during the hands-on “hacking” time.</p>
-<p><strong>Workshop Outcomes</strong> At the end of the two days, participants should be able to access the synthetic SWOT L2 SSH data that is archived in the NASA EArthdata Cloud (hosted in AWS) and at minimum, subset and plot a time series of their favorite region, if not more. Participants are encouraged to coordinate amongst their respective SWOT ST project to figure out who will be attending. If the project would like more than one person to attend that is welcomed, just note that as a project you will need to agree on what use case you want to work on. Even if the team members amongst the project are cloud savvy, it is still strongly recommended that there is a representative attending, as this workshop will specifically be covering the SWOT simulated data.</p>
+<section id="workshop-goal" class="level3">
+<h3 class="anchored" data-anchor-id="workshop-goal">Workshop Goal</h3>
+<p>The goal of the workshop is expose ECOSTRESS data users to ECOSTRESS version 2 (v2) data products in the cloud. Learning objectives focus on how to find and access ECOSTRESS v2 data from Earthdata Cloud either by downloading or accessing the data on the cloud. The LP DAAC is the NASA archive for ECOSTRESS data products. ECOSTRESS v2 data products will hosted in the NASA Earthdata Cloud, hosted in AWS.</p>
+</section>
+<section id="workshop-description" class="level3">
+<h3 class="anchored" data-anchor-id="workshop-description">Workshop Description</h3>
+<p>The goal of the workshop is expose ECOSTRESS data users to ECOSTRESS version 2 data products in the cloud. Learning objectives focus on how to finda and access ECOSTRESS version 2 data from Earthdata Cloud either by downloading or accessing the data on the cloud. The LP DAAC is the NASA archive for ECOSTRESS data products. ECOSTRESS version 2 data products will hosted in the NASA Earthdata Cloud, hosted in AWS.</p>
+<p>The workshop will demonstrate how to find, access, and download ECOSTRESS v2 data from the Earthdata Cloud. Participants will learn how to search for and download data from NASA’s Earthdata Search Client, a graphical user interface (GUI) for search, discovery, and download application for also EOSDIS data assets. Participants will also learn how to perform in-could data search, access, and processing routines where no data download is required, and data analysis can take place next to the data in the cloud.</p>
+</section>
+<section id="workshop-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="workshop-outcomes">Workshop Outcomes</h3>
+<p>At the end of the two days, participants should be able to find and access ECOSTRESS v2 data in the NASA Earthdata Cloud (hosted in AWS). Workshop materials will be available for future reference following the completion of the workshop/ECOSTRESS Science Team meeting</p>
+<blockquote class="blockquote">
+<p><strong>NOTE:</strong> ECOSTRESS v2 data will only be available to approved individuals. Please work with Christine Lee (christine.m.lee@jpl.nasa.gov) to have your name added to the allowlist.</p>
+</blockquote>
+</section>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>2022 SWOT Oceanography Cloud Workshop is hosted by NASA’s PO.DAAC with support from NASA Physical Oceanography Office and the NASA Openscapes Project, with cloud computing infrastructure by 2i2c.</p>
+<p>2022 ECOSTRESS Cloud Workshop is hosted by NASA’s LP DAAC with support from the NASA Openscapes Project, with cloud computing infrastructure by 2i2c.</p>
 
 
 </section>
