@@ -1,5 +1,5 @@
 ---
-title: Prerequisites & Homework
+title: Prerequisites
 ---
 
 ## Prerequisites

@@ -2,24 +2,24 @@ project:
   type: website
 
 site:
-  title: "2022 SWOT Oceanography Cloud Workshop"
-  site-url: https://nasa-openscapes.github.io/2022-SWOT-Ocean-Cloud-Workshop
-  repo-url: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
+  title: "2022 ECOSTRESS Cloud Workshop"
+  site-url: https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/
+  repo-url: https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop
   repo-actions: [edit, issue]
   page-navigation: true
-  page-footer: "PODAAC (2022). 2022 SWOT Oceanography Cloud Workshop"
+  page-footer: "LPDAAC & JPL (2022). 2022 ECOSTRESS Cloud Workshop"
  
   navbar: 
     #background: light
     right: 
       - sidebar:welcome
       - icon: github
-        href: https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop
+        href: https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop
  
   sidebar:
     - id: welcome
       title: "Menu"
-      logo: podaac-logo.png
+      logo: img/ecostress_lpdaac_image.jpg
       style: "docked"
       collapse-level: 1
       align: left
@@ -29,19 +29,23 @@ site:
             - index.md
             - cloud-paradigm.md
         - schedule.md
-        - section: prerequisites/index.md 
-          contents:
-            - logistics/github-workflows.md
-            - prerequisites/01_Earthdata_Search.md ## tutorial 1
-            - prerequisites/02_NASA_Earthdata_Authentication.ipynb ## tutorial 2
-            - prerequisites/03_download.md
+        - prerequisites/index.md 
         - section: "Tutorials"
           contents: 
             - tutorials/index.md
-            - tutorials/00_Setup.md  ## tutorial 0
-            - tutorials/01_Direct_Access_SWOT_sim.ipynb  ## tutorial 1
-            - tutorials/02_Subset_SWOT_sim.ipynb ## tutorial 2
-            - tutorials/03_Timeseries_SWOT_sim.ipynb
+            - href: tutorials/Earthdata_search.md
+              text: "Earthdata Search Client"
+            - href: tutorials/Getting_started_setup.md
+              text: "Getting Started"
+            - href: tutorials/Intro_xarray_hvplot.ipynb
+              text: "Introduction to xarray"
+            - href: how-tos/authentication/NASA_Earthdata_Authentication.ipynb
+              text: "NASA Earthdata Authentication"
+            - href: tutorials/Data_Discovery_CMR_API.ipynb
+              text: "Data Discovery - CMR API"
+            - href: tutorials/Data_Discovery_CMR-STAC_API.ipynb
+              text: "Data Discovery - CMR STAC API"
+            - tutorials/01_Earthdata_Search.md
         - section: "Further Resources"
           contents:
             - further-resources.md
