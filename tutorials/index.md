@@ -6,4 +6,4 @@ These tutorials are a combination of narrative, links, code, and outputs. They h
 
 Tutorials are markdown (`.md`) and Jupyter (`.ipynb`) notebooks, and are available on GitHub:
 
-<https://github.com/podaac/2022-SWOT-Ocean-Cloud-Workshop/tree/main/tutorials>.
+<https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop/tree/main/tutorials>.
