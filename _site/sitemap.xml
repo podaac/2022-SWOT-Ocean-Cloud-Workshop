@@ -134,7 +134,7 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/schedule.html</loc>
-    <lastmod>2022-03-18T16:49:56.584Z</lastmod>
+    <lastmod>2022-03-24T19:41:13.041Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/prerequisites/index.html</loc>
@@ -190,6 +190,26 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Getting_started_setup.html</loc>
-    <lastmod>2022-03-18T21:32:50.639Z</lastmod>
+    <lastmod>2022-03-24T20:46:46.163Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html</loc>
+    <lastmod>2022-03-24T19:35:16.876Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html</loc>
+    <lastmod>2022-03-24T19:35:19.579Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.html</loc>
+    <lastmod>2022-03-24T19:35:22.262Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html</loc>
+    <lastmod>2022-03-24T19:35:24.741Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html</loc>
+    <lastmod>2022-03-24T19:55:37.200Z</lastmod>
   </url>
 </urlset>
