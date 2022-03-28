@@ -42,17 +42,18 @@ site:
             - href: how-tos/authentication/NASA_Earthdata_Authentication.ipynb
               text: "NASA Earthdata Authentication"
             - href: tutorials/Data_Discovery_CMR_API.ipynb
-              text: "Data Discovery - CMR API"
+              text: "Data Discovery - Finding Data with the CMR API"
             - href: tutorials/Data_Discovery_CMR-STAC_API.ipynb
-              text: "Data Discovery - CMR STAC API"
-            - tutorials/01_Earthdata_Search.md
-        - section: "Further Resources"
+              text: "Data Discovery - Finding Data with the CMR STAC API"
+            - href: how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb
+              text: "Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file"
+        - section: "Additional Resources"
           contents:
-            - further-resources.md
-            - section: "Workshop Additional Tutorials"
-              contents:
-                - tutorials/SWOT_sim_data_intro.ipynb   ## Jinbo's SWOT simulated data intro
-                - tutorials/Finding_collection_s3_location.ipynb  ## Mike's complementary notebook to direct access
+            - how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.ipynb
+            - how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
+            - how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.ipynb
+            - how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.ipynb
+            - how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.ipynb
             
 
 format:

@@ -16,10 +16,10 @@ title: Schedule
 | 2:10 pm | ECOSTRESS Build 7 collection Overview | Christine Lee & Gregory Halverson (JPL) | 
 | 2:25 pm | Earthdata Cloud Overview | Aaron Friesz (LP DAAC) |
 | 2:55 pm | Break/QA | |
-| 3:00 pm | Earthdata Search Client (GUI) | Aaron Friesz (LP DAAC) |
+| 3:00 pm | [Earthdata Search Client (GUI)](https://search.earthdata.nasa.gov/search) | Aaron Friesz (LP DAAC) |
 | 3:30 pm | Break | |
-| 4:00 pm | Getting set up / Intro to Pangeo | Aaron Friesz (LP DAAC) |
-| 4:30 pm | Intro to xarray & hvplot | Aaron Friesz (LP DAAC) |
+| 4:00 pm | [Getting set up / Intro to Pangeo](tutorials/Getting_started_setup.md) | Aaron Friesz (LP DAAC) |
+| 4:30 pm | [Intro to xarray & hvplot](tutorials/Intro_xarray_hvplot.ipynb) | Aaron Friesz (LP DAAC) |
 | 5:15 pm | Break/QA |  |
 
 #### Closing Day 1
@@ -36,19 +36,19 @@ title: Schedule
 
 | Time, PST [(UTC-7)](https://www.timeanddate.com/time/zones/pdt) | Event | Leads/Instructors |
 |------|-------|-------------------|
-| 2:00 pm | Welcome / Earthdata Authentication: Set up netrc file | Aaron Friesz (LP DAAC) | 
-| 2:10 pm | Earthdata Cloud: Search and Discovery - CMR API | Aaron Friesz (LP DAAC) |
+| 2:00 pm | Welcome / [Earthdata Authentication: Set up netrc file](how-tos/authentication/NASA_Earthdata_Authentication.ipynb) | Aaron Friesz (LP DAAC) | 
+| 2:10 pm | [Earthdata Cloud: Search and Discovery - CMR API](tutorials/Data_Discovery_CMR_API.ipynb) | Aaron Friesz (LP DAAC) | 
 | 2:45 pm | Break/QA | |
-| 2:50 pm | Earthdata Cloud: Search and Discovery - CMR STAC API | Aaron Friesz (LP DAAC) |
+| 2:50 pm | [Earthdata Cloud: Search and Discovery - CMR STAC API](tutorials/Data_Discovery_CMR-STAC_API.ipynb) | Aaron Friesz (LP DAAC) | 
 | 3:30 pm | Break | |
-| 4:00 pm | Earthdata Cloud: Search and Discovery - Data Access | Aaron Friesz (LP DAAC) |
+| 4:00 pm | [Earthdata Cloud: Search and Discovery - Data Access](how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb) | Aaron Friesz (LP DAAC) | 
 | 4:30 pm | E2E Workflow | Gregory Halverson (JPL) |
 | 5:30 pm | Break/QA |  |
 
 #### Closing Day 2
 
 - **Thank you!**
-- You will continue to have access to the 2i2c JupyterHub in AWS for three months following the SWOT Ocean Cloud Workshop so you can continue to work and we all learn more about what is involved with migrating data access and science workflows to the Cloud. This cloud compute environment is supported by the [NASA Openscapes](https://nasa-openscapes.github.io/) project. 
+- You will continue to have access to the 2i2c JupyterHub in AWS for two weeks following the ECOSTRESS Cloud Workshop. You may use that time to continue work and all learn more about migrating data accass routines and science workflows to the Cloud. This cloud compute environment is supported by the [NASA Openscapes](https://nasa-openscapes.github.io/) project. 
 
 ## Getting help during the Workshop
 
