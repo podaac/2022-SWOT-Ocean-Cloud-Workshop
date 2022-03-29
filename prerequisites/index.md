@@ -14,6 +14,6 @@ To follow along hands-on during the Workshop, please do the following (20 minute
     - Create an Earthdata Login account (if you don't already have one) at <https://urs.earthdata.nasa.gov>
     - Remember your username and password; you will need to download or access cloud data during the workshop and beyond.
 3. **Laptop or tablet** 
-    - <ENTER TEXT>.
+    - Participation in the exercises requires a laptop or tablet. Yes, a tablet works too! All participants will have access to a 2i2c Jupyter Lab instance running in AWS us-west 2.
 4. **Slack** 
-    - <ENTER TEXT>.
+    - While we will be taking questions in person, we will also be communicating and recording questions via Slack. To take part in the conversations please ask Christine Lee or Gregory Halverson to add you to the ECOSTRESS Slack workspace.
