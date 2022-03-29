@@ -83,6 +83,8 @@
   <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="../../site_libs/quarto-search/fuse.min.js"></script>
   <script src="../../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html" rel="next">
+  <link href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html" rel="prev">
   <script src="../../site_libs/quarto-html/quarto.js"></script>
   <script src="../../site_libs/quarto-html/popper.min.js"></script>
   <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -175,21 +177,37 @@
   </li>  
         <li>
     <a class="dropdown-item" href="../../tutorials/Data_Discovery_CMR_API.html">
- <span class="dropdown-text">Data Discovery - CMR API</span></a>
+ <span class="dropdown-text">Data Discovery - Finding Data with the CMR API</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../tutorials/Data_Discovery_CMR-STAC_API.html">
- <span class="dropdown-text">Data Discovery - CMR STAC API</span></a>
+ <span class="dropdown-text">Data Discovery - Finding Data with the CMR STAC API</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.html">
+ <span class="dropdown-text">Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Further Resources</li>
+        <li class="dropdown-header">Additional Resources</li>
         <li>
-    <a class="dropdown-item" href="../../further-resources.html">
- <span class="dropdown-text">Additional resources</span></a>
+    <a class="dropdown-item" href="../../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html">
+ <span class="dropdown-text">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../tutorials/SWOT_sim_data_intro.html">
- <span class="dropdown-text">Workshop Additional Tutorials</span></a>
+    <a class="dropdown-item" href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html">
+ <span class="dropdown-text">Accessing a NetCDF4/HDF5 File - S3 Direct Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.html">
+ <span class="dropdown-text">Multi-File_Direct_S3_Access_COG_Example.html</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html">
+ <span class="dropdown-text">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html">
+ <span class="dropdown-text">Using OPeNDAP to Access Data from On-Prem and Earthdata Cloud Archives</span></a>
   </li>  
     </ul>
   </li>
@@ -291,49 +309,54 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../tutorials/Data_Discovery_CMR_API.html" class="sidebar-item-text sidebar-link">Data Discovery - CMR API</a>
+  <a href="../../tutorials/Data_Discovery_CMR_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR API</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../tutorials/Data_Discovery_CMR-STAC_API.html" class="sidebar-item-text sidebar-link">Data Discovery - CMR STAC API</a>
+  <a href="../../tutorials/Data_Discovery_CMR-STAC_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR STAC API</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file</a>
   </div>
 </li>
     </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">Further Resources</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-additional-resources" aria-expanded="true">Additional Resources</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-additional-resources" aria-expanded="true">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-further-resources" class="collapse list-unstyled sidebar-section depth1 ">  
+    <ul id="quarto-sidebar-section-additional-resources" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../further-resources.html" class="sidebar-item-text sidebar-link">Additional resources</a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">Workshop Additional Tutorials</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-workshop-additional-tutorials" class="collapse list-unstyled sidebar-section depth2 ">  
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../tutorials/SWOT_sim_data_intro.html" class="sidebar-item-text sidebar-link">SWOT Oceanography with PO.DAAC</a>
+  <a href="../../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../tutorials/Finding_collection_s3_location.html" class="sidebar-item-text sidebar-link">Location of data in the PO.DAAC S3 Archive</a>
+  <a href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html" class="sidebar-item-text sidebar-link">Accessing a NetCDF4/HDF5 File - S3 Direct Access</a>
   </div>
 </li>
-    </ul>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.html" class="sidebar-item-text sidebar-link active">Multi-File_Direct_S3_Access_COG_Example.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html" class="sidebar-item-text sidebar-link">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html" class="sidebar-item-text sidebar-link">Using OPeNDAP to Access Data from On-Prem and Earthdata Cloud Archives</a>
+  </div>
+</li>
     </ul>
   </li>
     </ul>
@@ -597,6 +620,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Accessing a NetCDF4/HDF5 File - S3 Direct Access</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html" class="pagination-link">
+        <span class="nav-page-text">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

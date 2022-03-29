@@ -86,8 +86,10 @@
     <a class="dropdown-item" href="../schedule.html">
  <span class="dropdown-text">Schedule</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Prerequisites</li>
+        <li>
+    <a class="dropdown-item" href="../prerequisites/index.html">
+ <span class="dropdown-text">Prerequisites</span></a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Tutorials</li>
         <li>
@@ -95,38 +97,54 @@
  <span class="dropdown-text">Tutorials Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/01_Earthdata_Search.html">
- <span class="dropdown-text">01. Earthdata Search</span></a>
+    <a class="dropdown-item" href="../tutorials/Earthdata_search.html">
+ <span class="dropdown-text">Earthdata Search Client</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/02_NASA_Earthdata_Authentication.html">
- <span class="dropdown-text">02. Authentication for NASA Earthdata</span></a>
+    <a class="dropdown-item" href="../tutorials/Getting_started_setup.html">
+ <span class="dropdown-text">Getting Started</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/00_Setup.html">
- <span class="dropdown-text">00. Setup for tutorials</span></a>
+    <a class="dropdown-item" href="../tutorials/Intro_xarray_hvplot.html">
+ <span class="dropdown-text">Introduction to xarray</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/01_Direct_Access_SWOT_sim.html">
- <span class="dropdown-text">01. Direct cloud data access</span></a>
+    <a class="dropdown-item" href="../how-tos/authentication/NASA_Earthdata_Authentication.html">
+ <span class="dropdown-text">NASA Earthdata Authentication</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/02_Subset_SWOT_sim.html">
- <span class="dropdown-text">02. Using Harmony to Subset SWOT Simulated Data</span></a>
+    <a class="dropdown-item" href="../tutorials/Data_Discovery_CMR_API.html">
+ <span class="dropdown-text">Data Discovery - Finding Data with the CMR STAC API</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/03_Timeseries_SWOT_sim.html">
- <span class="dropdown-text">03. Build a Time Series of SWOT Simulated Data</span></a>
+    <a class="dropdown-item" href="../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.html">
+ <span class="dropdown-text">Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Further Resources</li>
+        <li class="dropdown-header">Additional Resources</li>
         <li>
-    <a class="dropdown-item" href="../further-resources.html">
- <span class="dropdown-text">Additional resources</span></a>
+    <a class="dropdown-item" href="../tutorials/Data_Discovery_CMR-STAC_API.html">
+ <span class="dropdown-text">02. Data Discovery with CMR-STAC API</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tutorials/SWOT_sim_data_intro.html">
- <span class="dropdown-text">Workshop Additional Tutorials</span></a>
+    <a class="dropdown-item" href="../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html">
+ <span class="dropdown-text">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html">
+ <span class="dropdown-text">Accessing a NetCDF4/HDF5 File - S3 Direct Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.html">
+ <span class="dropdown-text">Multi-File_Direct_S3_Access_COG_Example.html</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html">
+ <span class="dropdown-text">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html">
+ <span class="dropdown-text">Using OPeNDAP to Access Data from On-Prem and Earthdata Cloud Archives</span></a>
   </li>  
     </ul>
   </li>
@@ -158,7 +176,7 @@
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../">
-      <img src="../img/ecostress_lpdaac_image.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../img/ecostress_lpdaac_image.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       </div>
     <div class="sidebar-menu-container"> 
@@ -188,16 +206,11 @@
   <a href="../schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a href="../prerequisites/index.html" class="sidebar-item-text sidebar-link active">Prerequisites</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-prerequisitesindexmd" aria-expanded="false">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-prerequisitesindexmd" class="collapse list-unstyled sidebar-section depth1 ">  
-    </ul>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prerequisites/index.html" class="sidebar-item-text sidebar-link active">Prerequisites</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
         <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-tutorials" aria-expanded="false">Tutorials</a>
@@ -213,69 +226,74 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/01_Earthdata_Search.html" class="sidebar-item-text sidebar-link">01. Earthdata Search</a>
+  <a href="../tutorials/Earthdata_search.html" class="sidebar-item-text sidebar-link">Earthdata Search Client</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/02_NASA_Earthdata_Authentication.html" class="sidebar-item-text sidebar-link">02. Authentication for NASA Earthdata</a>
+  <a href="../tutorials/Getting_started_setup.html" class="sidebar-item-text sidebar-link">Getting Started</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/00_Setup.html" class="sidebar-item-text sidebar-link">00. Setup for tutorials</a>
+  <a href="../tutorials/Intro_xarray_hvplot.html" class="sidebar-item-text sidebar-link">Introduction to xarray</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/01_Direct_Access_SWOT_sim.html" class="sidebar-item-text sidebar-link">01. Direct cloud data access</a>
+  <a href="../how-tos/authentication/NASA_Earthdata_Authentication.html" class="sidebar-item-text sidebar-link">NASA Earthdata Authentication</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/02_Subset_SWOT_sim.html" class="sidebar-item-text sidebar-link">02. Using Harmony to Subset SWOT Simulated Data</a>
+  <a href="../tutorials/Data_Discovery_CMR_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR STAC API</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/03_Timeseries_SWOT_sim.html" class="sidebar-item-text sidebar-link">03. Build a Time Series of SWOT Simulated Data</a>
+  <a href="../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file</a>
   </div>
 </li>
     </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">Further Resources</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-further-resources" aria-expanded="false">
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-additional-resources" aria-expanded="false">Additional Resources</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-additional-resources" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-further-resources" class="collapse list-unstyled sidebar-section depth1 ">  
+    <ul id="quarto-sidebar-section-additional-resources" class="collapse list-unstyled sidebar-section depth1 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../further-resources.html" class="sidebar-item-text sidebar-link">Additional resources</a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">Workshop Additional Tutorials</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-workshop-additional-tutorials" aria-expanded="false">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-workshop-additional-tutorials" class="collapse list-unstyled sidebar-section depth2 ">  
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/SWOT_sim_data_intro.html" class="sidebar-item-text sidebar-link">SWOT Oceanography with PO.DAAC</a>
+  <a href="../tutorials/Data_Discovery_CMR-STAC_API.html" class="sidebar-item-text sidebar-link">02. Data Discovery with CMR-STAC API</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/Finding_collection_s3_location.html" class="sidebar-item-text sidebar-link">Location of data in the PO.DAAC S3 Archive</a>
+  <a href="../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</a>
   </div>
 </li>
-    </ul>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.html" class="sidebar-item-text sidebar-link">Accessing a NetCDF4/HDF5 File - S3 Direct Access</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Multi-File_Direct_S3_Access_COG_Example.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.html" class="sidebar-item-text sidebar-link">Accessing Multiple NetCDF4/HDF5 Files - S3 Direct Access</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.html" class="sidebar-item-text sidebar-link">Using OPeNDAP to Access Data from On-Prem and Earthdata Cloud Archives</a>
+  </div>
+</li>
     </ul>
   </li>
     </ul>
@@ -313,11 +331,11 @@
 </ul></li>
 <li><strong>Laptop or tablet</strong>
 <ul>
-<li><enter text="">.</enter></li>
+<li>Participation in the exercises requires a laptop or tablet. Yes, a tablet works too! All participants will have access to a 2i2c Jupyter Lab instance running in AWS us-west 2.</li>
 </ul></li>
 <li><strong>Slack</strong>
 <ul>
-<li><enter text="">.</enter></li>
+<li>While we will be taking questions in person, we will also be communicating and recording questions via Slack. To take part in the conversations please ask Christine Lee or Gregory Halverson to add you to the ECOSTRESS Slack workspace.</li>
 </ul></li>
 </ol>
 

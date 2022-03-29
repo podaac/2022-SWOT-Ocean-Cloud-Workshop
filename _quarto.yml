@@ -34,17 +34,17 @@ site:
           contents: 
             - tutorials/index.md
             - href: tutorials/Earthdata_search.md
-              text: "Earthdata Search Client"
+              text: "- Earthdata Search Client"
             - href: tutorials/Getting_started_setup.md
-              text: "Getting Started"
+              text: "- Getting Started"
             - href: tutorials/Intro_xarray_hvplot.ipynb
-              text: "Introduction to xarray"
+              text: "- Introduction to xarray"
             - href: how-tos/authentication/NASA_Earthdata_Authentication.ipynb
-              text: "NASA Earthdata Authentication"
+              text: "- NASA Earthdata Authentication"
             - href: tutorials/Data_Discovery_CMR_API.ipynb 
-              text: "Data Discovery - Finding Data with the CMR STAC API"
+              text: "- Data Discovery - Finding Data with the CMR API"
             - href: how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb
-              text: "Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file"
+              text: "- Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file"
         - section: "Additional Resources"
           contents:
             - tutorials/Data_Discovery_CMR-STAC_API.ipynb

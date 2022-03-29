@@ -177,10 +177,6 @@
   </li>  
         <li>
     <a class="dropdown-item" href="../tutorials/Data_Discovery_CMR_API.html">
- <span class="dropdown-text">Data Discovery - Finding Data with the CMR API</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../tutorials/Data_Discovery_CMR-STAC_API.html">
  <span class="dropdown-text">Data Discovery - Finding Data with the CMR STAC API</span></a>
   </li>  
         <li>
@@ -189,6 +185,10 @@
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Additional Resources</li>
+        <li>
+    <a class="dropdown-item" href="../tutorials/Data_Discovery_CMR-STAC_API.html">
+ <span class="dropdown-text">02. Data Discovery with CMR-STAC API</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html">
  <span class="dropdown-text">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</span></a>
@@ -309,12 +309,7 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/Data_Discovery_CMR_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR API</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tutorials/Data_Discovery_CMR-STAC_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR STAC API</a>
+  <a href="../tutorials/Data_Discovery_CMR_API.html" class="sidebar-item-text sidebar-link">Data Discovery - Finding Data with the CMR STAC API</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -332,6 +327,11 @@
       </a>
     </div>
     <ul id="quarto-sidebar-section-additional-resources" class="collapse list-unstyled sidebar-section depth1 ">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/Data_Discovery_CMR-STAC_API.html" class="sidebar-item-text sidebar-link">02. Data Discovery with CMR-STAC API</a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.html" class="sidebar-item-text sidebar-link">Accessing Cloud Optimized GeoTIFF (COG) - HTTPS Example</a>
@@ -392,7 +392,7 @@
 
 <div class="quarto-title"><h1 class="title d-none d-lg-block display-7">Setup for tutorials</h1></div></header>
 
-<p>This tutorial will help you set up your JupyterHub (or Hub) with tutorials and other materials from our Cloud Workshop folder..</p>
+<p>This tutorial will help you set up your JupyterHub (or Hub) with tutorials and other materials from our Workshop folder.</p>
 <section id="step-1.-login-to-the-hub" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.-login-to-the-hub">Step 1. Login to the Hub</h2>
 <p>Please go to Jupyter Hub and Log in with your GitHub Account, and select “Small”.</p>
@@ -402,17 +402,37 @@
 <p><a href="https://openscapes.2i2c.cloud/hub/" data-fig-align="center"><img src="https://img.shields.io/static/v1.svg?logo=Jupyter&amp;label=Openscapes&amp;message=AWS+us-west-2&amp;color=orange" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
-<p><img src="img/JupyterHub-2i2c.png" class="img-fluid" width="500"></p>
-<p><img src="img/JupyterHub-Login.png" class="img-fluid" width="500"></p>
-<p><img src="img/JupyterHub-SelectSmall.png" class="img-fluid" width="500"></p>
-<p><img src="img/JupyterHub-Loading.png" class="img-fluid" width="500"></p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="../img/JupyterHub-2i2c.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="../img/JupyterHub-Login.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="../img/JupyterHub-SelectSmall.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="../img/JupyterHub-Loading.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> It takes a few minutes for the Hub to load. Please be patient!</p>
 </blockquote>
 <p>While the Hub loads, we’ll:</p>
 <ul>
-<li>Discuss cloud environments</li>
-<li>See how my Desktop is setup</li>
+<li>Discuss cloud environments<br>
+</li>
+<li>See how my Desktop is setup<br>
+</li>
 <li>Discuss python and conda environments</li>
 </ul>
 <p>Then, when the Hub is loaded, we’ll get oriented in the Hub.</p>
@@ -425,7 +445,8 @@
 <ul>
 <li>Cloud: AWS <a href="https://goo.gl/maps/BYqGYxahpwJgzKwR8"><code>us-west-2</code></a>
 <ul>
-<li>Data: AWS S3 (cloud) and <a href="https://earthdata.nasa.gov/eosdis/daacs">NASA DAAC</a> data centers (on-prem).</li>
+<li>Data: AWS S3 (cloud) and <a href="https://earthdata.nasa.gov/eosdis/daacs">NASA DAAC</a> data centers (on-prem).<br>
+</li>
 <li>Cloud compute environment: <a href="https://docs.2i2c.org/en/latest/">2i2c Jupyterhub deployment</a>
 <ul>
 <li>IDE: <a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html"><strong>JupyterLab</strong></a></li>
@@ -438,8 +459,8 @@
 <h2 class="anchored" data-anchor-id="discussion-my-desktop-setup">Discussion: My desktop setup</h2>
 <p>I’ll screenshare to show and/or talk through how I have oriented the following software we’re using:</p>
 <ul>
-<li><a href="https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU/">Workshop Book</a> (my teaching notes, your reference material)</li>
-<li>Zoom Chat</li>
+<li><a href="https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/">Workshop Book</a></li>
+<li>Slack</li>
 </ul>
 </section>
 <section id="discussion-python-and-conda-environments" class="level2">
@@ -539,7 +560,7 @@ Conda environment
 <p>Now that the Hub is loaded, let’s get oriented.</p>
 <div id="fig-anonymous-9419237" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><a href="img/JupyterHub-View.png"><img src="img/JupyterHub-View.png" class="img-fluid figure-img" width="500"></a></p>
+<p><a href="../img/JupyterHub-View.png"><img src="../img/JupyterHub-View.png" class="img-fluid figure-img" width="500"></a></p>
 </figure>
 </div>
 <section id="first-impressions" class="level3">
@@ -552,7 +573,7 @@ Conda environment
 </section>
 <section id="step-3.-navigate-to-the-workshop-folder" class="level2">
 <h2 class="anchored" data-anchor-id="step-3.-navigate-to-the-workshop-folder">Step 3. Navigate to the Workshop folder</h2>
-<p>The workshop folder <code>2021-Cloud-Workshop-AGU</code> is in the shared folder on JupyterHub.</p>
+<p>The workshop folder <code>2022-ECOSTRESS-Cloud-Workshop</code> is in the shared folder on JupyterHub.</p>
 </section>
 <section id="jupyter-notebooks" class="level2">
 <h2 class="anchored" data-anchor-id="jupyter-notebooks">Jupyter notebooks</h2>

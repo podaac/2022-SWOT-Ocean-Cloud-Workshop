@@ -2,51 +2,53 @@
 title: Setup for tutorials
 ---
 
-This tutorial will help you set up your JupyterHub (or Hub) with tutorials and other materials from our Cloud Workshop folder..
+This tutorial will help you set up your JupyterHub (or Hub) with tutorials and other materials from our Workshop folder.  
 
-## Step 1. Login to the Hub
+## Step 1. Login to the Hub  
 
-Please go to Jupyter Hub and Log in with your GitHub Account, and select "Small".
+Please go to Jupyter Hub and Log in with your GitHub Account, and select "Small".  
 
-Alternatively, you can also click this badge to launch the Hub:
+Alternatively, you can also click this badge to launch the Hub:  
 
-[![](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Openscapes&message=AWS+us-west-2&color=orange)](https://openscapes.2i2c.cloud/hub/){fig-align="center"}
+[![](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Openscapes&message=AWS+us-west-2&color=orange)](https://openscapes.2i2c.cloud/hub/){fig-align="center"}  
 
-![](img/JupyterHub-2i2c.png){width="500"}
+:::{layout="[[100], [100], [100], [100]]"}
+![](../img/JupyterHub-2i2c.png)  
 
-![](img/JupyterHub-Login.png){width="500"}
+![](../img/JupyterHub-Login.png)  
 
-![](img/JupyterHub-SelectSmall.png){width="500"}
+![](../img/JupyterHub-SelectSmall.png)  
 
-![](img/JupyterHub-Loading.png){width="500"}
+![](../img/JupyterHub-Loading.png) 
+:::
 
-> **Note:** It takes a few minutes for the Hub to load. Please be patient!
+> **Note:** It takes a few minutes for the Hub to load. Please be patient!  
 
-While the Hub loads, we'll:
+While the Hub loads, we'll:  
 
--   Discuss cloud environments
--   See how my Desktop is setup
--   Discuss python and conda environments
+-   Discuss cloud environments  
+-   See how my Desktop is setup  
+-   Discuss python and conda environments  
 
-Then, when the Hub is loaded, we'll get oriented in the Hub.
+Then, when the Hub is loaded, we'll get oriented in the Hub.  
 
-## Discussion: Cloud environment
+## Discussion: Cloud environment  
 
-A brief overview. See [NASA Openscapes Cloud Environment](https://nasa-openscapes.github.io/2021-Cloud-Hackathon/clinic/jupyterhub.html) in the 2021-Cloud-Hackathon book for more detail.
+A brief overview. See [NASA Openscapes Cloud Environment](https://nasa-openscapes.github.io/2021-Cloud-Hackathon/clinic/jupyterhub.html) in the 2021-Cloud-Hackathon book for more detail.  
 
-#### Cloud infrastructure
+#### Cloud infrastructure  
 
--   Cloud: AWS [`us-west-2`](https://goo.gl/maps/BYqGYxahpwJgzKwR8)
-    -   Data: AWS S3 (cloud) and [NASA DAAC](https://earthdata.nasa.gov/eosdis/daacs) data centers (on-prem).
-    -   Cloud compute environment:  [2i2c Jupyterhub deployment](https://docs.2i2c.org/en/latest/)
-        -   IDE: [**JupyterLab**](https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html)
+-   Cloud: AWS [`us-west-2`](https://goo.gl/maps/BYqGYxahpwJgzKwR8)  
+    -   Data: AWS S3 (cloud) and [NASA DAAC](https://earthdata.nasa.gov/eosdis/daacs) data centers (on-prem).  
+    -   Cloud compute environment:  [2i2c Jupyterhub deployment](https://docs.2i2c.org/en/latest/)  
+        -   IDE: [**JupyterLab**](https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html)  
 
-## Discussion: My desktop setup
+## Discussion: My desktop setup  
 
-I'll screenshare to show and/or talk through how I have oriented the following software we're using:
+I'll screenshare to show and/or talk through how I have oriented the following software we're using:  
 
--   [Workshop Book](https://nasa-openscapes.github.io/2021-Cloud-Workshop-AGU/) (my teaching notes, your reference material)
--   Zoom Chat
+-   [Workshop Book](https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/)
+-   Slack
 
 ## Discussion: Python and Conda environments
 
@@ -134,7 +136,7 @@ If we want to update a library or install a whole new environment we need to ope
 
 Now that the Hub is loaded, let's get oriented.
 
-[![](img/JupyterHub-View.png){width="500"}](img/JupyterHub-View.png)
+[![](../img/JupyterHub-View.png){width="500"}](../img/JupyterHub-View.png)
 
 ### First impressions
 
@@ -143,7 +145,7 @@ Now that the Hub is loaded, let's get oriented.
 
 ## Step 3. Navigate to the Workshop folder
 
-The workshop folder `2021-Cloud-Workshop-AGU` is in the shared folder on JupyterHub. 
+The workshop folder `2022-ECOSTRESS-Cloud-Workshop` is in the shared folder on JupyterHub. 
 
 ## Jupyter notebooks
 
