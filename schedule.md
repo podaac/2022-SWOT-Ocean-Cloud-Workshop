@@ -36,7 +36,7 @@ title: Schedule
 
 | Time, PST [(UTC-7)](https://www.timeanddate.com/time/zones/pdt) | Event | Leads/Instructors |
 |------|-------|-------------------|
-| 2:00 pm | Welcome / [Earthdata Authentication: Set up netrc file](how-tos/authentication/NASA_Earthdata_Authentication.ipynb) | Aaron Friesz (LP DAAC) | 
+| 2:00 pm | Welcome Back / Earthdata Authentication: [Set up netrc file](how-tos/authentication/NASA_Earthdata_Authentication.ipynb) & [Generate EDL Tokens](how-tos/authentication/NASA_Earthdata_Login_Token.ipynb) | Aaron Friesz (LP DAAC) | 
 | 2:10 pm | [Earthdata Cloud: Search and Discovery - CMR API](tutorials/Data_Discovery_CMR_API.ipynb) | Aaron Friesz (LP DAAC) | 
 | 2:45 pm | Break/QA | |
 | 2:50 pm | [Earthdata Cloud: Search and Discovery - CMR STAC API](tutorials/Data_Discovery_CMR-STAC_API.ipynb) | Aaron Friesz (LP DAAC) | 
