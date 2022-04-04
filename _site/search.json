@@ -109,7 +109,7 @@
     "href": "tutorials/index.html",
     "title": "Tutorials Overview",
     "section": "",
-    "text": "These tutorials are a combination of narrative, links, code, and outputs. They have been developed for live demos during the Workshop, and are available for self-paced learning.\nTutorials are markdown (.md) and Jupyter (.ipynb) notebooks, and are available on GitHub:\nhttps://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop/tree/main/tutorials."
+    "text": "These tutorials are a combination of narrative, links, code, and outputs. They have been developed for live demos during the Workshop, and are available for self-paced learning.\nHands-on exercises will be executed from a Jupyter Lab instance in 2i2c. Please pass along your Github Username to get access.\nTutorials are markdown (.md) and Jupyter (.ipynb) notebooks, and are available on GitHub:\nhttps://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop/tree/main/tutorials."
   },
   {
     "objectID": "tutorials/02_NASA_Earthdata_Authentication.html#summary",
