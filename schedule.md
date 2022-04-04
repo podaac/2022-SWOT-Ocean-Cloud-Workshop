@@ -5,6 +5,8 @@ title: Schedule
 **The ECOSTRESS Cloud Workshop take place on April 12-13, from  2pm-5:30pm PDT**.   
 
 **WebEx links** will be shared directly with this group via a (calendar) meeting invite.
+
+**Note,** hands-on exercises will be executed from a [Jupyter Lab instance in 2i2c](https://openscapes.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FNASA-Openscapes%2F2022-ECOSTRESS-Cloud-Workshop&urlpath=lab%2Ftree%2F2022-ECOSTRESS-Cloud-Workshop%2FREADME.md&branch=main). Please pass along your Github Username to get access.
  
 ## Workshop Schedule 
 
