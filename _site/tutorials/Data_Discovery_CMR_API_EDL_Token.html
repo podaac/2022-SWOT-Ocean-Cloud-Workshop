@@ -400,7 +400,7 @@
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>In this notebook, we will walk through how to search for Earthdata data collections and granules. Along the way we will explore the available search parameters, information return, and specific contrains when using the CMR API. Our object is to identify assets to access that we would downloaded, or perform S3 direct access, within an analysis workflow</p>
-<p>We will be querying CMR for <a href="">ECOSTRESS</a> collects/granules to identify assets we would downloaded, or perform S3 direct access, within an analysis workflow</p>
+<p>We will be querying CMR for <a href="">ECOSTRESS</a> collections/granules to identify assets we would downloaded, or perform S3 direct access, within an analysis workflow</p>
 </section>
 <section id="requirements" class="level2">
 <h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
@@ -413,8 +413,8 @@
 <h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <ul>
 <li>understand what CMR/CMR API is and what CMR/CMR API can be used for</li>
-<li>how to use the <code>requests</code> package to search data collections and granules<br>
-</li>
+<li>how to use the <code>requests</code> package to search data collections and granules</li>
+<li>how to use an Earthdata Login token to search for data with access control lists</li>
 <li>how to parse the results of these searches.</li>
 </ul>
 </section>
@@ -434,95 +434,67 @@
 <p>The first step is to import python packages. We will use:<br>
 - <code>requests</code> This package does most of the work for us accessing the CMR API using HTTP methods. - <code>pprint</code> to <em>pretty print</em> the results of the search.</p>
 <p>A more in-depth tutorial on <code>requests</code> is <a href="https://realpython.com/python-requests/">here</a></p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-tags="[]">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To conduct a search using the CMR API, <code>requests</code> needs the url for the root CMR search endpoint. We’ll assign this url to a python variable as a <em>string</em>.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell">
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>CMR_OPS <span class="op">=</span> <span class="st">'https://cmr.earthdata.nasa.gov/search'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>CMR allows search by <strong>collections</strong>, which are datasets, and <strong>granules</strong>, which are files that contain data. Many of the same search parameters can be used for collections and granules but the type of results returned differ. Search parameters can be found in the <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">API Documentation</a>.</p>
 <p>Whether we search <strong>collections</strong> or <strong>granules</strong> is distinguished by adding <code>"collections"</code> or <code>"granules"</code> to the end of the CMR endpoint URL.</p>
 <p>We are going to search collections first, so we add <code>"collections"</code> to the URL. We are using a <code>python</code> format string in the examples below.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell">
 <div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"collections"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this first example, I want to retrieve a list of <strong>ECOSTRESS</strong> collections.</p>
-<p>I want to get the content in <code>json</code> (pronounced “jason”) format, so I pass a dictionary to the header keyword argument to say that I want results returned as <code>json</code>.</p>
+<p>In this first example, I want to retrieve a list of <strong>ECOSTRESS</strong> collections in the Earthdata Cloud. This includes ECOSTRESS collections from build 7 which at the time of this tutorial, is hidden to all except early adopters. Because of this, an extra parameter needs to be passed in each CMR request that indicates you are part of the access list. An Earthdata Login token will be passed to the <code>token</code> parameter, which is generated using your Earthdata Login credentials.</p>
+<p>Two options are available to generate an Earthdata Login token. 1. Generate a token from the Earthdata Login interface by logging into Earthdata Login and Click Generate Token. 2. Programatically generate an Earthdata Login token. Use the <a href="../how-tos/authentication/NASA_Earthdata_Login_Token.html">NASA_Earthdata_Login_Token</a> notebook to generate and save a token for use in this notebook.</p>
+<p>We can read in our token after it has been generated and saved using the <a href="../how-tos/authentication/NASA_Earthdata_Login_Token.html">NASA_Earthdata_Login_Token</a> notebook. The json file produce can be found here: <code>/home/jovyan/.hidden_dir/edl_token.json</code>. We’ll read to token into a variable named <code>token</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'../../.hidden_dir/edl_token.json'</span>) <span class="im">as</span> js:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    token <span class="op">=</span> json.load(js)[<span class="st">'access_token'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll want to get the content in <code>json</code> (pronounced “jason”) format, so I pass a dictionary to the header keyword argument to say that I want results returned as <code>json</code>.</p>
 <p>The <code>.get()</code> method is used to send this information to the CMR API. <code>get()</code> calls the HTTP method <strong>GET</strong>.</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'cloud_hosted': 'True',</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'project'</span>: <span class="st">'ECOSTRESS'</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'cloud_hosted'</span>: <span class="st">'True'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'has_granules': 'True',</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'project': 'ECOSTRESS',</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'token'</span>: token</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The request returns a <code>Response</code> object.</p>
 <p>To check that our request was successful we can print the <code>response</code> variable we saved the request to.</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="5">
-<pre><code>&lt;Response [200]&gt;</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A <strong>200</strong> response is what we want. This means that the requests was successful. For more information on HTTP status codes see <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" class="uri">https://en.wikipedia.org/wiki/List_of_HTTP_status_codes</a></p>
 <p>A more explict way to check the status code is to use the <code>status_code</code> attribute. Both methods return a HTTP status code.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell">
 <div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response.status_code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="10">
-<pre><code>200</code></pre>
-</div>
 </div>
 <p>The response from <code>requests.get</code> returns the results of the search and metadata about those results in the <code>headers</code>.</p>
 <p>More information about the <code>response</code> object can be found by typing <code>help(response)</code>.</p>
 <p><code>headers</code> contains useful information in a case-insensitive dictionary. We requested (above) that the information be return in json which means the object return is a dictionary in our Python environment. We’ll iterate through the returned dictionary, looping throught each field (<code>k</code>) and its associated value (<code>v</code>). For more on interating through dictionary object click <a href="https://realpython.com/iterate-through-dictionary-python/">here</a>.</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode" id="cb9"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, v <span class="kw">in</span> response.headers.items():</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>Content-Type: application/json;charset=utf-8
-Transfer-Encoding: chunked
-Connection: keep-alive
-Date: Mon, 04 Apr 2022 15:16:23 GMT
-X-Frame-Options: SAMEORIGIN
-Access-Control-Allow-Origin: *
-X-XSS-Protection: 1; mode=block
-CMR-Request-Id: 6ae24cfd-80be-4b12-9cd1-8c6fa6130859
-Strict-Transport-Security: max-age=31536000
-CMR-Search-After: [0.0,0.0,"ECO4ESIALEXI","1",1639530606,21]
-CMR-Hits: 13
-Access-Control-Expose-Headers: CMR-Hits, CMR-Request-Id, X-Request-Id, CMR-Scroll-Id, CMR-Search-After, CMR-Timed-Out, CMR-Shapefile-Original-Point-Count, CMR-Shapefile-Simplified-Point-Count
-X-Content-Type-Options: nosniff
-CMR-Took: 224
-X-Request-Id: Hl8sywakCQzaQCUg2CfCLE1QccVXr9uoEhM2s7Yu28PJhjuoOGYYHQ==
-Vary: Accept-Encoding, User-Agent
-Content-Encoding: gzip
-Server: ServerTokens ProductOnly
-X-Cache: Miss from cloudfront
-Via: 1.1 adc2002956acc4d61bfbf3b973fdf246.cloudfront.net (CloudFront)
-X-Amz-Cf-Pop: SEA19-C1
-X-Amz-Cf-Id: Hl8sywakCQzaQCUg2CfCLE1QccVXr9uoEhM2s7Yu28PJhjuoOGYYHQ==</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, v <span class="kw">in</span> response.headers.items():</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Each item in the dictionary can be accessed in the normal way you access a <code>python</code> dictionary but the keys uniquely case-insensitive. Let’s take a look at the commonly used <code>CMR-Hits</code> key.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'CMR-Hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="8">
-<pre><code>'13'</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'CMR-Hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that “cmr-hits” works as well!</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="9">
-<pre><code>'13'</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In some situations the response to your query can return a very large number of result, some of which may not be relevant. We can add additional <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">query parameters</a> to restrict the information returned. We’re going to restrict the search by the <code>provider</code> parameter.</p>
 <p>You can modify the code below to explore all Earthdata data products hosted by the various providers. When searching by provider, use <em>Cloud Provider</em> to search for cloud-hosted datasets and <em>On-Premises Provider</em> to search for datasets archived at the DAACs. A partial list of providers is given below.</p>
@@ -599,419 +571,113 @@ X-Amz-Cf-Id: Hl8sywakCQzaQCUg2CfCLE1QccVXr9uoEhM2s7Yu28PJhjuoOGYYHQ==</code></pr
 </tbody>
 </table>
 <p>We’ll assign the provider to a variable as a <em>string</em> and insert the variable into the parameter argument in the request. We’ll also assign the term ‘ECOSTRESS’ to a varible so we don’t need to repeatedly add it to the requests parameters.</p>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>provider <span class="op">=</span> <span class="st">'LPDAAC_ECS'</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>project <span class="op">=</span> <span class="st">'ECOSTRESS'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>provider <span class="op">=</span> <span class="st">'LPDAAC_ECS'</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>project <span class="op">=</span> <span class="st">'ECOSTRESS'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'cloud_hosted': 'True',</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'project'</span>: project,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="22">
-<pre><code>&lt;Response [200]&gt;</code></pre>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'cloud_hosted': 'True',</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'project'</span>: project,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'token'</span>: token</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="23">
-<pre><code>'13'</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Search results are contained in the <strong>content</strong> part of the Response object. However, <code>response.content</code> returns information in bytes.</p>
-<div class="cell" data-tags="[]" data-execution_count="24">
-<div class="sourceCode" id="cb20"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>response.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="24">
-<pre><code>b'{"feed":{"updated":"2022-04-04T16:00:16.411Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules=True&amp;provider=LPDAAC_ECS&amp;project=ECOSTRESS","title":"ECHO dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2018-07-09T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO2LSTE","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe ECO2LSTE Version 1 data product provides atmospherically corrected land surface temperature and emissivity (LST&amp;E) values derived from five thermal infrared (TIR) bands. The ECO2LSTE data product was derived using a physics-based Temperature/Emissivity Separation (TES) algorithm. The ECO2LSTE is provided as swath data and has a spatial resolution of 70 meters (m).  The corresponding ECO1BGEO data product is required to georeference the ECO2LSTE data product. \\r\\n\\r\\nThe ECO2LSTE Version 1 data product contains layers of LST, emissivity for bands 1 through 5, quality control for LST&amp;E, LST error, emissivity error for bands 1 through 5, wideband emissivity, and Precipitable Water Vapor (PWV). For acquisitions after May 15, 2019, data products contain data values for TIR bands 2, 4 and 5 only. TIR bands 1 and 3 contain fill values to accommodate direct streaming of data from the ISS as mentioned in the Known Issues section.\\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534729776-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534729776-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO2LSTE.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO2LSTE.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/423/ECO2_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1324/ECO2_LSTE_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://ecostress.jpl.nasa.gov/science"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/380/ECO2_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/299/ECO2_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.29/ECOSTRESS_L2_LSTE_13110_011_20201028T103433_0601_01.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO2LSTE.001/contents.html"}]},{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2018-07-09T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Geolocation Daily L1B Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO1BGEO","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Geolocation Daily L1B Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission  measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science). \\r\\n\\r\\nThe ECO1BGEO Version 1 data product provides the geolocation information for the radiance values retrieved in the ECO1BRAD Version 1 data product (https://doi.org/10.5067/ECOSTRESS/ECO1BRAD.001). The ECO1BGEO data product should be used to georeference the ECO1BRAD, ECO2CLD, ECO2LSTE, ECO3ANCQA, ECO3ETPTJPL, ECO4ESIPTJPL, ECO4WUE data products. The geolocation processing corrects the ISS-reported ephemeris and attitude data by image matching with a global ortho-base derived from Landsat data, and then assigns latitude and longitude values to each of the Level 1 radiance pixels. When image matching is successful, the data are geolocated to better than 50 meter (m) accuracy. The ECO1BGEO data product is provided as swath data.\\r\\n\\r\\nThe ECO1BGEO data product contains data layers for latitude and longitude values, solar and view geometry information, surface height, and the fraction of pixel on land versus water.\\r\\n\\r\\nData acquisition gaps:  ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534584923-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":false,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534584923-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO1BGEO.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO1BGEO.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1323/ECO1B_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://ecostress.jpl.nasa.gov/science"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/222/ECO1B_Calibration_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/223/ECO1B_Geolocation_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1321/ECO1B_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/225/ECO1B_Rad_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/226/ECO1B_Geo_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOA/ECOSTRESS/ECO1BGEO.001/contents.html"}]},{"processing_level_id":"3","boxes":["23 -127 52 -65"],"time_start":"2018-07-15T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Evapotranspiration dis-ALEXI Daily L3 CONUS 70 m V001","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1568897323-LPDAAC_ECS"]},"has_variables":true,"data_center":"LPDAAC_ECS","short_name":"ECO3ETALEXI","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Evapotranspiration dis-ALEXI Daily L3 CONUS 70 m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe NASA Jet Propulsion Laboratory (JPL) ECO3ETALEXI Version 1 data product provides estimates of daily evapotranspiration (ET) using the ECOSTRESS Level 2 (L2) land surface temperature and emissivity (LST&amp;E) product, along with ancillary meteorological data and remotely sensed vegetation cover information. The ECO3ETALEXI data product is derived using a physics-based surface energy balance (SEB) algorithm, the Atmosphere Land Exchange Inverse (ALEXI) Disaggregation algorithm (DisALEXI). Described in the Algorithm Theoretical Basis Document (ATBD) (https://lpdaac.usgs.gov/documents/1000/ECO3ETALEXI_ATBD_V1.pdf), DisALEXI is based on spatial disaggregation of regional-scale fluxes from the ALEXI SEB model. There are many approaches for spatially mapping ET; however, SEB methods are favored for remote sensing retrievals based on land-surface temperature. ALEXI was initially developed for managed landscapes and has now been evaluated in comparison with micrometeorological flux tower observations over crop, forest, grassland, wetland, and semiarid desert sites. Applications include crop water use, crop phenology monitoring, and drought early warning or water stress detection. ECO3ETALEXI is available for CONUS at 70-meter (m) pixel resolution.\\r\\n\\r\\nThe ECO3ETALEXI Version 1 data product contains layers of daily ET, ET uncertainty, and associated quality flags. A low-resolution browse is also available showing daily ET as a stretched image with a color ramp in JPEG format.\\r\\n","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1639530522-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":true,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1639530522-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO3ETALEXI.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ETALEXI.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/999/ECO3ETALEXI_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1000/ECO3ETALEXI_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.25/ECOSTRESS_L3_ET_ALEXI_12977_012_20201019T204204_0601_01.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"}]},{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2018-07-09T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Cloud Mask Daily L2 Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO2CLD","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Cloud Mask Daily L2 Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe ECO2CLD Version 1 data product provides a cloud mask that can be used to determine cloud cover for the ECO1BRAD, ECO2LSTE, ECO3ETPTJPL, ECO4ESIPTJPL, and ECO4WUE data products. The ECOSTRESS Level 2 cloud product is derived using the five calibrated thermal bands in a multispectral cloud-conservative thresholding approach. The details of the algorithm are provided in the Algorithm Theoretical Basis Document (ATBD). The corresponding ECO1BGEO (https://doi.org/10.5067/ECOSTRESS/ECO1BGEO.001) data product is required to georeference the ECO2CLD data product.\\r\\n\\r\\nThe ECO2CLD Version 1 data product contains a single cloud mask layer. Information on how to interpret the bit fields in the cloud mask is provided in section 3.1 of the User Guide.\\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).\\r\\n","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534730833-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534730833-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO2CLD.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO2CLD.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/423/ECO2_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/296/ECO2_Cloud_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://ecostress.jpl.nasa.gov/science"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/380/ECO2_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/299/ECO2_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.29/ECOSTRESS_L2_CLOUD_13108_017_20201028T073252_0601_01.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO2CLD.001/contents.html"}]},{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2018-07-15T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Evapotranspiration PT-JPL Daily L3 Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO3ETPTJPL","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Evapotranspiration PT-JPL Daily L3 Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nECO3ETPTJPL Version 1 is a Level 3 (L3) product that provides evapotranspiration (ET) generated from data acquired by the ECOSTRESS radiometer instrument according to the Priestly-Taylor Jet Propulsion Laboratory (PT-JPL) algorithm described in the Algorithm Theoretical Basis Document (ATBD) (https://lpdaac.usgs.gov/documents/335/ECO3ETPTJPL_ATBD_V1.pdf). The ET product is generated from the Level 2 data products for surface temperature and emissivity, the Level 1 geolocation information, and a significant number of ancillary data inputs from other sources.  ET is set by various controls, including radiative and atmospheric demand, and environmental sensitivity, productivity, vegetation physiology, and phenology. PT-JPL is best utilized for natural ecosystems. The L3 ET product is used for creating the Level 4 products, Evaporative Stress Index (ESI) and Water Use Efficiency (WUE).\\r\\n\\r\\nThe ECO3ETPTJPL Version 1 data product contains layers of instantaneous ET, daily ET, canopy transpiration, soil evaporation, ET uncertainty, and interception evaporation. \\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534730469-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534730469-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO3ETPTJPL.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ETPTJPL.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/424/ECO3ETPTJPL_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/335/ECO3ETPTJPL_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/381/ECO3ETPTJPL_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/334/ECO3ETPTJPL_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.29/ECOSTRESS_L3_ET_PT-JPL_13106_013_20201028T044524_0601_01.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO3ETPTJPL.001/contents.html"}]},{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2018-07-09T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Resampled Radiance Daily L1B Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO1BMAPRAD","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Resampled Radiance Daily L1B Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission  measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science). \\r\\n\\r\\nThe ECO1BMAPRAD Version 1 data product combines the at-sensor calibrated radiance values retrieved for the ECO1BRAD (https://doi.org/10.5067/ECOSTRESS/ECO1BRAD.001) data product and the geolocation information provided in the ECO1BGEO (https://doi.org/10.5067/ECOSTRESS/ECO1BGEO.001) data product to produce a geotagged, resampled radiance product.  The ECO1BMAPRAD data product is produced as a map registered product that is in a rotated geographic projection with a spatial resolution of 70 m. The ECO1BMAPRAD data product accounts for the overlap and variable pixel size in the ECO1BRAD data product.\\r\\n\\r\\nThe ECO1BMAPRAD Version 1 data product contains data layers including the radiance values for the five thermal infrared (TIR) bands, digital number (DN) values for the shortwave infrared (SWIR) band, associated data quality indicators, latitude and longitude values, solar and view geometry information, and surface height.\\r\\n\\r\\nThe ECO1BMAPRAD Version 1 data product contains data layers including the radiance values for the five thermal infrared (TIR) bands, digital number (DN) values for the shortwave infrared (SWIR) band, associated data quality indicators, latitude and longitude values, solar and view geometry information, and surface height. For acquisitions after May 15, 2019, data products contain data values for the 8.785 \xce\xbcm, 10.522 \xce\xbcm, and 12.001 \xce\xbcm (TIR) bands only. The 1.6 \xce\xbcm (SWIR), 8.285 \xce\xbcm (TIR), and 9.060 \xce\xbcm (TIR) bands contain fill values to accommodate direct streaming of data from the ISS as mentioned in the Known Issues section.\\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1545228916-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1545228916-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO1BMAPRAD.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO1BMAPRAD.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1323/ECO1B_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://ecostress.jpl.nasa.gov/science"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/222/ECO1B_Calibration_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/223/ECO1B_Geolocation_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1321/ECO1B_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/225/ECO1B_Rad_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/226/ECO1B_Geo_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2019.12.31/ECOSTRESS_L1B_MAP_RAD_08422_001_20191231T002428_0601_01.1.jpg?_ga=2.210053781.1882281295.1577729098-2066674673.1574795892"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOD/ECOSTRESS/ECO1BMAPRAD.001/contents.html"}]},{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2018-07-09T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS At-sensor Calibrated Radiance Daily L1B Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO1BRAD","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS At-sensor Calibrated Radiance Daily L1B Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission  measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe ECO1BRAD Version 1 data product provides at-sensor calibrated radiance values retrieved for five thermal infrared (TIR) bands operating between 8 and 12.5 \xc2\xb5m.  Additionally, the digital numbers (DN) for the shortwave infrared (SWIR) band are provided. The TIR bands are spatially co-registered to produce a variable spatial resolution between 70 meters (m) to 90 m at the edge of the swath. The ECO1BRAD data product is provided as swath data and does not contain geolocation information. The corresponding ECO1BGEO (https://doi.org/10.5067/ECOSTRESS/ECO1BGEO.001) data product is required to georeference the ECO1BRAD data product.  The geographic coverage of acquisitions for the ECO1BRAD Version 1 data product extends to areas outside of those indicated on the coverage map. However, corresponding higher-level products over these areas are not available at this time.\\r\\n\\r\\nThe ECO1BRAD Version 1 data product contains layers of radiance values for the five TIR bands, DN values for the SWIR band, associated data quality indicators, and ancillary data. For acquisitions after May 15, 2019, data products contain data values for the 8.785 \xce\xbcm, 10.522 \xce\xbcm, and 12.001 \xce\xbcm (TIR) bands only. The 1.6 \xce\xbcm (SWIR), 8.285 \xce\xbcm (TIR), and 9.060 \xce\xbcm (TIR) bands contain fill values to accommodate direct streaming of data from the ISS as mentioned in the Known Issues section.\\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534582789-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534582789-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO1BRAD.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO1BRAD.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1323/ECO1B_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://ecostress.jpl.nasa.gov/science"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/222/ECO1B_Calibration_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/223/ECO1B_Geolocation_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1321/ECO1B_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/225/ECO1B_Rad_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/226/ECO1B_Geo_ASD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2019.12.31/ECOSTRESS_L1B_RAD_08406_001_20191229T233632_0601_01.1.jpg?_ga=2.235356801.1882281295.1577729098-2066674673.1574795892"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOA/ECOSTRESS/ECO1BRAD.001/contents.html"}]},{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2018-07-15T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS L3/L4 Ancillary data Quality Assurance (QA) flags L3 Global 70m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO3ANCQA","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS L3/L4 Ancillary data Quality Assurance (QA) flags L3 Global 70m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe ECO3ANCQA Version 1 is a Level 3 (L3) product that provides Quality Assessment (QA) fields for all ancillary data used in L3 and Level 4 (L4) products generated by Jet Propulsion Laboratory (JPL). No quality flags are generated for the L3 or L4 products. Instead, the quality flags of the source data products are resampled by nearest neighbor onto the geolocation of the ECOSTRESS scene. A quality flag array for each input dataset, when available, is collected into the combined QA product.\\r\\n\\r\\nThe ECO3ANCQA Version 1 data product contains layers of quality flags for ECOSTRESS cloud mask, Landsat 8, land cover type, albedo, MODIS Terra aerosol, MODIS Terra Cloud 1 km, MODIS Terra Cloud 5 km, MODIS Terra atmospheric profile, vegetation indices, MODIS Terra gross primary productivity, and MODIS water mask.\\r\\n\\r\\nData acquisition gaps: ECOSTRESS was launched on June 29, 2018 and moved to autonomous science operations on August 20, 2018 following a successful in-orbit checkout period. On September 29, 2018, ECOSTRESS experienced an anomaly with its primary mass storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A and B). On December 5, 2018, the instrument was switched to the secondary MSU and science operations resumed. On March 14, 2019, the secondary MSU experienced a similar anomaly temporarily halting science acquisitions. On May 15, 2019, a new data acquisition approach was implemented and science acquisitions resumed. To optimize the new acquisition approach TIR bands 2, 4 and 5 are being downloaded. The data products are as previously, except the bands not downloaded contain fill values (L1 radiance and L2 emissivity).","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534730053-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":false,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534730053-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO3ANCQA.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ANCQA.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/424/ECO3ETPTJPL_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/335/ECO3ETPTJPL_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ANCQA.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/425/ECO4ESIPTJPL_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/342/ECO4ESIPTJPL_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/381/ECO3ETPTJPL_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/382/ECO4ESIPTJPL_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/service#","hreflang":"en-US","href":"https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO2LSTE.001/contents.html"}]},{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2018-07-30T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Evapotranspiration dis-ALEXI USDA Daily L3 Global 30m V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"ECO3ETALEXIU","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Evapotranspiration dis-ALEXI USDA Daily L3 Global 30m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected [FLUXNET](http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe United States Department of Agriculture (USDA) ECO3ETALEXIU Version 1 data product provides estimates of daily evapotranspiration (ET) using the ECOSTRESS Level 2 (L2) land surface temperature and emissivity (LST&amp;E) product, along with ancillary meteorological data and remotely sensed vegetation cover information. The ECO3ETALEXIU data product is derived using a physics-based surface energy balance (SEB) algorithm, the Atmosphere Land Exchange Inverse (ALEXI) Disaggregation algorithm (disALEXI). Described in the Algorithm Theoretical Basis Document (ATBD) (https://lpdaac.usgs.gov/documents/332/ECO3ETALEXIU_ATBD_V1.pdf), disALEXI is based on spatial disaggregation of regional-scale fluxes from the ALEXI SEB model. Many approaches exist for mapping ET spatially; however, SEB methods are favored for remote sensing retrievals based on land-surface temperature. ALEXI was initially developed for managed landscapes. Applications include crop water use, crop phenology monitoring, and drought early warning or water stress detection. The output ET is generated on a UTM grid at a spatial resolution of 30 meters.\\r\\n\\r\\nThe ECO3ETALEXIU Version 1 data product contains layers of daily ET, ET uncertainty, and associated quality flags. A low-resolution browse is also available showing daily ET as a stretched image with a color ramp in JPEG format.\\r\\n","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1534730413-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1534730413-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO3ETALEXIU.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ETALEXIU.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/331/ECO3ETALEXIU_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/332/ECO3ETALEXIU_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO3ETALEXIU.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/333/ECO3ETALEXIU_PSD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2019.07.25/ECOSTRESS_L3_ET_ALEXI_USDA_00731_008_20180822T201811_0503_03.mead.1.jpg?_ga=2.229793116.1575605641.1565613093-1371303444.1563801461"}]},{"processing_level_id":"4","boxes":["23 -127 52 -65"],"time_start":"2018-07-15T00:00:00.000Z","version_id":"001","dataset_id":"ECOSTRESS Evaporative Stress Index dis-ALEXI Daily L4 CONUS 70 m V001","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1568897323-LPDAAC_ECS"]},"has_variables":true,"data_center":"LPDAAC_ECS","short_name":"ECO4ESIALEXI","organizations":["LP DAAC","NASA/JPL/ECOSTRESS"],"title":"ECOSTRESS Evaporative Stress Index dis-ALEXI Daily L4 CONUS 70 m V001","coordinate_system":"CARTESIAN","summary":"The ECOsystem Spaceborne Thermal Radiometer Experiment on Space Station (ECOSTRESS) mission measures the temperature of plants to better understand how much water plants need and how they respond to stress. ECOSTRESS is attached to the International Space Station (ISS) and collects data over the conterminous United States (CONUS) as well as key biomes and agricultural zones around the world and selected FLUXNET (http://fluxnet.fluxdata.org/about/) validation sites. A map of the acquisition coverage can be found on the ECOSTRESS website (https://ecostress.jpl.nasa.gov/science).\\r\\n\\r\\nThe NASA Jet Propulsion Laboratory (JPL) ECO4ESIALEXI Version 1 data product provides the Evaporative Stress Index (ESI), which is computed from clear-sky estimates of the relative daily evapotranspiration (ET) fraction: ESI = ET/ETo, where ET is ETdaily from the ECOSTRESS Level 3 product and ETo is the reference ET. A description of the major components of the ECOSTRESS algorithm implemented in Version 1 of the Atmosphere Land Exchange Inverse (ALEXI) Disaggregation algorithm (DisALEXI) ESI code is provided in the Algorithm Theoretical Basis Document (ATBD) (https://lpdaac.usgs.gov/documents/1002/ECO4ESIALEXI_ATBD_V1.pdf). ESI applications include indicating agricultural drought and observing vegetation stress. ECO4ESIALEXI is available for CONUS at 70-meter (m) pixel resolution.\\r\\n\\r\\nThe ECO4ESIALEXI Version 1 data product contains layers of daily evaporative stress index, evaporative stress index uncertainty, and associated quality flags. A low-resolution browse is also available showing daily ESI as a stretched image with a color ramp in JPEG format.\\r\\n","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1639530606-LPDAAC_ECS","has_formats":false,"score":1.32,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":true,"browse_flag":true,"platforms":["ISS"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C1639530606-LPDAAC_ECS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO4ESIALEXI.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ECOSTRESS/ECO4ESIALEXI.001"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1325/ECO4ESIALEXI_User_Guide_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1004/ECO4ESIALEXI_ATBD_V1.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.23/ECOSTRESS_L4_ESI_ALEXI_13007_004_20201021T190748_0601_01.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://appeears.earthdatacloud.nasa.gov/"}]}]}}'</code></pre>
-</div>
+<div class="cell" data-tags="[]">
+<div class="sourceCode" id="cb14"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>response.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A more convenient way to work with this information is to use <code>json</code> formatted data. I’m using pretty print <code>pprint</code> to print the data in an easy to read way.</p>
 <p><strong>Note</strong> - <code>response.json()</code> will format our response in <code>json</code> - <code>['feed']['entry']</code> returns all entries that CMR returned in the request (not the same as <strong>CMR-Hits</strong>) - <code>[0]</code> returns the first entry. Reminder that python starts indexing at 0, not 1!</p>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode" id="cb22"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pprint(response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>{'archive_center': 'LP DAAC',
- 'boxes': ['-90 -180 90 180'],
- 'browse_flag': True,
- 'consortiums': ['GEOSS', 'EOSDIS'],
- 'coordinate_system': 'CARTESIAN',
- 'data_center': 'LPDAAC_ECS',
- 'dataset_id': 'ECOSTRESS Land Surface Temperature and Emissivity Daily L2 '
-               'Global 70m V001',
- 'has_formats': False,
- 'has_spatial_subsetting': False,
- 'has_temporal_subsetting': False,
- 'has_transforms': False,
- 'has_variables': False,
- 'id': 'C1534729776-LPDAAC_ECS',
- 'links': [{'href': 'https://search.earthdata.nasa.gov/search?q=C1534729776-LPDAAC_ECS',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO2LSTE.001/',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://doi.org/10.5067/ECOSTRESS/ECO2LSTE.001',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/423/ECO2_User_Guide_V1.pdf',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/1324/ECO2_LSTE_ATBD_V1.pdf',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://ecostress.jpl.nasa.gov/science',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/380/ECO2_PSD_V1.pdf',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/299/ECO2_ASD_V1.pdf',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.29/ECOSTRESS_L2_LSTE_13110_011_20201028T103433_0601_01.1.jpg',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
-           {'href': 'https://appeears.earthdatacloud.nasa.gov/',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://earthexplorer.usgs.gov/',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO2LSTE.001/contents.html',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/service#'}],
- 'online_access_flag': True,
- 'orbit_parameters': {},
- 'organizations': ['LP DAAC', 'NASA/JPL/ECOSTRESS'],
- 'original_format': 'UMM_JSON',
- 'platforms': ['ISS'],
- 'processing_level_id': '2',
- 'score': 1.32,
- 'service_features': {'esi': {'has_formats': False,
-                              'has_spatial_subsetting': False,
-                              'has_temporal_subsetting': False,
-                              'has_transforms': False,
-                              'has_variables': False},
-                      'harmony': {'has_formats': False,
-                                  'has_spatial_subsetting': False,
-                                  'has_temporal_subsetting': False,
-                                  'has_transforms': False,
-                                  'has_variables': False},
-                      'opendap': {'has_formats': False,
-                                  'has_spatial_subsetting': False,
-                                  'has_temporal_subsetting': False,
-                                  'has_transforms': False,
-                                  'has_variables': False}},
- 'short_name': 'ECO2LSTE',
- 'summary': 'The ECOsystem Spaceborne Thermal Radiometer Experiment on Space '
-            'Station (ECOSTRESS) mission measures the temperature of plants to '
-            'better understand how much water plants need and how they respond '
-            'to stress. ECOSTRESS is attached to the International Space '
-            'Station (ISS) and collects data over the conterminous United '
-            'States (CONUS) as well as key biomes and agricultural zones '
-            'around the world and selected FLUXNET '
-            '(http://fluxnet.fluxdata.org/about/) validation sites. A map of '
-            'the acquisition coverage can be found on the ECOSTRESS website '
-            '(https://ecostress.jpl.nasa.gov/science).\r\n'
-            '\r\n'
-            'The ECO2LSTE Version 1 data product provides atmospherically '
-            'corrected land surface temperature and emissivity (LST&amp;E) values '
-            'derived from five thermal infrared (TIR) bands. The ECO2LSTE data '
-            'product was derived using a physics-based Temperature/Emissivity '
-            'Separation (TES) algorithm. The ECO2LSTE is provided as swath '
-            'data and has a spatial resolution of 70 meters (m).  The '
-            'corresponding ECO1BGEO data product is required to georeference '
-            'the ECO2LSTE data product. \r\n'
-            '\r\n'
-            'The ECO2LSTE Version 1 data product contains layers of LST, '
-            'emissivity for bands 1 through 5, quality control for LST&amp;E, LST '
-            'error, emissivity error for bands 1 through 5, wideband '
-            'emissivity, and Precipitable Water Vapor (PWV). For acquisitions '
-            'after May 15, 2019, data products contain data values for TIR '
-            'bands 2, 4 and 5 only. TIR bands 1 and 3 contain fill values to '
-            'accommodate direct streaming of data from the ISS as mentioned in '
-            'the Known Issues section.\r\n'
-            '\r\n'
-            'Data acquisition gaps: ECOSTRESS was launched on June 29, 2018 '
-            'and moved to autonomous science operations on August 20, 2018 '
-            'following a successful in-orbit checkout period. On September 29, '
-            '2018, ECOSTRESS experienced an anomaly with its primary mass '
-            'storage unit (MSU). ECOSTRESS has a primary and secondary MSU (A '
-            'and B). On December 5, 2018, the instrument was switched to the '
-            'secondary MSU and science operations resumed. On March 14, 2019, '
-            'the secondary MSU experienced a similar anomaly temporarily '
-            'halting science acquisitions. On May 15, 2019, a new data '
-            'acquisition approach was implemented and science acquisitions '
-            'resumed. To optimize the new acquisition approach TIR bands 2, 4 '
-            'and 5 are being downloaded. The data products are as previously, '
-            'except the bands not downloaded contain fill values (L1 radiance '
-            'and L2 emissivity).',
- 'time_start': '2018-07-09T00:00:00.000Z',
- 'title': 'ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global '
-          '70m V001',
- 'version_id': '001'}</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pprint(response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The first response contains a lot more information than we need. We’ll narrow in on a few fields to get a feel for what we have. We’ll print the name of the dataset (<code>dataset_id</code>) and the concept id (<code>id</code>). We can build this variable and print statement like we did above with the <code>url</code> variable.</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode" id="cb24"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode" id="cb25"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>LP DAAC | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | C1534729776-LPDAAC_ECS
-LP DAAC | ECOSTRESS Geolocation Daily L1B Global 70m V001 | C1534584923-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration dis-ALEXI Daily L3 CONUS 70 m V001 | C1639530522-LPDAAC_ECS
-LP DAAC | ECOSTRESS Cloud Mask Daily L2 Global 70m V001 | C1534730833-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration PT-JPL Daily L3 Global 70m V001 | C1534730469-LPDAAC_ECS
-LP DAAC | ECOSTRESS Resampled Radiance Daily L1B Global 70m V001 | C1545228916-LPDAAC_ECS
-LP DAAC | ECOSTRESS At-sensor Calibrated Radiance Daily L1B Global 70m V001 | C1534582789-LPDAAC_ECS
-LP DAAC | ECOSTRESS L3/L4 Ancillary data Quality Assurance (QA) flags L3 Global 70m V001 | C1534730053-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration dis-ALEXI USDA Daily L3 Global 30m V001 | C1534730413-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evaporative Stress Index dis-ALEXI Daily L4 CONUS 70 m V001 | C1639530606-LPDAAC_ECS</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In some situations we may be expecting a certain number of results. Note here that we only have 10 datasets are printed. We know from <code>CMR-Hits</code> that there are more than 10 datasets. This is because CMR restricts the number of results returned by each query. The default is 10 but it can be set to a maximum of 2000. We’ll set the <code>page_size</code> parameter to 25 so we return all results in a single query.</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode" id="cb27"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'cloud_hosted': 'True',</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'project'</span>: project,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">25</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="28">
-<pre><code>&lt;Response [200]&gt;</code></pre>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#'cloud_hosted': 'True',</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'project'</span>: project,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'token'</span>: token,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">25</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-tags="[]" data-execution_count="29">
-<div class="sourceCode" id="cb29"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="29">
-<pre><code>'13'</code></pre>
-</div>
+<div class="cell" data-tags="[]">
+<div class="sourceCode" id="cb19"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, when we can re-run our for loop for the collections we now have all of the available collections listed.</p>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode" id="cb31"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>LP DAAC | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | C1534729776-LPDAAC_ECS
-LP DAAC | ECOSTRESS Geolocation Daily L1B Global 70m V001 | C1534584923-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration dis-ALEXI Daily L3 CONUS 70 m V001 | C1639530522-LPDAAC_ECS
-LP DAAC | ECOSTRESS Cloud Mask Daily L2 Global 70m V001 | C1534730833-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration PT-JPL Daily L3 Global 70m V001 | C1534730469-LPDAAC_ECS
-LP DAAC | ECOSTRESS Resampled Radiance Daily L1B Global 70m V001 | C1545228916-LPDAAC_ECS
-LP DAAC | ECOSTRESS At-sensor Calibrated Radiance Daily L1B Global 70m V001 | C1534582789-LPDAAC_ECS
-LP DAAC | ECOSTRESS L3/L4 Ancillary data Quality Assurance (QA) flags L3 Global 70m V001 | C1534730053-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evapotranspiration dis-ALEXI USDA Daily L3 Global 30m V001 | C1534730413-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evaporative Stress Index dis-ALEXI Daily L4 CONUS 70 m V001 | C1639530606-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evaporative Stress Index dis-ALEXI USDA Daily L4 Global 30m V001 | C1534730559-LPDAAC_ECS
-LP DAAC | ECOSTRESS Evaporative Stress Index PT-JPL Daily L4 Global 70m V001 | C1534730762-LPDAAC_ECS
-LP DAAC | ECOSTRESS Water Use Efficiency Daily L4 Global 70m V001 | C1534731034-LPDAAC_ECS</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="searching-for-granules" class="level2">
 <h2 class="anchored" data-anchor-id="searching-for-granules">Searching for Granules</h2>
 <p>In NASA speak, Granules are files or groups of files. In this example, we will search for ECO2LSTE version 1 for a specified region of interest and datetime range.</p>
 <p>We need to change the resource url to look for <strong>granules</strong> instead of collections</p>
-<div class="cell" data-execution_count="43">
-<div class="sourceCode" id="cb33"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"granules"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"granules"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will search by <code>concept_id</code>, <code>temporal</code>, and <code>bounding_box</code>. Details about these search parameters can be found in the CMR API Documentation.</p>
 <p>The formatting of the values for each parameter is quite specific.<br>
 <strong>Temporal parameters</strong> are in ISO 8061 format <code>yyyy-MM-ddTHH:mm:ssZ</code>.<br>
 <strong>Bounding box coordinates</strong> are lower left longitude, lower left latitude, upper right longitude, upper right latitude.</p>
-<div class="cell" data-execution_count="47">
-<div class="sourceCode" id="cb34"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>collection_id <span class="op">=</span> <span class="st">'C1534729776-LPDAAC_ECS'</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>date_range <span class="op">=</span> <span class="st">'2020-10-17T00:00:00Z,2020-11-18T23:59:59Z'</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> <span class="st">'-120.45264628,34.51050622,-120.40432448,34.53239876'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>collection_id <span class="op">=</span> <span class="st">'C1534729776-LPDAAC_ECS'</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>date_range <span class="op">=</span> <span class="st">'2020-10-17T00:00:00Z,2020-11-18T23:59:59Z'</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> <span class="st">'-120.45264628,34.51050622,-120.40432448,34.53239876'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="48">
-<div class="sourceCode" id="cb35"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'concept_id'</span>: collection_id,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'temporal'</span>: date_range,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'bounding_box'</span>: bbox,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">200</span>,</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                            },</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                            }</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>200</code></pre>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'concept_id'</span>: collection_id,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'temporal'</span>: date_range,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'bounding_box'</span>: bbox,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'token'</span>: token,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">200</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                            },</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.headers[<span class="st">'CMR-Hits'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="49">
-<div class="sourceCode" id="cb37"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.headers[<span class="st">'CMR-Hits'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>28</code></pre>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>granules <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> granule <span class="kw">in</span> granules:</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>granule[<span class="st">"data_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="54">
-<div class="sourceCode" id="cb39"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>granules <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> granule <span class="kw">in</span> granules:</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>granule[<span class="st">"data_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1955166480-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1955860878-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1955860907-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1956790291-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1957484010-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1957483425-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1959140552-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1959144003-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1960024552-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1960024537-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1960892156-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1961251292-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1961859384-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1961859396-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1962720026-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1963283754-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1964173469-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1964173212-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1964455718-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1964731097-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1965332089-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1966009898-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1966835047-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1967120727-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1967502414-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1968102807-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1968495116-LPDAAC_ECS
-LPDAAC_ECS | ECOSTRESS Land Surface Temperature and Emissivity Daily L2 Global 70m V001 | G1968495429-LPDAAC_ECS</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="51">
-<div class="sourceCode" id="cb41"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pprint(granules[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>{'boxes': ['29.607285 -124.541191 34.880539 -118.98838'],
- 'browse_flag': True,
- 'collection_concept_id': 'C1534729776-LPDAAC_ECS',
- 'coordinate_system': 'CARTESIAN',
- 'data_center': 'LPDAAC_ECS',
- 'dataset_id': 'ECOSTRESS Land Surface Temperature and Emissivity Daily L2 '
-               'Global 70m V001',
- 'day_night_flag': 'DAY',
- 'granule_size': '667.132',
- 'id': 'G1955166480-LPDAAC_ECS',
- 'links': [{'href': 'https://e4ftl01.cr.usgs.gov//ECOB/ECOSTRESS/ECO2LSTE.001/2020.10.19/ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.h5',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-            'title': 'ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.h5. '
-                     'MimeType: application/x-hdfeos',
-            'type': 'application/x-hdfeos'},
-           {'href': 'https://opendap.cr.usgs.gov/opendap/hyrax//ECOB/ECOSTRESS/ECO2LSTE.001/2020.10.19/ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.h5',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/service#',
-            'title': 'This file may be accessed using OPeNDAP directly from '
-                     'this link (OPENDAP DATA)',
-            'type': 'text/html'},
-           {'href': 'https://dx.doi.org/10.5067/ECOSTRESS/ECO2LSTE.001',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-            'title': 'The Landing Page for this file may be accessed directly '
-                     'from this link (DOI)',
-            'type': 'text/html'},
-           {'href': 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.21/ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.1.jpg',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-            'title': 'This Browse file may be downloaded directly from this '
-                     'link (BROWSE)',
-            'type': 'image/jpeg'},
-           {'href': 'https://e4ftl01.cr.usgs.gov//ECOB/ECOSTRESS/ECO2LSTE.001/2020.10.19/ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.h5.xml',
-            'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-            'title': 'This Metadata file may be downloaded directly from this '
-                     'link (EXTENDED METADATA)',
-            'type': 'text/xml'},
-           {'href': 'https://search.earthdata.nasa.gov/search?q=C1534729776-LPDAAC_ECS',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://e4ftl01.cr.usgs.gov/ECOSTRESS/ECO2LSTE.001/',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://doi.org/10.5067/ECOSTRESS/ECO2LSTE.001',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/423/ECO2_User_Guide_V1.pdf',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/1324/ECO2_LSTE_ATBD_V1.pdf',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://ecostress.jpl.nasa.gov/science',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/380/ECO2_PSD_V1.pdf',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/299/ECO2_ASD_V1.pdf',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://lpdaac.usgs.gov/documents/227/ECO_Earthdata_Search_Quick_Guide.pdf',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
-           {'href': 'https://appeears.earthdatacloud.nasa.gov/',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://earthexplorer.usgs.gov/',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
-           {'href': 'https://opendap.cr.usgs.gov/opendap/hyrax/ECOB/ECOSTRESS/ECO2LSTE.001/contents.html',
-            'hreflang': 'en-US',
-            'inherited': True,
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/service#'}],
- 'online_access_flag': True,
- 'orbit_calculated_spatial_domains': [{'start_orbit_number': '12978',
-                                       'stop_orbit_number': '12978'}],
- 'original_format': 'ECHO10',
- 'producer_granule_id': 'ECOSTRESS_L2_LSTE_12978_011_20201019T221736_0601_01.h5',
- 'time_end': '2020-10-19T22:22:37.260Z',
- 'time_start': '2020-10-19T22:17:37.260Z',
- 'title': 'SC:ECO2LSTE.001:2413567151',
- 'updated': '2020-10-20T23:53:17.641Z'}</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pprint(granules[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

@@ -134,7 +134,7 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/schedule.html</loc>
-    <lastmod>2022-04-01T15:28:56.854Z</lastmod>
+    <lastmod>2022-04-04T21:47:11.989Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/prerequisites/index.html</loc>
@@ -186,7 +186,7 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Data_Discovery_CMR_API.html</loc>
-    <lastmod>2022-04-01T19:57:51.334Z</lastmod>
+    <lastmod>2022-04-04T21:58:16.426Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Getting_started_setup.html</loc>
@@ -218,7 +218,7 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Comparing TNC Tree Data to ECOSTRESS.html</loc>
-    <lastmod>2022-04-01T21:19:22.269Z</lastmod>
+    <lastmod>2022-04-04T21:41:29.197Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/cloud-paradigm.html</loc>
@@ -230,10 +230,18 @@
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Data_Discovery_CMR_API_EDL_Token.html</loc>
-    <lastmod>2022-04-04T16:13:58.327Z</lastmod>
+    <lastmod>2022-04-04T20:44:33.049Z</lastmod>
   </url>
   <url>
     <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/how-tos/data_access/Direct_Access_netCDF_simple.html</loc>
     <lastmod>2022-04-04T14:42:26.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Comparing_TNC_Tree_Data_to_ECOSTRESS.html</loc>
+    <lastmod>2022-04-04T21:47:30.276Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/tutorials/Data_Discovery_CMR_API_ECOSTRESSv1.html</loc>
+    <lastmod>2022-04-04T21:47:31.820Z</lastmod>
   </url>
 </urlset>
