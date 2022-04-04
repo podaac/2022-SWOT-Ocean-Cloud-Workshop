@@ -1,7 +1,7 @@
 project: 
   type: website
 
-site:
+website:
   title: "2022 ECOSTRESS Cloud Workshop"
   site-url: https://nasa-openscapes.github.io/2022-ECOSTRESS-Cloud-Workshop/
   repo-url: https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop
@@ -10,7 +10,7 @@ site:
   page-footer: "LPDAAC & JPL (2022). 2022 ECOSTRESS Cloud Workshop"
  
   navbar: 
-    #background: light
+    background: primary
     right: 
       - sidebar:welcome
       - icon: github
