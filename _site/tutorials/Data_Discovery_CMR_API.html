@@ -374,12 +374,18 @@
         <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">On this page</h2>
 <ul>
-<li><a href="#data-discovery-with-cmr" class="nav-link active" data-scroll-target="#data-discovery-with-cmr">Data discovery with CMR</a>
+<li><a href="#data-discovery-with-nasas-cmr" class="nav-link active" data-scroll-target="#data-discovery-with-nasas-cmr">Data discovery with NASA’s CMR</a>
 <ul class="collapse">
+<li><a href="#summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+<li><a href="#requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a>
+<ul class="collapse">
+<li><a href="#earthdata-login" class="nav-link" data-scroll-target="#earthdata-login">1. Earthdata Login</a></li>
+</ul></li>
+<li><a href="#learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
 <li><a href="#what-is-cmr" class="nav-link" data-scroll-target="#what-is-cmr">What is CMR</a></li>
 <li><a href="#what-is-the-cmr-api" class="nav-link" data-scroll-target="#what-is-the-cmr-api">What is the CMR API</a></li>
-<li><a href="#how-to-search-cmr-from-python" class="nav-link" data-scroll-target="#how-to-search-cmr-from-python">How to search CMR from Python</a></li>
-<li><a href="#granule-search" class="nav-link" data-scroll-target="#granule-search">Granule Search</a></li>
+<li><a href="#getting-started-how-to-search-cmr-from-python" class="nav-link" data-scroll-target="#getting-started-how-to-search-cmr-from-python">Getting Started: How to search CMR from Python</a></li>
+<li><a href="#searching-for-granules" class="nav-link" data-scroll-target="#searching-for-granules">Searching for Granules</a></li>
 </ul></li>
 </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop/edit/main/tutorials/Data_Discovery_CMR_API.ipynb" class="toc-action">Edit this page</a></p><p><a href="https://github.com/NASA-Openscapes/2022-ECOSTRESS-Cloud-Workshop/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -387,12 +393,29 @@
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<section id="data-discovery-with-cmr" class="level1">
-<h1>Data discovery with CMR</h1>
-<p>In this tutorial you will learn: - what CMR is;<br>
-- how to use the <code>requests</code> package to search data collections and granules;<br>
-- how to parse the results of these searches.</p>
-<p>We will focus on datasets in the cloud. Currently, DAACs with data in the cloud are ‘ASF’, ‘GES_DISC’, ‘GHRC_DAAC’, ‘LPCLOUD’, ‘ORNL_CLOUD’, ‘POCLOUD’</p>
+<section id="data-discovery-with-nasas-cmr" class="level1">
+<h1>Data discovery with NASA’s CMR</h1>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this notebook, we will walk through how to search for Earthdata data collections and granules. Along the way we will explore the available search parameters, information return, and specific contrains when using the CMR API. Our object is to identify assets to access that we would downloaded, or perform S3 direct access, within an analysis workflow</p>
+<p>We will be querying CMR for <a href="">Harmonized Landsat Sentinel-2 (HLS)</a> collections/granules to identify assets we would downloaded, or perform S3 direct access, within an analysis workflow</p>
+</section>
+<section id="requirements" class="level2">
+<h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
+<section id="earthdata-login" class="level3">
+<h3 class="anchored" data-anchor-id="earthdata-login">1. Earthdata Login</h3>
+<p>An Earthdata Login account is required to access data, as well as discover restricted data, from the NASA Earthdata system. Thus, to access NASA data, you need Earthdata Login. Please visit <a href="https://urs.earthdata.nasa.gov" class="uri">https://urs.earthdata.nasa.gov</a> to register and manage your Earthdata Login account. This account is free to create and only takes a moment to set up.</p>
+</section>
+</section>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li>understand what CMR/CMR API is and what CMR/CMR API can be used for</li>
+<li>how to use the <code>requests</code> package to search data collections and granules<br>
+</li>
+<li>how to parse the results of these searches.</li>
+</ul>
+</section>
 <section id="what-is-cmr" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-cmr">What is CMR</h2>
 <p>CMR is the Common Metadata Repository. It catalogs all data for NASA’s Earth Observing System Data and Information System (EOSDIS). It is the backend of <a href="https://search.earthdata.nasa.gov/search">Earthdata Search</a>, the GUI search interface you are probably familiar with. More information about CMR can be found <a href="https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/cmr">here</a>.</p>
@@ -402,31 +425,31 @@
 <h2 class="anchored" data-anchor-id="what-is-the-cmr-api">What is the CMR API</h2>
 <p>API stands for Application Programming Interface. It allows applications (software, services, etc) to send information to each other. A helpful analogy is a waiter in a restaurant. The waiter takes your drink or food order that you select from the menu, often translated into short-hand, to the bar or kitchen, and then returns (hopefully) with what you ordered when it is ready.</p>
 <p>The CMR API accepts search terms such as collection name, keywords, datetime range, and location, queries the CMR database and returns the results.</p>
+<hr>
 </section>
-<section id="how-to-search-cmr-from-python" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-search-cmr-from-python">How to search CMR from Python</h2>
+<section id="getting-started-how-to-search-cmr-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-how-to-search-cmr-from-python">Getting Started: How to search CMR from Python</h2>
 <p>The first step is to import python packages. We will use:<br>
 - <code>requests</code> This package does most of the work for us accessing the CMR API using HTTP methods. - <code>pprint</code> to <em>pretty print</em> the results of the search.</p>
-<p>A more in depth tutorial on <code>requests</code> is <a href="https://realpython.com/python-requests/">here</a></p>
+<p>A more in-depth tutorial on <code>requests</code> is <a href="https://realpython.com/python-requests/">here</a></p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then we need to authenticate with EarthData Login. Since we’ve already set this up in the previous lesson, here you need to enter your username before executing the cell.</p>
-<p>To conduct a search using the CMR API, <code>requests</code> needs the url for the root CMR search endpoint. We’ll build this url as a python variable.</p>
+<p>To conduct a search using the CMR API, <code>requests</code> needs the url for the root CMR search endpoint. We’ll assign this url to a python variable as a <em>string</em>.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>CMR_OPS <span class="op">=</span> <span class="st">'https://cmr.earthdata.nasa.gov/search'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>CMR allows search by <strong>collections</strong>, which are datasets, and <strong>granules</strong>, which are files that contain data. Many of the same search parameters can be used for colections and granules but the type of results returned differ. Search parameters can be found in the <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">API Documentation</a>.</p>
-<p>Whether we search <strong>collections</strong> or <strong>granules</strong> is distinguished by adding <code>"collections"</code> or <code>"granules"</code> to the url for the root CMR endpoint.</p>
-<p>We are going to search collections first, so we add collections to the url. I’m using a <code>python</code> format string here.</p>
+<p>CMR allows search by <strong>collections</strong>, which are datasets, and <strong>granules</strong>, which are files that contain data. Many of the same search parameters can be used for collections and granules but the type of results returned differ. Search parameters can be found in the <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">API Documentation</a>.</p>
+<p>Whether we search <strong>collections</strong> or <strong>granules</strong> is distinguished by adding <code>"collections"</code> or <code>"granules"</code> to the end of the CMR endpoint URL.</p>
+<p>We are going to search collections first, so we add <code>"collections"</code> to the URL. We are using a <code>python</code> format string in the examples below.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"collections"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this first example, I want to retrieve a list of collections that are hosted in the cloud. Each collection has a <code>cloud_hosted</code> parameter that is either True if that collection is in the cloud and False if it is not. The migration of NASA data to the cloud is a work in progress. Not all collections tagged as <code>cloud_hosted</code> have granules. To search for only <code>cloud_hosted</code> datasets with granules, I also set <code>has_granules</code> to <code>True</code>.</p>
-<p>I also want to get the content in <code>json</code> (pronounced “jason”) format, so I pass a dictionary to the header keyword argument to say that I want results returned as <code>json</code>.</p>
+<p>In this first example, I want to retrieve a list of collections available from the Earthdata Cloud using the <code>cloud_hosted</code> parameter in the request.</p>
+<p>We want to get the content in <code>json</code> (pronounced “jason”) format, so I pass a dictionary to the header keyword argument to say that I want results returned as <code>json</code>.</p>
 <p>The <code>.get()</code> method is used to send this information to the CMR API. <code>get()</code> calls the HTTP method <strong>GET</strong>.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'cloud_hosted'</span>: <span class="st">'True'</span>,</span>
@@ -437,71 +460,69 @@
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                        }</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>requests</code> returns a <code>Response</code> object.</p>
-<p>Often, we want to check that our request was successful. In a notebook or someother interactive environment, we can just type the name of the variable we have saved our <code>requests</code> Response to, in this case the <code>response</code> variable.</p>
-<div class="cell" data-execution_count="6">
+<p>The request returns a <code>Response</code> object.</p>
+<p>To check that our request was successful we can print the <code>response</code> variable we saved the request to.</p>
+<div class="cell" data-execution_count="5">
 <div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="6">
+<div class="cell-output-display" data-execution_count="5">
 <pre><code>&lt;Response [200]&gt;</code></pre>
 </div>
 </div>
-<p>A cleaner and more understandable method is to check the <code>status_code</code> attribute. Both methods return a HTTP status code. You’ve probably seen a 404 error when you have tried to access a website that doesn’t exist.</p>
-<div class="cell" data-execution_count="7">
+<p>A <strong>200</strong> response is what we want. This means that the requests was successful. For more information on HTTP status codes see <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" class="uri">https://en.wikipedia.org/wiki/List_of_HTTP_status_codes</a></p>
+<p>A more explict way to check the status code is to use the <code>status_code</code> attribute. Both methods return a HTTP status code.</p>
+<div class="cell" data-execution_count="6">
 <div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response.status_code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="7">
+<div class="cell-output-display" data-execution_count="6">
 <pre><code>200</code></pre>
 </div>
 </div>
-<p>Try changing <code>CMR_OPS</code> to <code>https://cmr.earthdata.nasa.gov/searches</code> and run <code>requests.get</code> again. <strong>Don’t forget to rerun the cell that assigns the <code>url</code> variable</strong></p>
 <p>The response from <code>requests.get</code> returns the results of the search and metadata about those results in the <code>headers</code>.</p>
 <p>More information about the <code>response</code> object can be found by typing <code>help(response)</code>.</p>
-<p><code>headers</code> contains useful information in a case-insensitive dictionary. This information is printed below. <em>TODO: maybe some context for where the 2 elements k, v, come from?</em></p>
-<div class="cell" data-execution_count="8">
+<p><code>headers</code> contains useful information in a case-insensitive dictionary. We requested (above) that the information be return in json which means the object return is a dictionary in our Python environment. We’ll iterate through the returned dictionary, looping throught each field (<code>k</code>) and its associated value (<code>v</code>). For more on interating through dictionary object click <a href="https://realpython.com/iterate-through-dictionary-python/">here</a>.</p>
+<div class="cell" data-execution_count="7">
 <div class="sourceCode" id="cb9"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, v <span class="kw">in</span> response.headers.items():</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>Content-Type: application/json;charset=utf-8
-Content-Length: 3820
+Content-Length: 4517
 Connection: keep-alive
-Date: Tue, 02 Nov 2021 22:07:37 GMT
+Date: Mon, 04 Apr 2022 21:04:20 GMT
 X-Frame-Options: SAMEORIGIN
 Access-Control-Allow-Origin: *
 X-XSS-Protection: 1; mode=block
-CMR-Request-Id: 510cf611-d65b-4b46-981b-f4719405676a
+CMR-Request-Id: 6b187d39-c5b8-40f7-9b06-9228ea3c33b2
 Strict-Transport-Security: max-age=31536000
-CMR-Search-After: [0.0,14000.0,"SENTINEL-1A_RAW","1",1214470561,1320]
-CMR-Hits: 917
+CMR-Search-After: [0.0,18400.0,"SENTINEL-1A_OCN","1",1214472977,1250]
+CMR-Hits: 1169
 Access-Control-Expose-Headers: CMR-Hits, CMR-Request-Id, X-Request-Id, CMR-Scroll-Id, CMR-Search-After, CMR-Timed-Out, CMR-Shapefile-Original-Point-Count, CMR-Shapefile-Simplified-Point-Count
 X-Content-Type-Options: nosniff
-CMR-Took: 435
-X-Request-Id: 510cf611-d65b-4b46-981b-f4719405676a
+CMR-Took: 303
+X-Request-Id: zbAtpLRlRe2kPJi8PNdomG7u6C22HPSRbAy5E2m23uYIKga7V8DEfg==
 Vary: Accept-Encoding, User-Agent
 Content-Encoding: gzip
 Server: ServerTokens ProductOnly
 X-Cache: Miss from cloudfront
-Via: 1.1 3f7e5e686bf8f19b9c786efbe99c7589.cloudfront.net (CloudFront)
-X-Amz-Cf-Pop: DEN52-C1
-X-Amz-Cf-Id: BXEUlb5ygB9nj9ygUbSZvIc3BE4k0d1Mn1qDd66IkkuX1rC_Z-mN6Q==</code></pre>
+Via: 1.1 e9c8cd6cad69627cb7c9d88123e6e2cc.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: HIO50-C2
+X-Amz-Cf-Id: zbAtpLRlRe2kPJi8PNdomG7u6C22HPSRbAy5E2m23uYIKga7V8DEfg==</code></pre>
 </div>
 </div>
-<p>We can see that the content returned is in <code>json</code> format in the UTF-8 character set. We can also see from <code>CMR-Hits</code> that 919 collections were found.</p>
-<p>Each item in the dictionary can be accessed in the normal way you access a <code>python</code> dictionary but because it is case-insensitive, both</p>
-<div class="cell" data-execution_count="9">
+<p>Each item in the dictionary can be accessed in the normal way you access a <code>python</code> dictionary but the keys uniquely case-insensitive. Let’s take a look at the commonly used <code>CMR-Hits</code> key.</p>
+<div class="cell" data-execution_count="8">
 <div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'CMR-Hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="9">
-<pre><code>'917'</code></pre>
+<div class="cell-output-display" data-execution_count="8">
+<pre><code>'1169'</code></pre>
 </div>
 </div>
-<p>and</p>
-<div class="cell" data-execution_count="10">
+<p>Note that “cmr-hits” works as well!</p>
+<div class="cell" data-execution_count="9">
 <div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="10">
-<pre><code>'917'</code></pre>
+<div class="cell-output-display" data-execution_count="9">
+<pre><code>'1169'</code></pre>
 </div>
 </div>
-<p>work.</p>
-<p>This is a large number of data sets. I’m going to restrict the search to cloud-hosted datasets from ASF (Alaska SAR Facility) because I’m interested in SAR images of sea ice. To do this, I set the <code>provider</code> parameter to <code>ASF</code>.</p>
-<p>You can modify the code below to explore all of the cloud-hosted datasets or cloud-hosted datasets from other providers. A partial list of providers is given below.</p>
+<p>In some situations the response to your query can return a very large number of result, some of which may not be relevant. We can add additional <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">query parameters</a> to restrict the information returned. We’re going to restrict the search by the <code>provider</code> parameter.</p>
+<p>You can modify the code below to explore all Earthdata data products hosted by the various providers. When searching by provider, use <em>Cloud Provider</em> to search for cloud-hosted datasets and <em>On-Premises Provider</em> to search for datasets archived at the DAACs. A partial list of providers is given below.</p>
 <table class="table">
 <colgroup>
 <col style="width: 11%">
@@ -574,58 +595,98 @@ X-Amz-Cf-Id: BXEUlb5ygB9nj9ygUbSZvIc3BE4k0d1Mn1qDd66IkkuX1rC_Z-mN6Q==</code></pr
 </tr>
 </tbody>
 </table>
-<p>When search by provider, use <em>Cloud Provider</em> to search for cloud-hosted datasets and <em>On-Premises Provider</em> to search for datasets archived at the DAACs.</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>provider <span class="op">=</span> <span class="st">'ASF'</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'cloud_hosted'</span>: <span class="st">'True'</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’ll assign the provider to a variable as a <em>string</em> and insert the variable into the parameter argument in the request.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode" id="cb15"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>provider <span class="op">=</span> <span class="st">'LPCLOUD'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="27">
-<pre><code>'45'</code></pre>
-</div>
-</div>
-<p>Search results are contained in the content part of the Response object. However, <code>response.content</code> returns information in bytes.</p>
-<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-tags="[]" data-execution_count="28">
-<div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>response.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display" data-execution_count="28">
-<pre><code>b'{"feed":{"updated":"2021-11-02T22:41:34.322Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?cloud_hosted=True&amp;has_granules=True&amp;provider=ASF","title":"ECHO dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:39.000Z","dataset_id":"SENTINEL-1A_SLC","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_SLC","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1A_SLC","coordinate_system":"CARTESIAN","summary":"Sentinel-1A slant-range product","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214470488-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2016-04-25T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:17:22.000Z","dataset_id":"SENTINEL-1B_SLC","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1B_SLC","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1B_SLC","coordinate_system":"CARTESIAN","summary":"Sentinel-1B slant-range product","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1327985661-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1B"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:15:56.000Z","dataset_id":"SENTINEL-1A_DUAL_POL_GRD_HIGH_RES","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_DP_GRD_HIGH","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1A_DUAL_POL_GRD_HIGH_RES","coordinate_system":"CARTESIAN","summary":"Sentinel-1A Dual-pol ground projected high and full resolution images","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214470533-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2016-04-25T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:47.000Z","dataset_id":"SENTINEL-1B_DUAL_POL_GRD_HIGH_RES","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1B_DP_GRD_HIGH","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1B_DUAL_POL_GRD_HIGH_RES","coordinate_system":"CARTESIAN","summary":"Sentinel-1B Dual-pol ground projected high and full resolution images","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1327985645-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1B"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2016-04-25T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:49.000Z","dataset_id":"SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1B_DP_GRD_MEDIUM","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES","coordinate_system":"CARTESIAN","summary":"Sentinel-1B Dual-pol ground projected medium resolution images","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1327985660-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1B"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:15:58.000Z","dataset_id":"SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_DP_GRD_MEDIUM","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES","coordinate_system":"CARTESIAN","summary":"Sentinel-1A Dual-pol ground projected medium resolution images","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214471521-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:20.000Z","dataset_id":"SENTINEL-1A_RAW","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_RAW","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1A_RAW","coordinate_system":"CARTESIAN","summary":"Sentinel-1A level zero product","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214470561-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:15.000Z","dataset_id":"SENTINEL-1A_METADATA_SLC","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_META_SLC","organizations":["ASF"],"title":"SENTINEL-1A_METADATA_SLC","coordinate_system":"CARTESIAN","summary":"Metadata for Sentinel-1A slant-range product","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214470496-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2016-04-25T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:17:02.000Z","dataset_id":"SENTINEL-1B_METADATA_SLC","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1B_META_SLC","organizations":["ASF"],"title":"SENTINEL-1B_METADATA_SLC","coordinate_system":"CARTESIAN","summary":"Metadata for Sentinel-1B slant-range product","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1327985617-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1B"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]},{"boxes":["-90 -180 90 180"],"time_start":"2014-04-03T00:00:00.000Z","version_id":"1","updated":"2021-07-15T19:16:26.000Z","dataset_id":"SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ASF","short_name":"SENTINEL-1A_SP_GRD_HIGH","organizations":["ASF","ESA/CS1CGS"],"title":"SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES","coordinate_system":"CARTESIAN","summary":"Sentinel-1A Single-pol ground projected high and full resolution images","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1214470682-ASF","has_formats":false,"original_format":"ECHO10","archive_center":"ASF","has_temporal_subsetting":false,"browse_flag":false,"platforms":["Sentinel-1A"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://vertex.daac.asf.alaska.edu/"}]}]}}'</code></pre>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'cloud_hosted'</span>: <span class="st">'True'</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'has_granules'</span>: <span class="st">'True'</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display" data-execution_count="11">
+<pre><code>&lt;Response [200]&gt;</code></pre>
 </div>
 </div>
-<p>It is more convenient to work with <code>json</code> formatted data. I’m using pretty print <code>pprint</code> to print the data in an easy to read way.</p>
-<p><strong>Step through <code>response.json()</code>, then to <code>response.json()['feed']['entry'][0]</code></strong>. A reminder that python starts indexing at 0, not 1!</p>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode" id="cb20"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pprint(response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>response.headers[<span class="st">'cmr-hits'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display" data-execution_count="12">
+<pre><code>'3'</code></pre>
+</div>
+</div>
+<p>Search results are contained in the <strong>content</strong> part of the Response object. However, <code>response.content</code> returns information in bytes.</p>
+<div class="cell" data-tags="[]" data-execution_count="13">
+<div class="sourceCode" id="cb20"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>response.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display" data-execution_count="13">
+<pre><code>b'{"feed":{"updated":"2022-04-04T21:04:21.524Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?cloud_hosted=True&amp;has_granules=True&amp;provider=LPCLOUD","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2013-04-11T00:00:00.000Z","version_id":"2.0","updated":"2015-12-03T10:57:07.000Z","dataset_id":"HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPCLOUD","short_name":"HLSL30","organizations":["LP DAAC","NASA/IMPACT"],"title":"HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0","coordinate_system":"CARTESIAN","summary":"The Harmonized Landsat and Sentinel-2 (HLS) project provides consistent surface reflectance (SR) and top of atmosphere (TOA) brightness data from the Operational Land Imager (OLI) aboard the joint NASA/USGS Landsat 8 satellite and the Multi-Spectral Instrument (MSI) aboard Europe\xe2\x80\x99s Copernicus Sentinel-2A and Sentinel-2B satellites. The combined measurement enables global observations of the land every 2\xe2\x80\x933 days at 30-meter (m) spatial resolution. The HLS project uses a set of algorithms to obtain seamless products from OLI and MSI that include atmospheric correction, cloud and cloud-shadow masking, spatial co-registration and common gridding, illumination and view angle normalization, and spectral bandpass adjustment.\\r\\n\\r\\nThe HLSL30 product provides 30-m Nadir Bidirectional Reflectance Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is derived from Landsat 8 OLI data products. The HLSS30 and HLSL30 products are gridded to the same resolution and Military Grid Reference System ([MGRS](https://hls.gsfc.nasa.gov/products-description/tiling-system/)) tiling system, and thus are \xe2\x80\x9cstackable\xe2\x80\x9d for time series analysis.\\r\\n\\r\\nThe HLSL30 product is provided in Cloud Optimized GeoTIFF (COG) format, and each band is distributed as a separate file. There are 11 bands included in the HLSL30 product along with one quality assessment (QA) band and four angle bands. See the User Guide for a more detailed description of the individual bands provided in the HLSL30 product.","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C2021957657-LPCLOUD","has_formats":false,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","collection_data_type":"OTHER","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["LANDSAT-8"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C2021957657-LPCLOUD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/HLS/HLSL30.002"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1118/HLS_User_Guide_V2.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/769/HLS_ATBD_V15_provisional.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/768/HLS_Quick_Guide_v011.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-tutorial/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-super-script/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G2095313663-LPCLOUD?h=512&amp;w=512"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-bulk-download/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/resources/e-learning/getting-started-with-cloud-native-harmonized-landsat-sentinel-2-hls-data-in-r/"}]},{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2015-11-28T00:00:00.000Z","version_id":"2.0","updated":"2020-03-04T07:19:53.396Z","dataset_id":"HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPCLOUD","short_name":"HLSS30","organizations":["LP DAAC","NASA/IMPACT"],"title":"HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0","coordinate_system":"CARTESIAN","summary":"The Harmonized Landsat and Sentinel-2 (HLS) project provides consistent surface reflectance data from the Operational Land Imager (OLI) aboard the joint NASA/USGS Landsat 8 satellite and the Multi-Spectral Instrument (MSI) aboard Europe\xe2\x80\x99s Copernicus Sentinel-2A and Sentinel-2B satellites. The combined measurement enables global observations of the land every 2\xe2\x80\x933 days at 30-meter (m) spatial resolution. The HLS project uses a set of algorithms to obtain seamless products from OLI and MSI that include atmospheric correction, cloud and cloud-shadow masking, spatial co-registration and common gridding, illumination and view angle normalization, and spectral bandpass adjustment. \\r\\n\\r\\nThe HLSS30 product provides 30-m Nadir Bidirectional Reflectance Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is derived from Sentinel-2A and Sentinel-2B MSI data products. The HLSS30 and HLSL30 products are gridded to the same resolution and Military Grid Reference System (MGRS) (https://hls.gsfc.nasa.gov/products-description/tiling-system/) tiling system, and thus are \xe2\x80\x9cstackable\xe2\x80\x9d for time series analysis.\\r\\n\\r\\nThe HLSS30 product is provided in Cloud Optimized GeoTIFF (COG) format, and each band is distributed as a separate COG. There are 13 bands included in the HLSS30 product along with four angle bands and a quality assessment (QA) band. See the User Guide for a more detailed description of the individual bands provided in the HLSS30 product.\\r\\n","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C2021957295-LPCLOUD","has_formats":false,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","collection_data_type":"OTHER","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["Sentinel-2A","Sentinel-2B"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=C2021957295-LPCLOUD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/HLS/HLSS30.002"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/1118/HLS_User_Guide_V2.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/769/HLS_ATBD_V15_provisional.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/768/HLS_Quick_Guide_v011.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-tutorial/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-super-script/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G2095548655-LPCLOUD?h=512&amp;w=512"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-bulk-download/browse"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/resources/e-learning/getting-started-with-cloud-native-harmonized-landsat-sentinel-2-hls-data-in-r/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://wiki.earthdata.nasa.gov/pages/viewpage.action?pageId=195432390"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/?v=-191.12397594071413,-86.52209371542455,182.39111268571813,89.5139950740695&amp;t=2020-10-15-T16%3A46%3A06Z&amp;l=Reference_Labels(hidden),Reference_Features(hidden),Coastlines,HLS_S30_Nadir_BRDF_Adjusted_Reflectance(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&amp;tr=hls_intro "}]},{"processing_level_id":"3","boxes":["-83 -180 82 180"],"time_start":"2000-03-01T00:00:00.000Z","version_id":"003","updated":"2015-09-30T10:42:35.418Z","dataset_id":"ASTER Global Digital Elevation Model V003","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPCLOUD","short_name":"ASTGTM","organizations":["LP DAAC","NASA/JPL/ASTER"],"title":"ASTER Global Digital Elevation Model V003","coordinate_system":"CARTESIAN","summary":"The ASTER Global Digital Elevation Model (GDEM) Version 3 (ASTGTM) provides a global digital elevation model (DEM) of land areas on Earth at a spatial resolution of 1 arc second (approximately 30 meter horizontal posting at the equator).\\r\\n\\r\\nThe development of the ASTER GDEM data products is a collaborative effort between National Aeronautics and Space Administration (NASA) and Japan\xe2\x80\x99s Ministry of Economy, Trade, and Industry (METI). The ASTER GDEM data products are created by the Sensor Information Laboratory Corporation (SILC) in Tokyo. \\r\\n\\r\\nThe ASTER GDEM Version 3 data product was created from the automated processing of the entire ASTER Level 1A (https://doi.org/10.5067/ASTER/AST_L1A.003) archive of scenes acquired between March 1, 2000, and November 30, 2013. Stereo correlation was used to produce over one million individual scene based ASTER DEMs, to which cloud masking was applied. All cloud screened DEMs and non-cloud screened DEMs were stacked. Residual bad values and outliers were removed. In areas with limited data stacking, several existing reference DEMs were used to supplement ASTER data to correct for residual anomalies. Selected data were averaged to create final pixel values before partitioning the data into 1 degree latitude by 1 degree longitude tiles with a one pixel overlap. To correct elevation values of water body surfaces, the ASTER Global Water Bodies Database (ASTWBD) (https://doi.org/10.5067/ASTER/ASTWBD.001) Version 1 data product was also generated. \\r\\n\\r\\nThe geographic coverage of the ASTER GDEM extends from 83\xc2\xb0 North to 83\xc2\xb0 South. Each tile is distributed in GeoTIFF format and projected on the 1984 World Geodetic System (WGS84)/1996 Earth Gravitational Model (EGM96) geoid. Each of the 22,912 tiles in the collection contain at least 0.01% land area. \\r\\n\\r\\nProvided in the ASTER GDEM product are layers for DEM and number of scenes (NUM). The NUM layer indicates the number of scenes that were processed for each pixel and the source of the data.\\r\\n\\r\\nWhile the ASTER GDEM Version 3 data products offer substantial improvements over Version 2, users are advised that the products still may contain anomalies and artifacts that will reduce its usability for certain applications. \\r\\n\\r\\nImprovements/Changes from Previous Versions \\r\\n\xe2\x80\xa2 Expansion of acquisition coverage to increase the amount of cloud-free input scenes from about 1.5 million in Version 2 to about 1.88 million scenes in Version 3.\\r\\n\xe2\x80\xa2 Separation of rivers from lakes in the water body processing. \\r\\n\xe2\x80\xa2 Minimum water body detection size decreased from 1 km2 to 0.2 km2. ","time_end":"2013-11-30T23:59:59.999Z","service_features":{"opendap":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"esi":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false},"harmony":{"has_formats":false,"has_variables":false,"has_transforms":false,"has_spatial_subsetting":false,"has_temporal_subsetting":false}},"orbit_parameters":{},"id":"C1711961296-LPCLOUD","has_formats":false,"consortiums":["GEOSS","EOSDIS"],"original_format":"UMM_JSON","archive_center":"LP DAAC","has_temporal_subsetting":false,"browse_flag":true,"platforms":["Terra"],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q= C1711961296-LPCLOUD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ASTER/ASTGTM.003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://asterweb.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/documents/434/ASTGTM_User_Guide_V3.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G1726374754-LPCLOUD?h=512&amp;w=512"}]}]}}'</code></pre>
+</div>
+</div>
+<p>A more convenient way to work with this information is to use <code>json</code> formatted data. I’m using pretty print <code>pprint</code> to print the data in an easy to read way.</p>
+<p><strong>Note</strong> - <code>response.json()</code> will format our response in <code>json</code> - <code>['feed']['entry']</code> returns all entries that CMR returned in the request (not the same as <strong>CMR-Hits</strong>) - <code>[0]</code> returns the first entry. Reminder that python starts indexing at 0, not 1!</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode" id="cb22"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pprint(response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
-<pre><code>{'archive_center': 'ASF',
+<pre><code>{'archive_center': 'LP DAAC',
  'boxes': ['-90 -180 90 180'],
- 'browse_flag': False,
+ 'browse_flag': True,
+ 'collection_data_type': 'OTHER',
+ 'consortiums': ['GEOSS', 'EOSDIS'],
  'coordinate_system': 'CARTESIAN',
- 'data_center': 'ASF',
- 'dataset_id': 'SENTINEL-1A_SLC',
+ 'data_center': 'LPCLOUD',
+ 'dataset_id': 'HLS Landsat Operational Land Imager Surface Reflectance and '
+               'TOA Brightness Daily Global 30m v2.0',
  'has_formats': False,
  'has_spatial_subsetting': False,
  'has_temporal_subsetting': False,
  'has_transforms': False,
  'has_variables': False,
- 'id': 'C1214470488-ASF',
- 'links': [{'href': 'https://vertex.daac.asf.alaska.edu/',
+ 'id': 'C2021957657-LPCLOUD',
+ 'links': [{'href': 'https://search.earthdata.nasa.gov/search?q=C2021957657-LPCLOUD',
             'hreflang': 'en-US',
-            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
+           {'href': 'https://doi.org/10.5067/HLS/HLSL30.002',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
+           {'href': 'https://lpdaac.usgs.gov/',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/1118/HLS_User_Guide_V2.pdf',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/769/HLS_ATBD_V15_provisional.pdf',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/768/HLS_Quick_Guide_v011.pdf',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-tutorial/browse',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-super-script/browse',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/G2095313663-LPCLOUD?h=512&amp;w=512',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-bulk-download/browse',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/resources/e-learning/getting-started-with-cloud-native-harmonized-landsat-sentinel-2-hls-data-in-r/',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'}],
  'online_access_flag': True,
  'orbit_parameters': {},
- 'organizations': ['ASF', 'ESA/CS1CGS'],
- 'original_format': 'ECHO10',
- 'platforms': ['Sentinel-1A'],
+ 'organizations': ['LP DAAC', 'NASA/IMPACT'],
+ 'original_format': 'UMM_JSON',
+ 'platforms': ['LANDSAT-8'],
+ 'processing_level_id': '3',
  'service_features': {'esi': {'has_formats': False,
                               'has_spatial_subsetting': False,
                               'has_temporal_subsetting': False,
@@ -641,124 +702,80 @@ X-Amz-Cf-Id: BXEUlb5ygB9nj9ygUbSZvIc3BE4k0d1Mn1qDd66IkkuX1rC_Z-mN6Q==</code></pr
                                   'has_temporal_subsetting': False,
                                   'has_transforms': False,
                                   'has_variables': False}},
- 'short_name': 'SENTINEL-1A_SLC',
- 'summary': 'Sentinel-1A slant-range product',
- 'time_start': '2014-04-03T00:00:00.000Z',
- 'title': 'SENTINEL-1A_SLC',
- 'updated': '2021-07-15T19:16:39.000Z',
- 'version_id': '1'}</code></pre>
+ 'short_name': 'HLSL30',
+ 'summary': 'The Harmonized Landsat and Sentinel-2 (HLS) project provides '
+            'consistent surface reflectance (SR) and top of atmosphere (TOA) '
+            'brightness data from the Operational Land Imager (OLI) aboard the '
+            'joint NASA/USGS Landsat 8 satellite and the Multi-Spectral '
+            'Instrument (MSI) aboard Europe’s Copernicus Sentinel-2A and '
+            'Sentinel-2B satellites. The combined measurement enables global '
+            'observations of the land every 2–3 days at 30-meter (m) spatial '
+            'resolution. The HLS project uses a set of algorithms to obtain '
+            'seamless products from OLI and MSI that include atmospheric '
+            'correction, cloud and cloud-shadow masking, spatial '
+            'co-registration and common gridding, illumination and view angle '
+            'normalization, and spectral bandpass adjustment.\r\n'
+            '\r\n'
+            'The HLSL30 product provides 30-m Nadir Bidirectional Reflectance '
+            'Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is '
+            'derived from Landsat 8 OLI data products. The HLSS30 and HLSL30 '
+            'products are gridded to the same resolution and Military Grid '
+            'Reference System '
+            '([MGRS](https://hls.gsfc.nasa.gov/products-description/tiling-system/)) '
+            'tiling system, and thus are “stackable” for time series '
+            'analysis.\r\n'
+            '\r\n'
+            'The HLSL30 product is provided in Cloud Optimized GeoTIFF (COG) '
+            'format, and each band is distributed as a separate file. There '
+            'are 11 bands included in the HLSL30 product along with one '
+            'quality assessment (QA) band and four angle bands. See the User '
+            'Guide for a more detailed description of the individual bands '
+            'provided in the HLSL30 product.',
+ 'time_start': '2013-04-11T00:00:00.000Z',
+ 'title': 'HLS Landsat Operational Land Imager Surface Reflectance and TOA '
+          'Brightness Daily Global 30m v2.0',
+ 'updated': '2015-12-03T10:57:07.000Z',
+ 'version_id': '2.0'}</code></pre>
 </div>
 </div>
-<p>The first response is not the result I am looking for <em>TODO: because xyz…but it does show a few variables that we can use to further refine the search</em>. So I want to print the name of the dataset (<code>dataset_id</code>) and the concept id (<code>id</code>). We can build this variable and print statement like we did above with the <code>url</code> variable. <em>TODO: is it worth saying something about what “feed” and “entry” are?</em></p>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode" id="cb22"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The first response contains a lot more information than we need. We’ll narrow in on a few fields to get a feel for what we have. We’ll print the name of the dataset (<code>dataset_id</code>) and the concept id (<code>id</code>). We can build this variable and print statement like we did above with the <code>url</code> variable.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode" id="cb24"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode" id="cb23"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode" id="cb25"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
-<pre><code>ASF SENTINEL-1A_SLC C1214470488-ASF
-ASF SENTINEL-1B_SLC C1327985661-ASF
-ASF SENTINEL-1A_DUAL_POL_GRD_HIGH_RES C1214470533-ASF
-ASF SENTINEL-1B_DUAL_POL_GRD_HIGH_RES C1327985645-ASF
-ASF SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES C1327985660-ASF
-ASF SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES C1214471521-ASF
-ASF SENTINEL-1A_RAW C1214470561-ASF
-ASF SENTINEL-1A_METADATA_SLC C1214470496-ASF
-ASF SENTINEL-1B_METADATA_SLC C1327985617-ASF
-ASF SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES C1214470682-ASF</code></pre>
+<pre><code>LP DAAC | HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0 | C2021957657-LPCLOUD
+LP DAAC | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | C2021957295-LPCLOUD
+LP DAAC | ASTER Global Digital Elevation Model V003 | C1711961296-LPCLOUD</code></pre>
 </div>
 </div>
-<p>But there is a problem. We know from <code>CMR-Hits</code> that there are 49 datasets but only 10 are printed. This is because CMR restricts the number of results returned by a query. The default is 10 but it can be set to a maximum of 2000. Knowing that there were 49 ‘hits’, I’ll set <code>page_size</code> to 49. Then, we can re-run our for loop for the collections.</p>
-<div class="cell" data-execution_count="32">
-<div class="sourceCode" id="cb25"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url,</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'cloud_hosted'</span>: <span class="st">'True'</span>,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'provider'</span>: provider,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">49</span>,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'Accept'</span>: <span class="st">'application/json'</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                        }</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="33">
-<div class="sourceCode" id="cb26"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>collections <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collection <span class="kw">in</span> collections:</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>collection[<span class="st">"archive_center"</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>collection[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>collection[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>ASF SENTINEL-1A_SLC C1214470488-ASF
-ASF SENTINEL-1B_SLC C1327985661-ASF
-ASF SENTINEL-1A_DUAL_POL_GRD_HIGH_RES C1214470533-ASF
-ASF SENTINEL-1B_DUAL_POL_GRD_HIGH_RES C1327985645-ASF
-ASF SENTINEL-1B_DUAL_POL_GRD_MEDIUM_RES C1327985660-ASF
-ASF SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES C1214471521-ASF
-ASF SENTINEL-1A_RAW C1214470561-ASF
-ASF SENTINEL-1A_METADATA_SLC C1214470496-ASF
-ASF SENTINEL-1B_METADATA_SLC C1327985617-ASF
-ASF SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES C1214470682-ASF
-ASF SENTINEL-1A_OCN C1214472977-ASF
-ASF SENTINEL-1B_RAW C1327985647-ASF
-ASF SENTINEL-1A_DUAL_POL_METADATA_GRD_HIGH_RES C1214470576-ASF
-ASF SENTINEL-1B_OCN C1327985579-ASF
-ASF SENTINEL-1A_METADATA_RAW C1214470532-ASF
-ASF SENTINEL-1B_DUAL_POL_METADATA_GRD_HIGH_RES C1327985741-ASF
-Alaska Satellite Facility Sentinel-1 Interferograms (BETA) C1595422627-ASF
-ASF ALOS_AVNIR_OBS_ORI C1808440897-ASF
-ASF SENTINEL-1A_SINGLE_POL_GRD_MEDIUM_RES C1214472994-ASF
-ASF SENTINEL-1B_METADATA_RAW C1327985650-ASF
-ASF SENTINEL-1B_SINGLE_POL_GRD_HIGH_RES C1327985571-ASF
-ASF SENTINEL-1B_SINGLE_POL_GRD_MEDIUM_RES C1327985740-ASF
-ASF SENTINEL-1A_METADATA_OCN C1266376001-ASF
-ASF SENTINEL-1B_METADATA_OCN C1327985646-ASF
-ASF SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES C1214472336-ASF
-ASF SENTINEL-1A_SINGLE_POL_METADATA_GRD_HIGH_RES C1214470732-ASF
-ASF SENTINEL-1A_SINGLE_POL_METADATA_GRD_MEDIUM_RES C1214473170-ASF
-ASF SENTINEL-1B_DUAL_POL_METADATA_GRD_MEDIUM_RES C1327985578-ASF
-ASF SENTINEL-1B_SINGLE_POL_METADATA_GRD_HIGH_RES C1327985619-ASF
-ASF SENTINEL-1B_SINGLE_POL_METADATA_GRD_MEDIUM_RES C1327985739-ASF
-ASF STS-68_BROWSE_GRD C1661710593-ASF
-ASF STS-68_BROWSE_SLC C1661710596-ASF
-ASF STS-59_BROWSE_GRD C1661710578-ASF
-ASF STS-59_BROWSE_SLC C1661710581-ASF
-ASF SENTINEL-1A_DUAL_POL_GRD_FULL_RES C1214471197-ASF
-ASF SENTINEL-1A_DUAL_POL_METADATA_GRD_FULL_RES C1214471960-ASF
-ASF SENTINEL-1A_SINGLE_POL_GRD_FULL_RES C1214472978-ASF
-ASF SENTINEL-1A_SINGLE_POL_METADATA_GRD_FULL_RES C1214473165-ASF
-ASF SENTINEL-1B_DUAL_POL_GRD_FULL_RES C1327985697-ASF
-ASF SENTINEL-1B_DUAL_POL_METADATA_GRD_FULL_RES C1327985651-ASF
-ASF SENTINEL-1B_SINGLE_POL_GRD_FULL_RES C1327985644-ASF
-ASF SENTINEL-1B_SINGLE_POL_METADATA_GRD_FULL_RES C1327985674-ASF
-Alaska Satellite Facility Sentinel-1 Unwrapped Interferogram and Coherence Map (BETA) C1379535600-ASF
-Alaska Satellite Facility Sentinel-1 Interferograms - Amplitude (BETA) C1596065640-ASF
-Alaska Satellite Facility Sentinel-1 Interferograms - Coherence (BETA) C1596065639-ASF
-Alaska Satellite Facility Sentinel-1 Interferograms - Connected Components (BETA) C1596065641-ASF
-Alaska Satellite Facility Sentinel-1 Interferograms - Unwrapped Phase (BETA) C1595765183-ASF
-ASF STS-59_GRD C1661710583-ASF
-ASF STS-59_METADATA_GRD C1661710586-ASF</code></pre>
-</div>
-</div>
+<p>In some situations we may be expecting a certain number of results. Only 10 datasets are return be default. This can be modified by setting the <code>page_size</code> parameter to a different any value less than or equal to 2000 (2000 is the maximum number of results return by CMR). Note, this is different that what we see from <code>CMR-Hits</code> in the header, which is the number of entries found that are available for request.</p>
 </section>
-<section id="granule-search" class="level2">
-<h2 class="anchored" data-anchor-id="granule-search">Granule Search</h2>
-<p>In NASA speak, Granules are files. In this example, we will search for recent Sentinel-1 Ground Range Detected (GRD) Medium Resolution Synthetic Aperture Radar images over the east coast of Greenland. The data in these files are most useful for sea ice mapping.</p>
-<p>I’ll use the data range 2021-10-17 00:00 to 2021-10-18 23:59:59.</p>
-<p>I’ll use a simple bounding box to search. - SW: 76.08166,-67.1746 - NW: 88.19689,21.04862</p>
-<p>From the collections search, I know the concept ids for Sentinel-1A and Sentinel-1B GRD medium resolution are - C1214472336-ASF - C1327985578-ASF</p>
-<p>We need to change the resource url to look for granules instead of collections</p>
-<div class="cell" data-execution_count="34">
-<div class="sourceCode" id="cb28"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"granules"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="searching-for-granules" class="level2">
+<h2 class="anchored" data-anchor-id="searching-for-granules">Searching for Granules</h2>
+<p>In NASA speak, Granules are files or groups of files. In this example, we will search for ECO2LSTE version 1 for a specified region of interest and datetime range.</p>
+<p>We need to change the resource url to look for <strong>granules</strong> instead of collections</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode" id="cb27"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>CMR_OPS<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="st">"granules"</span><span class="sc">}</span><span class="ss">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will search by <code>concept_id</code>, <code>temporal</code>, and <code>bounding_box</code>. Details about these search parameters can be found in the CMR API Documentation.</p>
-<p>The formatting of the values for each parameter is quite specific.<br>
-Temporal parameters are in ISO 8061 format <code>yyyy-MM-ddTHH:mm:ssZ</code>.<br>
-Bounding box coordinates are lower left longitude, lower left latitude, upper right longitude, upper right latitude.</p>
-<div class="cell" data-execution_count="36">
+<p>The formatting of the values for each parameter is quite specific.</p>
+<p><strong>concept_id</strong> parameter is one to many collections/collection id(s) assigned to a list<br>
+<strong>temporal</strong> parameter are dates in ISO 8061 format <code>yyyy-MM-ddTHH:mm:ssZ</code><br>
+<strong>bounding_box</strong> parameter are coordinates in the order: lower left longitude, lower left latitude, upper right longitude, upper right latitude</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode" id="cb28"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>collection_id <span class="op">=</span> [<span class="st">'C2021957657-LPCLOUD'</span>, <span class="st">'C2021957295-LPCLOUD'</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>date_range <span class="op">=</span> <span class="st">'2020-10-17T00:00:00Z,2020-11-18T23:59:59Z'</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> <span class="st">'-120.45264628,34.51050622,-120.40432448,34.53239876'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
 <div class="sourceCode" id="cb29"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>{</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'concept_id'</span>: <span class="st">'C1214472336-ASF'</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'temporal'</span>: <span class="st">'2020-10-17T00:00:00Z,2020-10-18T23:59:59Z'</span>,</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'bounding_box'</span>: <span class="st">'76.08166,-67.1746,88.19689,21.04862'</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'concept_id'</span>: collection_id,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'temporal'</span>: date_range,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'bounding_box'</span>: bbox,</span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">'page_size'</span>: <span class="dv">200</span>,</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                            },</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                        headers<span class="op">=</span>{</span>
@@ -770,254 +787,285 @@ Bounding box coordinates are lower left longitude, lower left latitude, upper ri
 <pre><code>200</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="37">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode" id="cb31"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.headers[<span class="st">'CMR-Hits'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
-<pre><code>6</code></pre>
+<pre><code>10</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode" id="cb33"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>granules <span class="op">=</span> response.json()[<span class="st">'feed'</span>][<span class="st">'entry'</span>]</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#for granule in granules:</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    print(f'{granule["archive_center"]} {granule["dataset_id"]} {granule["id"]}')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="39">
-<div class="sourceCode" id="cb34"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pprint(granules)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> granule <span class="kw">in</span> granules:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>granule[<span class="st">"data_center"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"dataset_id"</span>]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>granule[<span class="st">"id"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
-<pre><code>[{'browse_flag': True,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633258819580078',
-  'id': 'G1954601581-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201017T132009_20201017T132039_034836_040F98_404E.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://datapool.asf.alaska.edu/BROWSE/SA/S1A_EW_GRDM_1SDH_20201017T132009_20201017T132039_034836_040F98_404E.jpg',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34836'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-59.163563 87.942726 -60.893669 89.293564 -59.279579 '
-                '96.119583 -57.619923 94.49958 -59.163563 87.942726']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201017T132009_20201017T132039_034836_040F98_404E',
-  'time_end': '2020-10-17T13:20:39.000Z',
-  'time_start': '2020-10-17T13:20:09.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201017T132009_20201017T132039_034836_040F98_404E-METADATA_GRD_MD',
-  'updated': '2020-10-19T17:13:39.000Z'},
- {'browse_flag': False,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633354187011719',
-  'id': 'G1954616816-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201017T145616_20201017T145720_034837_040FA0_0B4B.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34837'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-66.104271 69.819366 -69.571243 74.741966 -67.42112 83.209152 '
-                '-64.210938 77.59269 -66.104271 69.819366']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201017T145616_20201017T145720_034837_040FA0_0B4B',
-  'time_end': '2020-10-17T14:57:20.000Z',
-  'time_start': '2020-10-17T14:56:16.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201017T145616_20201017T145720_034837_040FA0_0B4B-METADATA_GRD_MD',
-  'updated': '2020-10-19T18:35:34.000Z'},
- {'browse_flag': True,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633354187011719',
-  'id': 'G1954616638-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201017T145720_20201017T145820_034837_040FA0_72CE.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://datapool.asf.alaska.edu/BROWSE/SA/S1A_EW_GRDM_1SDH_20201017T145720_20201017T145820_034837_040FA0_72CE.jpg',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34837'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-62.765087 66.277176 -66.103951 69.81897 -64.211227 77.590164 '
-                '-61.060097 73.427185 -62.765087 66.277176']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201017T145720_20201017T145820_034837_040FA0_72CE',
-  'time_end': '2020-10-17T14:58:20.000Z',
-  'time_start': '2020-10-17T14:57:20.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201017T145720_20201017T145820_034837_040FA0_72CE-METADATA_GRD_MD',
-  'updated': '2020-10-19T18:33:31.000Z'},
- {'browse_flag': True,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633354187011719',
-  'id': 'G1954805829-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201018T135856_20201018T140000_034851_041027_2659.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://datapool.asf.alaska.edu/BROWSE/SA/S1A_EW_GRDM_1SDH_20201018T135856_20201018T140000_034851_041027_2659.jpg',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34851'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-65.236397 83.18071 -68.712318 87.887711 -66.630493 96.161102 '
-                '-63.400326 90.779785 -65.236397 83.18071']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201018T135856_20201018T140000_034851_041027_2659',
-  'time_end': '2020-10-18T14:00:00.000Z',
-  'time_start': '2020-10-18T13:58:56.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201018T135856_20201018T140000_034851_041027_2659-METADATA_GRD_MD',
-  'updated': '2020-10-20T07:16:54.000Z'},
- {'browse_flag': True,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633354187011719',
-  'id': 'G1954799806-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201018T140000_20201018T140100_034851_041027_2777.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://datapool.asf.alaska.edu/BROWSE/SA/S1A_EW_GRDM_1SDH_20201018T140000_20201018T140100_034851_041027_2777.jpg',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34851'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-61.876564 79.848251 -65.236069 83.180344 -63.400402 90.778 '
-                '-60.217258 86.840034 -61.876564 79.848251']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201018T140000_20201018T140100_034851_041027_2777',
-  'time_end': '2020-10-18T14:01:00.000Z',
-  'time_start': '2020-10-18T14:00:00.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201018T140000_20201018T140100_034851_041027_2777-METADATA_GRD_MD',
-  'updated': '2020-10-20T06:51:16.000Z'},
- {'browse_flag': False,
-  'collection_concept_id': 'C1214472336-ASF',
-  'coordinate_system': 'GEODETIC',
-  'data_center': 'ASF',
-  'dataset_id': 'SENTINEL-1A_DUAL_POL_METADATA_GRD_MEDIUM_RES',
-  'day_night_flag': 'UNSPECIFIED',
-  'granule_size': '0.05633258819580078',
-  'id': 'G1954798927-ASF',
-  'links': [{'href': 'https://datapool.asf.alaska.edu/METADATA_GRD_MD/SA/S1A_EW_GRDM_1SDH_20201018T140100_20201018T140148_034851_041027_C95D.iso.xml',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
-             'title': 'This link provides direct download access to the '
-                      'granule.'},
-            {'href': 'www.asf.alaska.edu/sar-data-sets/sentinel-1',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 data set landing page (VIEW RELATED '
-                      'INFORMATION)'},
-            {'href': 'www.asf.alaska.edu/sar-information/sentinel-1-documents-tools',
-             'hreflang': 'en-US',
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
-             'title': 'ASF DAAC Sentinel-1 User Guide and Technical '
-                      'Documentation (VIEW RELATED INFORMATION)'},
-            {'href': 'https://vertex.daac.asf.alaska.edu/',
-             'hreflang': 'en-US',
-             'inherited': True,
-             'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'}],
-  'online_access_flag': True,
-  'orbit_calculated_spatial_domains': [{'orbit_number': '34851'}],
-  'original_format': 'ECHO10',
-  'polygons': [['-59.113174 77.623962 -61.876228 79.847961 -60.217464 '
-                '86.837784 -57.570774 84.174744 -59.113174 77.623962']],
-  'producer_granule_id': 'S1A_EW_GRDM_1SDH_20201018T140100_20201018T140148_034851_041027_C95D',
-  'time_end': '2020-10-18T14:01:48.000Z',
-  'time_start': '2020-10-18T14:01:00.000Z',
-  'title': 'S1A_EW_GRDM_1SDH_20201018T140100_20201018T140148_034851_041027_C95D-METADATA_GRD_MD',
-  'updated': '2020-10-20T06:46:01.000Z'}]</code></pre>
+<pre><code>LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2167580011-LPCLOUD
+LPCLOUD | HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0 | G2152756095-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2167475882-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2167295721-LPCLOUD
+LPCLOUD | HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0 | G2152682346-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2166867404-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2166768089-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2166693426-LPCLOUD
+LPCLOUD | HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0 | G2152120260-LPCLOUD
+LPCLOUD | HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0 | G2165191762-LPCLOUD</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode" id="cb35"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pprint(granules[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>{'browse_flag': True,
+ 'collection_concept_id': 'C2021957295-LPCLOUD',
+ 'coordinate_system': 'GEODETIC',
+ 'data_center': 'LPCLOUD',
+ 'dataset_id': 'HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance '
+               'Daily Global 30m v2.0',
+ 'day_night_flag': 'DAY',
+ 'id': 'G2167580011-LPCLOUD',
+ 'links': [{'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B09.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B09.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B09.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B07.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B07.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B07.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B01.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B01.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B01.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B04.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B04.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B04.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B12.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B12.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B12.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.SZA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.SZA.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.SZA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B03.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B03.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B03.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B11.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B11.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B11.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B02.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B02.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B02.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B08.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B08.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B08.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B10.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B10.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B10.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.SAA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.SAA.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.SAA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.VZA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.VZA.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.VZA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B05.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B05.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B05.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B06.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B06.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B06.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B8A.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.B8A.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.B8A.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.Fmask.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.Fmask.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.Fmask.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.VAA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.VAA.tif'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.VAA.tif',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/s3#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0_stac.json',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0_stac.json '
+                     '(EXTENDED METADATA)'},
+           {'href': 's3://lp-prod-public/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0_stac.json',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule (EXTENDED METADATA)'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.cmr.xml',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.cmr.xml '
+                     '(EXTENDED METADATA)'},
+           {'href': 's3://lp-prod-protected/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.cmr.xml',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule (EXTENDED METADATA)'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+            'title': 'api endpoint to retrieve temporary credentials valid for '
+                     'same-region direct s3 access (VIEW RELATED INFORMATION)'},
+           {'href': 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.jpg',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+            'title': 'Download HLS.S30.T10SGD.2020292T184411.v2.0.jpg'},
+           {'href': 's3://lp-prod-public/HLSS30.020/HLS.S30.T10SGD.2020292T184411.v2.0/HLS.S30.T10SGD.2020292T184411.v2.0.jpg',
+            'hreflang': 'en-US',
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+            'title': 'This link provides direct download access via S3 to the '
+                     'granule'},
+           {'href': 'https://search.earthdata.nasa.gov/search?q=C2021957295-LPCLOUD',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/data#'},
+           {'href': 'https://doi.org/10.5067/HLS/HLSS30.002',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
+           {'href': 'https://lpdaac.usgs.gov/',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/metadata#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/1118/HLS_User_Guide_V2.pdf',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/769/HLS_ATBD_V15_provisional.pdf',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/documents/768/HLS_Quick_Guide_v011.pdf',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-tutorial/browse',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-super-script/browse',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://git.earthdata.nasa.gov/projects/LPDUR/repos/hls-bulk-download/browse',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'},
+           {'href': 'https://lpdaac.usgs.gov/resources/e-learning/getting-started-with-cloud-native-harmonized-landsat-sentinel-2-hls-data-in-r/',
+            'hreflang': 'en-US',
+            'inherited': True,
+            'rel': 'http://esipfed.org/ns/fedsearch/1.1/documentation#'}],
+ 'online_access_flag': True,
+ 'original_format': 'ECHO10',
+ 'polygons': [['34.2068165 -119.6382697 35.1952508 -119.5980052 35.2231329 '
+               '-120.8028976 34.2336951 -120.8289365 34.2068165 -119.6382697']],
+ 'producer_granule_id': 'HLS.S30.T10SGD.2020292T184411',
+ 'time_end': '2020-10-18T18:54:56.060Z',
+ 'time_start': '2020-10-18T18:54:56.060Z',
+ 'title': 'HLS.S30.T10SGD.2020292T184411.v2.0',
+ 'updated': '2021-11-17T08:22:16.691Z'}</code></pre>
 </div>
 </div>
 
