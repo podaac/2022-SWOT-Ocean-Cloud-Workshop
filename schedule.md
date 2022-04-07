@@ -34,7 +34,7 @@ title: Schedule
 - Agenda for tomorrow: what's coming next.
 
 
-### Day 2 - March 17, 2022
+### Day 2 - April 13, 2022
 
 | Time, PST [(UTC-7)](https://www.timeanddate.com/time/zones/pdt) | Event | Leads/Instructors |
 |------|-------|-------------------|
