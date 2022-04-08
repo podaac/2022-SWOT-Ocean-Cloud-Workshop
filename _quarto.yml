@@ -45,7 +45,7 @@ website:
               text: "NASA Earthdata Authentication - Generate EDL Token"
             - href: tutorials/Data_Discovery_CMR_API_EDL_Token.ipynb 
               text: "Data Discovery - Finding Data with the CMR API"
-            - href: how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_COG_Example.ipynb
+            - href: how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_Clip_COG_Example.ipynb
               text: "Data Access - Direct S3 Access of Cloud Optimized GeoTIFF (COG) file"
         - section: "Additional Resources"
           contents:
