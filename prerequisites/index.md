@@ -8,8 +8,7 @@ To follow along hands-on during the Workshop, please do the following (20 minute
 
 1. **GitHub username**
     - Create a GitHub account (if you don’t already have one) at <https://github.com>. Follow optional [advice on choosing your username](https://happygitwithr.com/github-acct.html)
-    - The workshop signup form asks for your GitHub username - this allows us to enable you access to a cloud environment during the workshop.
-    - Remember your username and password; you will need to be logged in during the workshop!
+    - Your GitHub username is used to enable you access to a cloud environment during the workshop. Please add your GitHub username to the following form: [GitHub Username Google Form](https://forms.gle/a9XMKmqWJWhy89r5A)
 2. **Earthdata Login account** 
     - Create an Earthdata Login account (if you don't already have one) at <https://urs.earthdata.nasa.gov>
     - Remember your username and password; you will need to download or access cloud data during the workshop and beyond.
