@@ -18,7 +18,7 @@ title: Schedule
 | 2:10 pm | ECOSTRESS Build 7 collection Overview | Christine Lee & Gregory Halverson (JPL) | 
 | 2:25 pm | Earthdata Cloud Overview | Aaron Friesz (LP DAAC) |
 | 2:55 pm | Break/QA | |
-| 3:00 pm | [Earthdata Search Client (GUI)](https://search.earthdata.nasa.gov/search) | Aaron Friesz (LP DAAC) |
+| 3:00 pm | [Earthdata Search Client (GUI)](tutorials/Earthdata_search.md) | Aaron Friesz (LP DAAC) |
 | 3:30 pm | Break | |
 | 4:00 pm | [Getting set up / Intro to Pangeo](tutorials/Getting_started_setup.md) | Aaron Friesz (LP DAAC) |
 | 4:30 pm | [Intro to xarray & hvplot](tutorials/Intro_xarray_hvplot.ipynb) | Aaron Friesz (LP DAAC) |
