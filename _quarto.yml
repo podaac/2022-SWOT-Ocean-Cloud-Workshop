@@ -50,11 +50,11 @@ website:
         - section: "Additional Resources"
           contents:
             - tutorials/Data_Discovery_CMR-STAC_API.ipynb
-            - how-tos/data_access/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.ipynb
-            - how-tos/data_access/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
-            - how-tos/data_access/Multi-File_Direct_S3_Access_COG_Example.ipynb
-            - how-tos/data_access/Multi-File_Direct_S3_Access_NetCDF_Example.ipynb
-            - how-tos/data_access/Earthdata_Cloud__Data_Access_OPeNDAP_Example.ipynb
+            - how-tos/additional_resources/Earthdata_Cloud__Single_File__HTTPS_Access_COG_Example.ipynb
+            - how-tos/additional_resources/Earthdata_Cloud__Single_File__Direct_S3_Access_NetCDF4_Example.ipynb
+            - how-tos/additional_resources/Multi-File_Direct_S3_Access_COG_Example.ipynb
+            - how-tos/additional_resources/Multi-File_Direct_S3_Access_NetCDF_Example.ipynb
+            - how-tos/additional_resources/Earthdata_Cloud__Data_Access_OPeNDAP_Example.ipynb
             
 
 format:
